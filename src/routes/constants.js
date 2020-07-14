@@ -2,6 +2,8 @@ const ROUTES = {
   MAIN: 'MAIN',
   HOME: 'HOME',
   DASHBOARD: 'DASHBOARD',
+  PROFILE: 'PROFILE',
+  SETTINGS: 'SETTINGS',
 };
 
 export default ROUTES;
