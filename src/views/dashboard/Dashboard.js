@@ -5,7 +5,7 @@ import styles from './DashboardStyle';
 const Dashboard = () => {
   return (
     <View style={styles.centered}>
-      <Text style={styles.text}>This is dashboard</Text>
+      <Text>This is dashboard</Text>
     </View>
   );
 };

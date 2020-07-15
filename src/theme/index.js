@@ -19,6 +19,16 @@ const theme = {
       pink: '#FF8199',
     },
   },
+  button: {
+    active: {
+      borderRadius: 16,
+      backgroundColor: '#00AAFF',
+    },
+    disabled: {
+      borderRadius: 16,
+      backgroundColor: '#cfcfcf',
+    },
+  },
 };
 
 export default theme;
