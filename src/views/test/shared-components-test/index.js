@@ -17,7 +17,7 @@ const SharedComponentsTest = ({handleOpenToast, handleOpenDialog}) => {
             {backgroundColor: theme.palette.secondary.yellow},
           ]}
           onPress={() =>
-            handleOpenToast('warning', 'Warning toast present', 'bottom')
+            handleOpenToast('warning', 'Warning toast present', 'top')
           }>
           <Text style={styles.buttonTitle}>Warning Toast</Text>
         </TouchableOpacity>

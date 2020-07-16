@@ -30,7 +30,7 @@ export default handleActions(
       open: false,
       type: '',
       content: '',
-      position: '',
+      position: 'bottom',
     }),
   },
   initialState,

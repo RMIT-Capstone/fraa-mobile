@@ -37,6 +37,17 @@ const FraaToast = ({toast, handleCloseToast}) => {
     }
   };
 
+  const renderToastContent = () => {
+    if (toast) {
+      return <Text style={styles.toastContentText}>{content}</Text>;
+    }
+    return (
+      <Text style={styles.toastContentText}>
+        Something went wrong, toast message is not present.
+      </Text>
+    );
+  };
+
   return (
     <Modal animationType="slide" transparent={true} visible={toastOpen}>
       <View style={styles.centeredView}>
@@ -54,7 +65,7 @@ const FraaToast = ({toast, handleCloseToast}) => {
                   toastBackground(),
                 ]
           }>
-          <Text style={styles.toastContentText}>{content}</Text>
+          <Text style={styles.toastContentText}>{renderToastContent()}</Text>
         </View>
       </View>
     </Modal>
