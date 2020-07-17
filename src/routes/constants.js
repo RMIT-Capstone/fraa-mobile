@@ -1,0 +1,10 @@
+const ROUTES = {
+  MAIN: 'MAIN',
+  HOME: 'HOME',
+  DASHBOARD: 'DASHBOARD',
+  PROFILE: 'PROFILE',
+  SETTINGS: 'SETTINGS',
+  TEST: 'TEST',
+};
+
+export default ROUTES;
