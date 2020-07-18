@@ -1,3 +1,4 @@
+// @flow
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {object, func} from 'prop-types';
@@ -50,7 +51,7 @@ const FraaToast = ({toast, handleCloseToast}) => {
 
   return (
     <Modal animationType="slide" transparent={true} visible={toastOpen}>
-      <View style={styles.centeredView}>
+      <View testID="ToastTesting" style={styles.centeredView}>
         <View
           style={
             position === 'bottom'
