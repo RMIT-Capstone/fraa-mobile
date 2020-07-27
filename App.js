@@ -25,6 +25,7 @@ import ReduxLoading from './src/shared-components/loading/redux-load-screen';
 import Test from './src/views/test/Test';
 import FraaToast from './src/shared-components/toast/FraaToast';
 import FraaDialog from './src/shared-components/dialog';
+import Camera from './src/components/camera/Camera';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,6 +46,7 @@ const App = () => {
             />
             <Tab.Screen name={ROUTES.PROFILE} component={ProfileStackScreens} />
             <Tab.Screen name={ROUTES.TEST} component={Test} />
+            <Tab.Screen name={ROUTES.CAMERA} component={Camera} />
           </Tab.Navigator>
         </NavigationContainer>
         <FraaToast />

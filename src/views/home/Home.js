@@ -10,8 +10,8 @@ const Home = ({navigation}) => {
     <View style={styles.centered}>
       <Text style={styles.text}>This is home</Text>
       <Button
-        title="Go to Test"
-        onPress={() => navigateTo(navigation, ROUTES.TEST)}
+        title="Open Camera"
+        onPress={() => navigateTo(navigation, ROUTES.CAMERA)}
       />
     </View>
   );

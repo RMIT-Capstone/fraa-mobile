@@ -5,6 +5,7 @@ const ROUTES = {
   PROFILE: 'PROFILE',
   SETTINGS: 'SETTINGS',
   TEST: 'TEST',
+  CAMERA: 'CAMERA',
 };
 
 export default ROUTES;
