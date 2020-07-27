@@ -1,0 +1,21 @@
+{
+  "testRunner": "jest",
+  "runnerConfig": "e2e/config.json",
+  "configurations": {
+    "ios": {
+      "type": "ios.simulator",
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/fraa.app",
+      "build": "xcodebuild -workspace ios/fraa.xcworkspace -configuration Debug  -scheme fraa -derivedDataPath ios/build -destination id=BEEE87A3-A694-4888-9E54-D5C122E82AD2",
+      "device": {
+        "type": "iPhone 11"
+      }
+    },
+    "android": {
+      "type": "android.emulator",
+      "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY",
+      "device": {
+        "avdName": "Pixel_2_API_29"
+      }
+    }
+  }
+}

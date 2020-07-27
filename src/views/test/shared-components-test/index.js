@@ -9,9 +9,10 @@ import DIALOG from '../../../shared-components/dialog/constants';
 
 const SharedComponentsTest = ({handleOpenToast, handleOpenDialog}) => {
   return (
-    <>
+    <View>
       <View style={styles.testRow}>
         <TouchableOpacity
+          testID="SharedComponentsTestToastBtn"
           style={[
             styles.button,
             {backgroundColor: theme.palette.secondary.yellow},
@@ -21,6 +22,7 @@ const SharedComponentsTest = ({handleOpenToast, handleOpenDialog}) => {
           }>
           <Text style={styles.buttonTitle}>Warning Toast</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={[
             styles.button,
@@ -53,6 +55,7 @@ const SharedComponentsTest = ({handleOpenToast, handleOpenDialog}) => {
       </View>
       <View style={styles.testRow}>
         <TouchableOpacity
+          testID="SharedComponentsTestDialogBtn"
           style={styles.button}
           onPress={() =>
             handleOpenDialog(DIALOG.DEFAULT, {content: 'DIALOG TEST'})
@@ -60,7 +63,7 @@ const SharedComponentsTest = ({handleOpenToast, handleOpenDialog}) => {
           <Text style={styles.buttonTitle}>Open Dialog</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </View>
   );
 };
 

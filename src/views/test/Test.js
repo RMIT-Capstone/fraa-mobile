@@ -3,11 +3,11 @@ import {func} from 'prop-types';
 import {connect} from 'react-redux';
 import {View, Text, StyleSheet} from 'react-native';
 import {openToast} from '../../config/redux/reducers/ToastReducer';
-import SharedComponentsTest from './shared-components-test';
+import SharedComponentsTest from './shared-components-test/index';
 
 const Test = () => {
   return (
-    <View style={styles.centeredView}>
+    <View testID="Test" style={styles.centeredView}>
       <View style={styles.textView}>
         <Text>Add code bellow this line in Test.js for testing</Text>
       </View>

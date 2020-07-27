@@ -1,3 +1,4 @@
+// @flow
 import React, {useState, useEffect} from 'react';
 import {func, object, bool} from 'prop-types';
 import {connect} from 'react-redux';
@@ -19,7 +20,7 @@ const DefaultDialog = ({open, options, handleCloseDialog}) => {
 
   return (
     <Modal animationType="slide" transparent={true} visible={dialogOpen}>
-      <View style={styles.centeredView}>
+      <View testID="dialog" style={styles.centeredView}>
         <View style={styles.dialogWrapper}>
           <View style={styles.dialogTextWrapper}>
             <Text style={styles.toastContentText}>
@@ -28,6 +29,7 @@ const DefaultDialog = ({open, options, handleCloseDialog}) => {
           </View>
           <View style={styles.dialogActionsWrapper}>
             <TouchableOpacity
+              testID="confirm"
               style={[styles.dialogAction, styles.confirmAction]}
               onPress={onDialogClose}>
               <Text style={styles.actionTitle}>Confirm</Text>
