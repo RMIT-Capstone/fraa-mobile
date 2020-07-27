@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 
 const Camera = () => {
@@ -7,45 +7,28 @@ const Camera = () => {
 
   const onBarCodeRecognized = barcodeScanned => {
     setBarCode(barcodeScanned);
-    console.log(barcodeScanned.bounds.size)
   };
 
   const renderBarcode = (bounds, data) => (
     <React.Fragment>
       <View
-        style={{
-          borderWidth: 2,
-          borderRadius: 10,
-          position: 'absolute',
-          borderColor: '#F00',
-          justifyContent: 'center',
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-          padding: 10,
-          height: parseInt(bounds.size.height),
-          width: parseInt(bounds.size.width),
-          left: parseInt(bounds.origin.x, 10),
-          top: parseInt(bounds.origin.y, 10),
-        }}>
-        <Text
-          style={{
-            color: '#F00',
-            flex: 1,
-            position: 'absolute',
-            textAlign: 'center',
-            backgroundColor: 'transparent',
-          }}>
-          {data}
-        </Text>
+        style={[
+          styles.barcodeBounds,
+          {
+            height: parseInt(bounds.size.height, 10),
+            width: parseInt(bounds.size.width, 10),
+            left: parseInt(bounds.origin.x, 10),
+            top: parseInt(bounds.origin.y, 10),
+          },
+        ]}>
+        <Text style={styles.barcodeText}>{data}</Text>
       </View>
     </React.Fragment>
   );
 
   return (
     <RNCamera
-      style={{
-        flex: 1,
-        width: '100%',
-      }}
+      style={styles.camera}
       ref={ref => {
         this.camera = ref;
       }}
@@ -68,5 +51,28 @@ const Camera = () => {
     </RNCamera>
   );
 };
+
+const styles = StyleSheet.create({
+  barcodeBounds: {
+    borderWidth: 2,
+    borderRadius: 10,
+    position: 'absolute',
+    borderColor: '#F00',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    padding: 10,
+  },
+  barcodeText: {
+    color: '#F00',
+    flex: 1,
+    position: 'absolute',
+    textAlign: 'center',
+    backgroundColor: 'transparent',
+  },
+  camera: {
+    flex: 1,
+    width: '100%',
+  },
+});
 
 export default Camera;
