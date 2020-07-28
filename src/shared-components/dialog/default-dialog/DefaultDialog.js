@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {func, object, bool} from 'prop-types';
 import {connect} from 'react-redux';
 import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
-import theme from '../../theme';
-import {closeDialog} from '../../config/redux/reducers/DialogReducer';
+import theme from '../../../theme';
+import {closeDialog} from '../../../config/redux/reducers/DialogReducer';
 
 const DefaultDialog = ({open, options, handleCloseDialog}) => {
   const [dialogOpen, setDialogOpen] = useState(false);
