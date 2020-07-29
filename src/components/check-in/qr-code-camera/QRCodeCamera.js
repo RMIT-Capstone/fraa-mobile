@@ -80,7 +80,9 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   rescanText: {
+    fontSize: 14,
     color: '#fff',
+    fontWeight: '700',
   },
 });
 

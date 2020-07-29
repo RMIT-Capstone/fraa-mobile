@@ -1,19 +1,33 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+  StyleSheet,
+} from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import theme from '../../../theme';
 
 const FrontFaceCamera = () => {
-  // for demo, doesn't work though
-  // TODO: add face detection with ML Kit
+  const [faceRecognized, setFaceRecognized] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+
   const takePicture = async camera => {
     const options = {quality: 0.5, base64: true};
-    const data = await camera.takePictureAsync(options);
-    console.log(data.uri);
+    try {
+      const data = await camera.takePictureAsync(options);
+      if (data) {
+        setPreviewImage(data.uri);
+      }
+    } catch (errorCapture) {
+      console.warn(errorCapture);
+    }
   };
 
   const onFaceDetected = ({faces}) => {
     if (faces[0]) {
-      console.log(faces[0]);
+      // keep this for later reference
       // this.setState({
       //   box: {
       //     width: faces[0].bounds.size.width,
@@ -24,7 +38,14 @@ const FrontFaceCamera = () => {
       //     rollAngle: faces[0].rollAngle,
       //   },
       // });
+      setFaceRecognized(true);
+    } else {
+      setFaceRecognized(false);
     }
+  };
+
+  const recapture = () => {
+    setPreviewImage(null);
   };
 
   const PendingView = () => (
@@ -32,6 +53,18 @@ const FrontFaceCamera = () => {
       <Text>Loading...</Text>
     </View>
   );
+
+  if (previewImage) {
+    return (
+      <ImageBackground source={{uri: previewImage}} style={styles.camera}>
+        <View style={styles.snapButton}>
+          <TouchableOpacity onPress={recapture} style={styles.capture}>
+            <Text style={styles.snapText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    );
+  }
 
   return (
     <RNCamera
@@ -55,13 +88,15 @@ const FrontFaceCamera = () => {
           return <PendingView />;
         }
         return (
-          <View style={styles.snapButton}>
-            <TouchableOpacity
-              onPress={() => takePicture(camera)}
-              style={styles.capture}>
-              <Text style={styles.snapText}> SNAP </Text>
-            </TouchableOpacity>
-          </View>
+          faceRecognized && (
+            <View style={styles.snapButton}>
+              <TouchableOpacity
+                onPress={() => takePicture(camera)}
+                style={styles.capture}>
+                <Text style={styles.snapText}>Snap</Text>
+              </TouchableOpacity>
+            </View>
+          )
         );
       }}
     </RNCamera>
@@ -76,13 +111,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   snapButton: {
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 20,
+    backgroundColor: theme.palette.primary.red,
+    padding: 15,
+    borderRadius: 16,
   },
   snapText: {
     fontSize: 14,
     color: '#fff',
+    fontWeight: '700',
   },
 });
 
