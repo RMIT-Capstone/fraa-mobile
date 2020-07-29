@@ -11,6 +11,22 @@ const FrontFaceCamera = () => {
     console.log(data.uri);
   };
 
+  const onFaceDetected = ({faces}) => {
+    if (faces[0]) {
+      console.log(faces[0]);
+      // this.setState({
+      //   box: {
+      //     width: faces[0].bounds.size.width,
+      //     height: faces[0].bounds.size.height,
+      //     x: faces[0].bounds.origin.x,
+      //     y: faces[0].bounds.origin.y,
+      //     yawAngle: faces[0].yawAngle,
+      //     rollAngle: faces[0].rollAngle,
+      //   },
+      // });
+    }
+  };
+
   const PendingView = () => (
     <View style={styles.camera}>
       <Text>Loading...</Text>
@@ -21,6 +37,7 @@ const FrontFaceCamera = () => {
     <RNCamera
       style={styles.camera}
       type={RNCamera.Constants.Type.front}
+      onFacesDetected={onFaceDetected}
       androidCameraPermissionOptions={{
         title: 'Permission to use camera',
         message: 'We need your permission to use your camera',
