@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ROUTES from '../constants';
 import Home from '../../views/home';
 import Header from '../header';
-import QRCodeCamera from '../../components/qr-code-camera/QRCodeCamera';
+import CheckIn from '../../components/check-in/CheckIn';
 
 const HomeStack = createStackNavigator();
 
@@ -14,7 +14,7 @@ const HomeStackScreens = () => {
         headerTitle: props => <Header {...props} />,
       }}>
       <HomeStack.Screen name={ROUTES.HOME} component={Home} />
-      <HomeStack.Screen name={ROUTES.CAMERA} component={QRCodeCamera} />
+      <HomeStack.Screen name={ROUTES.CHECK_IN} component={CheckIn} />
     </HomeStack.Navigator>
   );
 };

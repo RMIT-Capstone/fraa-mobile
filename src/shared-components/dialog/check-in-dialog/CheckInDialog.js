@@ -4,13 +4,17 @@ import {connect} from 'react-redux';
 import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
 import theme from '../../../theme';
 import {closeDialog} from '../../../config/redux/reducers/DialogReducer';
-import {clearCheckInCourse} from '../../../config/redux/reducers/CheckInCourseReducer';
+import {
+  clearCheckIn,
+  setCheckIn,
+} from '../../../config/redux/reducers/CheckInProcessReducer';
 
 const CheckInDialog = ({
   open,
   options,
   handleCloseDialog,
-  handleClearCheckInCourse,
+  handleSetCheckIn,
+  handleClearCheckIn,
 }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const {lecturer, course} = options;
@@ -22,7 +26,12 @@ const CheckInDialog = ({
   const onDialogClose = () => {
     setDialogOpen(false);
     handleCloseDialog();
-    handleClearCheckInCourse();
+    handleClearCheckIn();
+  };
+
+  const onAcceptCheckIn = () => {
+    handleCloseDialog();
+    handleSetCheckIn(options);
   };
 
   return (
@@ -37,7 +46,7 @@ const CheckInDialog = ({
           <View style={styles.dialogActionsWrapper}>
             <TouchableOpacity
               style={[styles.dialogAction, styles.confirmAction]}
-              onPress={onDialogClose}>
+              onPress={() => onAcceptCheckIn()}>
               <Text style={styles.actionTitle}>Confirm</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -99,12 +108,14 @@ CheckInDialog.propTypes = {
   open: bool.isRequired,
   options: object.isRequired,
   handleCloseDialog: func.isRequired,
-  handleClearCheckInCourse: func.isRequired,
+  handleSetCheckIn: func.isRequired,
+  handleClearCheckIn: func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   handleCloseDialog: (type, options) => dispatch(closeDialog(type, options)),
-  handleClearCheckInCourse: () => dispatch(clearCheckInCourse()),
+  handleSetCheckIn: course => dispatch(setCheckIn(course)),
+  handleClearCheckIn: () => dispatch(clearCheckIn()),
 });
 
 export default connect(

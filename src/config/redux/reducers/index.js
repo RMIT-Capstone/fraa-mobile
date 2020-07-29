@@ -2,10 +2,10 @@ import {combineReducers} from 'redux';
 
 import toastReducer from './ToastReducer';
 import dialogReducer from './DialogReducer';
-import checkInCourseReducer from './CheckInCourseReducer';
+import checkInProcessReducer from './CheckInProcessReducer';
 
 export default combineReducers({
   toast: toastReducer,
   dialog: dialogReducer,
-  checkInCourse: checkInCourseReducer,
+  checkInProcess: checkInProcessReducer,
 });

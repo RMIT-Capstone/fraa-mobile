@@ -11,7 +11,7 @@ const Home = ({navigation}) => {
       <Text style={styles.text}>This is home</Text>
       <Button
         title="Open Camera"
-        onPress={() => navigateTo(navigation, ROUTES.CAMERA)}
+        onPress={() => navigateTo(navigation, ROUTES.CHECK_IN)}
       />
     </View>
   );
