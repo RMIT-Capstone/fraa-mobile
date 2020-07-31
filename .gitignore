@@ -22,8 +22,6 @@ DerivedData
 *.xcuserstate
 
 # Android/IntelliJ
-#
-build/
 .idea
 .gradle
 local.properties
@@ -58,5 +56,6 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-# IDEs
-.idea
+# firebase config files
+android/app/google-services.json
+ios/fraa/GoogleService-Info.plist
