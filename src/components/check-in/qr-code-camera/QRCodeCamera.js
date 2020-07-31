@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {func, object} from 'prop-types';
 import {connect} from 'react-redux';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {RNCamera} from 'react-native-camera';
-import {openDialog} from '../../../config/redux/reducers/DialogReducer';
+import {Text, TouchableOpacity} from 'react-native';
+import LottieView from 'lottie-react-native';
+import styles from './QRCodeCameraStyle';
 import DIALOG from '../../../shared-components/dialog/constants';
+import {openDialog} from '../../../config/redux/reducers/DialogReducer';
 import {getCheckInProcessState} from '../../../config/redux/reducers/CheckInProcessReducer';
-import theme from '../../../theme';
+const GenericLoading = require('../../../lottie-assets/GenericLoading');
 
 const QRCodeCamera = ({handleOpenDialog, checkInProcess}) => {
   const [scan, setScan] = useState(false);
@@ -57,34 +59,20 @@ const QRCodeCamera = ({handleOpenDialog, checkInProcess}) => {
         style={styles.rescanButton}>
         <Text style={styles.rescanText}>
           {!scan && !barcodeFound && 'Scan'}
-          {scan && !barcodeFound && 'Scanning...'}
+          {scan && !barcodeFound && (
+            <LottieView
+              source={GenericLoading}
+              autoPlay
+              loop
+              style={styles.lottieView}
+            />
+          )}
           {barcodeFound && 'Barcode Found!'}
         </Text>
       </TouchableOpacity>
     </RNCamera>
   );
 };
-
-const styles = StyleSheet.create({
-  camera: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  rescanButton: {
-    position: 'absolute',
-    bottom: 20,
-    backgroundColor: theme.palette.primary.red,
-    padding: 15,
-    borderRadius: 16,
-  },
-  rescanText: {
-    fontSize: 14,
-    color: '#fff',
-    fontWeight: '700',
-  },
-});
 
 QRCodeCamera.propTypes = {
   handleOpenDialog: func.isRequired,
