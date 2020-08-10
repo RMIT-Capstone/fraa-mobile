@@ -58,4 +58,4 @@ buck-out/
 
 # firebase config files
 android/app/google-services.json
-ios/fraa/GoogleService-Info.plist
+ios/GoogleService-Info.plist

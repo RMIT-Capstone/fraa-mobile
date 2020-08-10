@@ -20,7 +20,7 @@
 		4AC586A3422711DD149C549E /* libPods-fraa-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D50A577B28925D2B1D7B2FEE /* libPods-fraa-tvOS.a */; };
 		580899ECFC1007A451025E6B /* libPods-fraa-fraaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B32A45E22117DB45E7097329 /* libPods-fraa-fraaTests.a */; };
 		5E6FF29862A8C266C5893D13 /* libPods-fraa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 142F50E588B703769E743A80 /* libPods-fraa.a */; };
-		8783DFA224D172E2008ACE28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8783DFA124D172E2008ACE28 /* GoogleService-Info.plist */; };
+		8783472524DC1073008840DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8783472424DC1073008840DC /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +59,7 @@
 		51764D7060716002BB22F1D5 /* libPods-fraa-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fraa-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C6630EBE6D94B453A92498D /* Pods-fraa-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-fraa-tvOSTests/Pods-fraa-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7BF1DE2D6A0A3FEA2F61AFDD /* Pods-fraa-fraaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-fraaTests.debug.xcconfig"; path = "Target Support Files/Pods-fraa-fraaTests/Pods-fraa-fraaTests.debug.xcconfig"; sourceTree = "<group>"; };
-		8783DFA124D172E2008ACE28 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "fraa/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8783472424DC1073008840DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B32A45E22117DB45E7097329 /* libPods-fraa-fraaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fraa-fraaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C007D73F25A3A5BF3A75F8C2 /* Pods-fraa-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-fraa-tvOS/Pods-fraa-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		C860EA98299CFF1215143B5B /* Pods-fraa-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-fraa-tvOSTests/Pods-fraa-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -131,8 +131,8 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				8783DFA124D172E2008ACE28 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				8783472424DC1073008840DC /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -345,7 +345,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				8783DFA224D172E2008ACE28 /* GoogleService-Info.plist in Resources */,
+				8783472524DC1073008840DC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
