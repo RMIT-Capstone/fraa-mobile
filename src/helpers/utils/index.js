@@ -1,4 +1,4 @@
-export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+export function getDistanceFromLatLngInMeters(lat1, lon1, lat2, lon2) {
   const R = 6371e3; // metres
   const theta1 = (lat1 * Math.PI) / 180; // φ, λ in radians
   const theta2 = (lat2 * Math.PI) / 180;
