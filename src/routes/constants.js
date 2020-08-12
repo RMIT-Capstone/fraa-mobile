@@ -5,6 +5,7 @@ const ROUTES = {
   PROFILE: 'PROFILE',
   SETTINGS: 'SETTINGS',
   TEST: 'TEST',
+  CHECK_IN: 'CHECK_IN',
 };
 
 export default ROUTES;

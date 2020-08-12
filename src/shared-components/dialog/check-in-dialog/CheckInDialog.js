@@ -1,13 +1,23 @@
-// @flow
 import React, {useState, useEffect} from 'react';
 import {func, object, bool} from 'prop-types';
 import {connect} from 'react-redux';
 import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
-import theme from '../../theme';
-import {closeDialog} from '../../config/redux/reducers/DialogReducer';
+import theme from '../../../theme';
+import {closeDialog} from '../../../config/redux/reducers/DialogReducer';
+import {
+  clearCheckIn,
+  setCheckIn,
+} from '../../../config/redux/reducers/CheckInProcessReducer';
 
-const DefaultDialog = ({open, options, handleCloseDialog}) => {
+const CheckInDialog = ({
+  open,
+  options,
+  handleCloseDialog,
+  handleSetCheckIn,
+  handleClearCheckIn,
+}) => {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const {lecturer, course} = options;
 
   useEffect(() => {
     setDialogOpen(open);
@@ -16,22 +26,27 @@ const DefaultDialog = ({open, options, handleCloseDialog}) => {
   const onDialogClose = () => {
     setDialogOpen(false);
     handleCloseDialog();
+    handleClearCheckIn();
+  };
+
+  const onAcceptCheckIn = () => {
+    handleCloseDialog();
+    handleSetCheckIn(options);
   };
 
   return (
     <Modal animationType="slide" transparent={true} visible={dialogOpen}>
-      <View testID="dialog" style={styles.centeredView}>
+      <View style={styles.centeredView}>
         <View style={styles.dialogWrapper}>
           <View style={styles.dialogTextWrapper}>
             <Text style={styles.toastContentText}>
-              {JSON.stringify(options)}
+              Do you want to check in {course} of {lecturer}
             </Text>
           </View>
           <View style={styles.dialogActionsWrapper}>
             <TouchableOpacity
-              testID="confirm"
               style={[styles.dialogAction, styles.confirmAction]}
-              onPress={onDialogClose}>
+              onPress={() => onAcceptCheckIn()}>
               <Text style={styles.actionTitle}>Confirm</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -59,6 +74,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: 300,
     borderRadius: 16,
+    padding: 10,
   },
   dialogTextWrapper: {
     flex: 2,
@@ -88,17 +104,21 @@ const styles = StyleSheet.create({
   },
 });
 
-DefaultDialog.propTypes = {
+CheckInDialog.propTypes = {
   open: bool.isRequired,
   options: object.isRequired,
   handleCloseDialog: func.isRequired,
+  handleSetCheckIn: func.isRequired,
+  handleClearCheckIn: func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   handleCloseDialog: (type, options) => dispatch(closeDialog(type, options)),
+  handleSetCheckIn: course => dispatch(setCheckIn(course)),
+  handleClearCheckIn: () => dispatch(clearCheckIn()),
 });
 
 export default connect(
   null,
   mapDispatchToProps,
-)(DefaultDialog);
+)(CheckInDialog);

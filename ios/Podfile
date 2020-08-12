@@ -77,6 +77,13 @@ target 'fraa' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'Firebase/Core'
+  pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
+    'FaceDetectorMLKit'
+  ]
+
+  pod 'react-native-location', :path => '../node_modules/react-native-location/react-native-location.podspec'
+
   target 'fraaTests' do
     inherit! :complete
     # Pods for testing

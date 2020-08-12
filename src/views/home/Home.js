@@ -14,8 +14,10 @@ const Home = ({navigation}: Props) => {
       <Text style={styles.text}>This is home</Text>
       <Button
         testID="Home_testBtn"
-        title="Go to Test"
-        onPress={() => navigateTo(navigation, ROUTES.TEST)}
+        // title="Go to Test"
+        // onPress={() => navigateTo(navigation, ROUTES.TEST)}
+        title="Open Camera"
+        onPress={() => navigateTo(navigation, ROUTES.CHECK_IN)}
       />
     </View>
   );
