@@ -61,4 +61,4 @@ android/app/google-services.json
 ios/GoogleService-Info.plist
 
 # ignore _snapshots__ anywhere
-_snapshots__/
+**/_snapshots__
