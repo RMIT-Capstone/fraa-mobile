@@ -9,7 +9,7 @@ import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
-test('renders correctly', () => {
+test('renders App component', () => {
   // since jest could not test the component with redux-persist, I turn this off
   // renderer.create(<App />);
 });
