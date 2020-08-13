@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders Home.js correctly 1`] = `
+exports[`renders Profile correctly 1`] = `
 <View
   style={
     Object {
@@ -11,7 +11,7 @@ exports[`renders Home.js correctly 1`] = `
   }
 >
   <Text>
-    This is dashboard
+    This is profile
   </Text>
 </View>
 `;
