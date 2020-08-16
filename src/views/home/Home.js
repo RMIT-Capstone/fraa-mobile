@@ -11,9 +11,11 @@ type Props = {
 const Home = ({navigation}: Props) => {
   return (
     <View testID="Home" style={styles.centered}>
-      <Text style={styles.text}>This is home</Text>
+      <Text testID="Home_txt" style={styles.text}>
+        This is home
+      </Text>
       <Button
-        testID="Home_testBtn"
+        testID="OpenCameraBtn"
         // title="Go to Test"
         // onPress={() => navigateTo(navigation, ROUTES.TEST)}
         title="Open Camera"

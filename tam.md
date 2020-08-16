@@ -1,9 +1,11 @@
 control props using PropTypes
 check runtime error using flow
+https://flow.org/en/docs/install/
 
 - yarn run flow
 
 unit/component testing using jest
+https://callstack.github.io/react-native-testing-library/docs/getting-started
 
 - yarn test
 
