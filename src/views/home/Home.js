@@ -4,6 +4,7 @@ import {View, Text, Button} from 'react-native';
 import styles from './HomeStyle';
 import {navigateTo} from '../../helpers/navigation';
 import ROUTES from '../../routes/constants';
+import MyModelComponent from '../MyModelComponent';
 
 const Home = ({navigation}) => {
   return (
@@ -13,6 +14,7 @@ const Home = ({navigation}) => {
         title="Open Camera"
         onPress={() => navigateTo(navigation, ROUTES.CHECK_IN)}
       />
+      <MyModelComponent />
     </View>
   );
 };

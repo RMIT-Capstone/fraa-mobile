@@ -26,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          packages.add(new MyModelPackage());
           return packages;
         }
 
@@ -33,6 +34,11 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+          // Add this method
+          // @Override
+          // protected String getJSBundleFile() {
+          //   return "/data/data/com.testassetsapp/files/android.bundle";
+          // }
       };
 
   @Override

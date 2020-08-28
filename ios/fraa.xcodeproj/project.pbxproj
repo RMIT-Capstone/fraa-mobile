@@ -16,6 +16,17 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* fraaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* fraaTests.m */; };
+		42D51ED824F914ED008490C9 /* MyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D51ED724F914ED008490C9 /* MyModel.swift */; };
+		42D51ED924F914ED008490C9 /* MyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D51ED724F914ED008490C9 /* MyModel.swift */; };
+		42D51EDB24F91568008490C9 /* MyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D51EDA24F91568008490C9 /* MyModel.m */; };
+		42D51EDC24F91568008490C9 /* MyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D51EDA24F91568008490C9 /* MyModel.m */; };
+		42D51EDE24F915F4008490C9 /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D51EDD24F915F4008490C9 /* EventEmitter.swift */; };
+		42D51EDF24F915F4008490C9 /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D51EDD24F915F4008490C9 /* EventEmitter.swift */; };
+		42D51EE224F91640008490C9 /* ReactNativeEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D51EE124F91640008490C9 /* ReactNativeEventEmitter.m */; };
+		42D51EE324F91640008490C9 /* ReactNativeEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D51EE124F91640008490C9 /* ReactNativeEventEmitter.m */; };
+		42D51EE524F916AF008490C9 /* ReactNativeEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D51EE424F916AF008490C9 /* ReactNativeEventEmitter.swift */; };
+		42D51EE624F916AF008490C9 /* ReactNativeEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D51EE424F916AF008490C9 /* ReactNativeEventEmitter.swift */; };
+		42D51EE824F91854008490C9 /* mymodel.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 42D51EE724F91854008490C9 /* mymodel.tflite */; };
 		49DF5C562404DF4377C9675A /* libPods-fraa-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51764D7060716002BB22F1D5 /* libPods-fraa-tvOSTests.a */; };
 		4AC586A3422711DD149C549E /* libPods-fraa-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D50A577B28925D2B1D7B2FEE /* libPods-fraa-tvOS.a */; };
 		580899ECFC1007A451025E6B /* libPods-fraa-fraaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B32A45E22117DB45E7097329 /* libPods-fraa-fraaTests.a */; };
@@ -56,6 +67,14 @@
 		2D02E47B1E0B4A5D006451C7 /* fraa-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fraa-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* fraa-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fraa-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4194195237AD62E052FC4D51 /* Pods-fraa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa.debug.xcconfig"; path = "Target Support Files/Pods-fraa/Pods-fraa.debug.xcconfig"; sourceTree = "<group>"; };
+		42D51ED524F914ED008490C9 /* fraa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "fraa-Bridging-Header.h"; sourceTree = "<group>"; };
+		42D51ED624F914ED008490C9 /* fraaTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "fraaTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		42D51ED724F914ED008490C9 /* MyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyModel.swift; sourceTree = "<group>"; };
+		42D51EDA24F91568008490C9 /* MyModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyModel.m; sourceTree = "<group>"; };
+		42D51EDD24F915F4008490C9 /* EventEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEmitter.swift; sourceTree = "<group>"; };
+		42D51EE124F91640008490C9 /* ReactNativeEventEmitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeEventEmitter.m; sourceTree = "<group>"; };
+		42D51EE424F916AF008490C9 /* ReactNativeEventEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNativeEventEmitter.swift; sourceTree = "<group>"; };
+		42D51EE724F91854008490C9 /* mymodel.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = mymodel.tflite; sourceTree = "<group>"; };
 		51764D7060716002BB22F1D5 /* libPods-fraa-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fraa-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C6630EBE6D94B453A92498D /* Pods-fraa-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-fraa-tvOSTests/Pods-fraa-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7BF1DE2D6A0A3FEA2F61AFDD /* Pods-fraa-fraaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-fraaTests.debug.xcconfig"; path = "Target Support Files/Pods-fraa-fraaTests/Pods-fraa-fraaTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +154,13 @@
 				8783472424DC1073008840DC /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				42D51ED724F914ED008490C9 /* MyModel.swift */,
+				42D51EDA24F91568008490C9 /* MyModel.m */,
+				42D51EDD24F915F4008490C9 /* EventEmitter.swift */,
+				42D51EE124F91640008490C9 /* ReactNativeEventEmitter.m */,
+				42D51EE424F916AF008490C9 /* ReactNativeEventEmitter.swift */,
+				42D51ED524F914ED008490C9 /* fraa-Bridging-Header.h */,
+				42D51ED624F914ED008490C9 /* fraaTests-Bridging-Header.h */,
 			);
 			name = fraa;
 			sourceTree = "<group>";
@@ -162,6 +188,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				42D51EE724F91854008490C9 /* mymodel.tflite */,
 				13B07FAE1A68108700A75B9A /* fraa */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* fraaTests */,
@@ -293,11 +320,12 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 1160;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = S5VZ535TY5;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1160;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -343,6 +371,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42D51EE824F91854008490C9 /* mymodel.tflite in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				8783472524DC1073008840DC /* GoogleService-Info.plist in Resources */,
@@ -564,7 +593,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42D51EDC24F91568008490C9 /* MyModel.m in Sources */,
+				42D51EDF24F915F4008490C9 /* EventEmitter.swift in Sources */,
+				42D51EE624F916AF008490C9 /* ReactNativeEventEmitter.swift in Sources */,
 				00E356F31AD99517003FC87E /* fraaTests.m in Sources */,
+				42D51ED924F914ED008490C9 /* MyModel.swift in Sources */,
+				42D51EE324F91640008490C9 /* ReactNativeEventEmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,8 +606,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42D51EE224F91640008490C9 /* ReactNativeEventEmitter.m in Sources */,
+				42D51EE524F916AF008490C9 /* ReactNativeEventEmitter.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				42D51ED824F914ED008490C9 /* MyModel.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				42D51EDE24F915F4008490C9 /* EventEmitter.swift in Sources */,
+				42D51EDB24F91568008490C9 /* MyModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,7 +665,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7BF1DE2D6A0A3FEA2F61AFDD /* Pods-fraa-fraaTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -641,6 +682,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "fraaTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fraa.app/fraa";
 			};
 			name = Debug;
@@ -649,7 +693,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED34B5BB472AAF859D8D3EA8 /* Pods-fraa-fraaTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = fraaTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -661,6 +707,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "fraaTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fraa.app/fraa";
 			};
 			name = Release;
@@ -687,6 +735,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa;
 				PRODUCT_NAME = fraa;
+				SWIFT_OBJC_BRIDGING_HEADER = "fraa-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -710,6 +759,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa;
 				PRODUCT_NAME = fraa;
+				SWIFT_OBJC_BRIDGING_HEADER = "fraa-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
