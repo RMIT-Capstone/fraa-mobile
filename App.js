@@ -20,9 +20,10 @@ import ProfileStackScreens from './src/routes/profile';
 import ROUTES from './src/routes/constants';
 
 // custom tab
-import TabWithIcon from './src/routes/tab-with-icon';
+import TabWithIcon from './src/routes/tab-with-icon/TabWithIcon';
 import ReduxLoading from './src/shared-components/loading/redux-load-screen';
-import Test from './src/views/test/Test';
+// add this for testing components
+// import Test from './src/views/test/Test';
 import FraaToast from './src/shared-components/toast/FraaToast';
 import FraaDialog from './src/shared-components/dialog';
 
@@ -44,7 +45,7 @@ const App = () => {
               component={SettingsStackScreens}
             />
             <Tab.Screen name={ROUTES.PROFILE} component={ProfileStackScreens} />
-            <Tab.Screen name={ROUTES.TEST} component={Test} />
+            {/*<Tab.Screen name={ROUTES.TEST} component={Test} />*/}
           </Tab.Navigator>
         </NavigationContainer>
         <FraaToast />
