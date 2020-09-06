@@ -1,4 +1,5 @@
 import React from 'react';
+import {object} from 'prop-types';
 import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 
 const TabWithIcon = ({state, descriptors, navigation}) => {
@@ -86,5 +87,11 @@ const styles = StyleSheet.create({
     color: '#000',
   },
 });
+
+TabWithIcon.propTypes = {
+  state: object.isRequired,
+  descriptors: object.isRequired,
+  navigation: object.isRequired,
+};
 
 export default TabWithIcon;

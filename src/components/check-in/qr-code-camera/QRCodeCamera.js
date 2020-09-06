@@ -8,7 +8,7 @@ import styles from './QRCodeCameraStyle';
 import DIALOG from '../../../shared-components/dialog/constants';
 import {openDialog} from '../../../config/redux/reducers/DialogReducer';
 import {getCheckInProcessState} from '../../../config/redux/reducers/CheckInProcessReducer';
-const GenericLoading = require('../../../lottie-assets/GenericLoading');
+const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
 const QRCodeCamera = ({handleOpenDialog, checkInProcess}) => {
   const [scan, setScan] = useState(false);

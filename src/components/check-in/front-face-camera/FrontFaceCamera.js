@@ -4,7 +4,7 @@ import {ImageBackground, Text, TouchableOpacity, View} from 'react-native';
 import styles from './FrontFaceCameraStyle';
 import {RNCamera} from 'react-native-camera';
 import LottieView from 'lottie-react-native';
-const GenericLoading = require('../../../lottie-assets/GenericLoading');
+const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
 const FrontFaceCamera = ({
   recognizedFaces,
