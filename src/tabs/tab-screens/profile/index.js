@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import ROUTES from '../constants';
-import Header from '../header';
-import Profile from '../../views/profile';
+import ROUTES from '../../constants';
+import Header from '../../configs/header';
+import Profile from '../../../views/profile';
 
 const ProfileStack = createStackNavigator();
 

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import FrontFaceCamera from './FrontFaceCamera';
 import RNLocation from 'react-native-location';
-import {getDistanceFromLatLngInMeters} from '../../../helpers/utils';
+import {getDistanceFromLatLngInMeters} from '../../../helpers/gps';
 
 const FrontFaceCameraWrapper = () => {
   const [recognizedFaces, setRecognizedFaces] = useState([]);

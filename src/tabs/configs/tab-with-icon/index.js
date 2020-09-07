@@ -2,7 +2,7 @@ import React from 'react';
 import {object} from 'prop-types';
 import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 
-const TabWithIcon = ({state, descriptors, navigation}) => {
+const Index = ({state, descriptors, navigation}) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
 
   if (focusedOptions.tabBarVisible === false) {
@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
   },
 });
 
-TabWithIcon.propTypes = {
+Index.propTypes = {
   state: object.isRequired,
   descriptors: object.isRequired,
   navigation: object.isRequired,
 };
 
-export default TabWithIcon;
+export default Index;

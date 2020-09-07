@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import ROUTES from '../constants';
-import Dashboard from '../../views/dashboard';
-import Header from '../header';
+import ROUTES from '../../constants';
+import Dashboard from '../../../views/dashboard';
+import Header from '../../configs/header';
 
 const DashboardStack = createStackNavigator();
 

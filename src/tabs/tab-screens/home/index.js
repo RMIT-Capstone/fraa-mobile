@@ -1,9 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import ROUTES from '../constants';
-import Home from '../../views/home';
-import Header from '../header';
-import CheckIn from '../../components/check-in/CheckIn';
+import ROUTES from '../../constants';
+import Home from '../../../views/home';
+import Header from '../../configs/header';
+import CheckIn from '../../../components/check-in/CheckIn';
 
 const HomeStack = createStackNavigator();
 

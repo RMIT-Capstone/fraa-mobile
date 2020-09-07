@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import ROUTES from '../constants';
-import Header from '../header';
-import Settings from '../../views/settings';
+import ROUTES from '../../constants';
+import Header from '../../configs/header';
+import Settings from '../../../views/settings';
 
 const SettingsStack = createStackNavigator();
 

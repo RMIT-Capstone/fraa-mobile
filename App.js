@@ -11,16 +11,16 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 
 // react navigation stack
-import HomeStackScreens from './src/routes/home';
-import DashboardStackScreens from './src/routes/dashboard';
-import SettingsStackScreens from './src/routes/settings';
-import ProfileStackScreens from './src/routes/profile';
+// import HomeStackScreens from './src/tabs/tab-screens/home';
+import DashboardStackScreens from './src/tabs/tab-screens/dashboard';
+import SettingsStackScreens from './src/tabs/tab-screens/settings';
+import ProfileStackScreens from './src/tabs/tab-screens/profile';
 
-// routes constant
-import ROUTES from './src/routes/constants';
+// tab-screens constant
+import ROUTES from './src/tabs/constants';
 
 // custom tab
-import TabWithIcon from './src/routes/tab-with-icon/TabWithIcon';
+import Index from './src/tabs/configs/tab-with-icon';
 import ReduxLoading from './src/shared-components/loading/redux-load-screen';
 // add this for testing components
 // import Test from './src/views/test/Test';
@@ -34,17 +34,17 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={<ReduxLoading />} persistor={persistor}>
         <NavigationContainer>
-          <Tab.Navigator tabBar={props => <TabWithIcon {...props} />}>
-            <Tab.Screen name={ROUTES.HOME} component={HomeStackScreens} />
+          <Tab.Navigator tabBar={props => <Index {...props} />}>
+            {/*<Tab.Screen name={ROUTES.HOME} component={HomeStackScreens} />*/}
             <Tab.Screen
               name={ROUTES.DASHBOARD}
               component={DashboardStackScreens}
             />
+            <Tab.Screen name={ROUTES.PROFILE} component={ProfileStackScreens} />
             <Tab.Screen
               name={ROUTES.SETTINGS}
               component={SettingsStackScreens}
             />
-            <Tab.Screen name={ROUTES.PROFILE} component={ProfileStackScreens} />
             {/*<Tab.Screen name={ROUTES.TEST} component={Test} />*/}
           </Tab.Navigator>
         </NavigationContainer>
