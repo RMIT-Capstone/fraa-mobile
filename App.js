@@ -13,7 +13,7 @@ import {NavigationContainer} from '@react-navigation/native';
 // react navigation stack
 // import HomeStackScreens from './src/tabs/tab-screens/home';
 import DashboardStackScreens from './src/tabs/tab-screens/dashboard';
-import SettingsStackScreens from './src/tabs/tab-screens/settings';
+// import SettingsStackScreens from './src/tabs/tab-screens/settings';
 import ProfileStackScreens from './src/tabs/tab-screens/profile';
 
 // tab-screens constant
@@ -26,6 +26,7 @@ import ReduxLoading from './src/shared-components/loading/redux-load-screen';
 // import Test from './src/views/test/Test';
 import FraaToast from './src/shared-components/toast/FraaToast';
 import FraaDialog from './src/shared-components/dialog';
+import HomeStackScreens from './src/tabs/tab-screens/home';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,16 +36,16 @@ const App = () => {
       <PersistGate loading={<ReduxLoading />} persistor={persistor}>
         <NavigationContainer>
           <Tab.Navigator tabBar={props => <Index {...props} />}>
-            {/*<Tab.Screen name={ROUTES.HOME} component={HomeStackScreens} />*/}
+            <Tab.Screen name={ROUTES.HOME} component={HomeStackScreens} />
             <Tab.Screen
               name={ROUTES.DASHBOARD}
               component={DashboardStackScreens}
             />
             <Tab.Screen name={ROUTES.PROFILE} component={ProfileStackScreens} />
-            <Tab.Screen
-              name={ROUTES.SETTINGS}
-              component={SettingsStackScreens}
-            />
+            {/*<Tab.Screen*/}
+            {/*  name={ROUTES.SETTINGS}*/}
+            {/*  component={SettingsStackScreens}*/}
+            {/*/>*/}
             {/*<Tab.Screen name={ROUTES.TEST} component={Test} />*/}
           </Tab.Navigator>
         </NavigationContainer>
