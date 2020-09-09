@@ -4,16 +4,9 @@ import {ImageBackground, Text, TouchableOpacity, View} from 'react-native';
 import styles from './FrontFaceCameraStyle';
 import {RNCamera} from 'react-native-camera';
 import LottieView from 'lottie-react-native';
-const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
+const GenericLoading = require('../../../../assets/lottie-assets/GenericLoading');
 
-const FrontFaceCamera = ({
-  recognizedFaces,
-  previewImage,
-  loading,
-  takePicture,
-  recapture,
-  onFacesDetected,
-}) => {
+const FrontFaceCamera = ({recognizedFaces, previewImage, loading, takePicture, recapture, onFacesDetected}) => {
   const RenderFaceBounds = () => {
     return recognizedFaces.map((face, index) => (
       <View
@@ -38,16 +31,9 @@ const FrontFaceCamera = ({
   );
 
   const SnapButton = ({camera}) => (
-    <TouchableOpacity
-      onPress={() => takePicture(camera)}
-      style={styles.snapButton}>
+    <TouchableOpacity onPress={() => takePicture(camera)} style={styles.snapButton}>
       {loading ? (
-        <LottieView
-          source={GenericLoading}
-          autoPlay
-          loop
-          style={styles.lottieView}
-        />
+        <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
       ) : (
         <Text style={styles.snapText}>Snap</Text>
       )}

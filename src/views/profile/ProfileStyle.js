@@ -22,15 +22,13 @@ const styles = StyleSheet.create({
   },
   bodyChildContainer: {
     flex: 2,
-    height: 170,
   },
-  carousel: {
-    marginTop: 15,
+  carouselContainer: {
     padding: 10,
   },
   carouselItemStyle: {
     width: 250,
-    height: 120,
+    height: '90%',
     borderRadius: 16,
     marginRight: 10,
     shadowColor: '#000',
@@ -42,12 +40,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  fixedText: {
-    position: 'absolute',
-    top: 0,
-    left: 15,
-    fontSize: 16,
-    fontWeight: '600',
+  courseContainer: {
+    padding: 10,
+    position: 'relative',
+    height: '100%',
   },
   courseName: {
     color: '#fff',
@@ -55,7 +51,21 @@ const styles = StyleSheet.create({
   },
   courseCode: {
     color: '#fff',
-    fontWeight: '200',
+    fontWeight: '300',
+  },
+  coursePercentage: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 20,
+    position: 'absolute',
+    bottom: 10,
+    right: 15,
+  },
+  fixedText: {
+    top: 0,
+    left: 15,
+    fontSize: 16,
+    fontWeight: '600',
   },
   profilePictureContainer: {
     flex: 2,
@@ -87,9 +97,11 @@ const styles = StyleSheet.create({
   profileStatisticsContainer: {
     flex: 2,
     width: '100%',
+    height: '100%',
     justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
-  statisticsColumn: {
+  profileStatisticsColumn: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
     width: '50%',
@@ -97,13 +109,27 @@ const styles = StyleSheet.create({
   },
   rightBorder: {
     borderRightWidth: 1,
+    borderColor: '#E6E6E6',
   },
-  statisticsNumber: {
+  profileStatisticsNumber: {
     fontWeight: '600',
     color: '#444444',
   },
-  statisticsTitle: {
+  profileStatisticsTitle: {
     fontWeight: '300',
+  },
+  circle: {
+    borderWidth: 12,
+    backgroundColor: '#fff',
+    height: 120,
+    width: 120,
+    borderRadius: 60,
+    borderColor: '#AAD75F',
+  },
+  greenText: {
+    fontWeight: '600',
+    color: '#AAD75F',
+    fontSize: 17,
   },
 });
 export default styles;

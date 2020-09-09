@@ -1,29 +1,11 @@
 import React from 'react';
+import {arrayOf, object} from 'prop-types';
 import {View, Text, ScrollView} from 'react-native';
 import styles from './ProfileStyle';
+import {navigateTo} from '../../helpers/navigation';
+import ROUTES from '../../tabs/constants';
 
-const Profile = () => {
-  let items = [
-    {
-      name: 'Course 1',
-      title: 'This is course 1.',
-    },
-    {
-      name: 'Course 2',
-      title: 'This is course 2.',
-    },
-    {
-      name: 'Course 2',
-      title: 'This is course 2.',
-    },
-  ];
-
-  const randomColors = [
-    {backgroundColor: '#7ae1aa'},
-    {backgroundColor: '#fc9147'},
-    {backgroundColor: '#fac800'},
-  ];
-
+const Profile = ({navigation, items, colors}) => {
   return (
     <View style={[styles.container, styles.centered]}>
       <View style={[styles.headerContainer, styles.centered]}>
@@ -33,45 +15,58 @@ const Profile = () => {
         <View style={[styles.profileInfoContainer, styles.centered]}>
           <Text style={styles.userFullName}>Nguyen Tuan Loc</Text>
           <Text style={styles.userEmail}>s3695769@rmit.edu.vn</Text>
-          <Text style={styles.error}>
-            You must register your identity to use FRAA
+          <Text onPress={() => navigateTo(navigation, ROUTES.REGISTER_IDENTITY)} style={styles.error}>
+            Press here to register identity to FRAA
           </Text>
         </View>
         <View style={[styles.profileStatisticsContainer, styles.centeredRow]}>
-          <View style={[styles.statisticsColumn, styles.rightBorder]}>
-            <Text style={styles.statisticsNumber}>100</Text>
-            <Text style={styles.statisticsTitle}>Check In</Text>
+          <View style={[styles.profileStatisticsColumn, styles.rightBorder]}>
+            <Text style={styles.profileStatisticsNumber}>100</Text>
+            <Text style={styles.profileStatisticsTitle}>Check In</Text>
           </View>
-          <View style={styles.statisticsColumn}>
-            <Text style={styles.statisticsNumber}>5</Text>
-            <Text style={styles.statisticsTitle}>Missed</Text>
+          <View style={styles.profileStatisticsColumn}>
+            <Text style={styles.profileStatisticsNumber}>5</Text>
+            <Text style={styles.profileStatisticsTitle}>Missed</Text>
           </View>
         </View>
       </View>
-      <View style={[styles.bodyContainer, styles.centered]}>
+      <View style={[styles.bodyContainer]}>
         <View style={styles.bodyChildContainer}>
           <Text style={styles.fixedText}>Courses</Text>
           <ScrollView
             horizontal={true}
-            showHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.centered}
-            style={[styles.carousel]}>
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.carouselContainer}>
             {items.map((item, key) => (
-              <View
-                key={key}
-                style={[styles.carouselItemStyle, randomColors[key]]}>
-                <View style={{position: 'absolute', top: 7, left: 10}}>
+              <View key={key} style={[styles.carouselItemStyle, colors[key]]}>
+                <View style={styles.courseContainer}>
                   <Text style={styles.courseName}>{item.name}</Text>
                   <Text style={styles.courseCode}>{item.title}</Text>
+                  <Text style={styles.coursePercentage}>{item.percentage}</Text>
                 </View>
               </View>
             ))}
           </ScrollView>
         </View>
-        <View style={styles.bodyChildContainer} />
+        <View style={styles.bodyChildContainer}>
+          <Text style={styles.fixedText}>Statistics</Text>
+          <View style={[styles.profileStatisticsContainer, styles.centeredRow]}>
+            <View style={[styles.circle, styles.centered]}>
+              <Text style={styles.greenText}>95%</Text>
+              <Text>attended</Text>
+            </View>
+            <Text style={styles.greenText}>Well Done!</Text>
+          </View>
+        </View>
       </View>
     </View>
   );
+};
+
+Profile.propTypes = {
+  navigation: object.isRequired,
+  items: arrayOf(object).isRequired,
+  colors: arrayOf(object).isRequired,
 };
 
 export default Profile;

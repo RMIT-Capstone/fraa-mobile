@@ -5,10 +5,10 @@ import {RNCamera} from 'react-native-camera';
 import {Text, TouchableOpacity} from 'react-native';
 import LottieView from 'lottie-react-native';
 import styles from './QRCodeCameraStyle';
-import DIALOG from '../../../shared-components/dialog/constants';
-import {openDialog} from '../../../config/redux/reducers/DialogReducer';
-import {getCheckInProcessState} from '../../../config/redux/reducers/CheckInProcessReducer';
-const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
+import DIALOG from '../../../../shared-components/dialog/constants';
+import {openDialog} from '../../../../config/redux/reducers/DialogReducer';
+import {getCheckInProcessState} from '../../../../config/redux/reducers/CheckInProcessReducer';
+const GenericLoading = require('../../../../assets/lottie-assets/GenericLoading');
 
 const QRCodeCamera = ({handleOpenDialog, checkInProcess}) => {
   const [scan, setScan] = useState(false);
@@ -53,20 +53,10 @@ const QRCodeCamera = ({handleOpenDialog, checkInProcess}) => {
         buttonNegative: 'Cancel',
       }}
       onBarCodeRead={onBarCodeRecognized}>
-      <TouchableOpacity
-        onPress={() => setScan(true)}
-        disabled={scan && !barcodeFound}
-        style={styles.rescanButton}>
+      <TouchableOpacity onPress={() => setScan(true)} disabled={scan && !barcodeFound} style={styles.rescanButton}>
         <Text style={styles.rescanText}>
           {!scan && !barcodeFound && 'Scan'}
-          {scan && !barcodeFound && (
-            <LottieView
-              source={GenericLoading}
-              autoPlay
-              loop
-              style={styles.lottieView}
-            />
-          )}
+          {scan && !barcodeFound && <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />}
           {barcodeFound && 'Barcode Found!'}
         </Text>
       </TouchableOpacity>

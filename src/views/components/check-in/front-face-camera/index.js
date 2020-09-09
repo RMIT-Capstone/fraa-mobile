@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import FrontFaceCamera from './FrontFaceCamera';
 import RNLocation from 'react-native-location';
-import {getDistanceFromLatLngInMeters} from '../../../helpers/gps';
+import {getDistanceFromLatLngInMeters} from '../../../../helpers/gps';
 
 const FrontFaceCameraWrapper = () => {
   const [recognizedFaces, setRecognizedFaces] = useState([]);
@@ -52,14 +52,7 @@ const FrontFaceCameraWrapper = () => {
           const lat = 10.729239078509787;
           const lng = 106.6965148240102;
           locations.forEach(location => {
-            if (
-              getDistanceFromLatLngInMeters(
-                lat,
-                lng,
-                location.latitude,
-                location.longitude,
-              ) >= 10
-            ) {
+            if (getDistanceFromLatLngInMeters(lat, lng, location.latitude, location.longitude) >= 10) {
               console.log('more than 10m');
             } else {
               console.log('less than 10m');

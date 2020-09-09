@@ -20,6 +20,7 @@
     "prop-types": "^15.7.2",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-calendars": "^1.403.0",
     "react-native-camera": "^3.35.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-location": "^2.5.0",
