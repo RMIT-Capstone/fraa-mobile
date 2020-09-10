@@ -3,7 +3,7 @@ import {func} from 'prop-types';
 import {connect} from 'react-redux';
 import RegisterIdentity from './RegisterIdentity';
 import RNLocation from 'react-native-location';
-import {openDialog} from '../../../config/redux/reducers/DialogReducer';
+import {openDialog} from '../../../../config/redux/reducers/DialogReducer';
 
 const RegisterIdentityWrapper = ({handleOpenDialog}) => {
   const [recognizedFaces, setRecognizedFaces] = useState([]);

@@ -1,12 +1,12 @@
 import React from 'react';
-import {func, bool, arrayOf, object, string} from 'prop-types';
-import {ImageBackground, Text, TouchableOpacity, View} from 'react-native';
-import styles from './FrontFaceCameraStyle';
-import {RNCamera} from 'react-native-camera';
+import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
+import styles from './RegisterIdentityStyle';
 import LottieView from 'lottie-react-native';
+import {arrayOf, bool, func, object, string} from 'prop-types';
+import {RNCamera} from 'react-native-camera';
 const GenericLoading = require('../../../../assets/lottie-assets/GenericLoading');
 
-const FrontFaceCamera = ({recognizedFaces, previewImage, loading, takePicture, recapture, onFacesDetected}) => {
+const RegisterIdentity = ({recognizedFaces, previewImage, loading, takePicture, recapture, onFacesDetected}) => {
   const RenderFaceBounds = () => {
     return recognizedFaces.map((face, index) => (
       <View
@@ -97,7 +97,7 @@ const FrontFaceCamera = ({recognizedFaces, previewImage, loading, takePicture, r
   );
 };
 
-FrontFaceCamera.propTypes = {
+RegisterIdentity.propTypes = {
   recognizedFaces: arrayOf(object).isRequired,
   previewImage: string.isRequired,
   loading: bool.isRequired,
@@ -106,4 +106,4 @@ FrontFaceCamera.propTypes = {
   onFacesDetected: func.isRequired,
 };
 
-export default FrontFaceCamera;
+export default RegisterIdentity;

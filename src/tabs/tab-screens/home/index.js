@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ROUTES from '../../constants';
 import Home from '../../../views/home';
 import Header from '../../configs/header';
-import CheckIn from '../../../views/components/check-in/CheckIn';
+import CheckIn from '../../../views/profile/components/check-in/CheckIn';
 
 const HomeStack = createStackNavigator();
 

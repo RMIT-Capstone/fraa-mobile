@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ROUTES from '../../constants';
 import Header from '../../configs/header';
 import Profile from '../../../views/profile';
-import RegisterIdentity from '../../../views/components/register-identity';
+import RegisterIdentity from '../../../views/profile/components/register-identity';
 
 const ProfileStack = createStackNavigator();
 

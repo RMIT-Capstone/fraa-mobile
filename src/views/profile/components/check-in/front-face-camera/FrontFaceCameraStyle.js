@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import theme from '../../../../theme';
+import theme from '../../../../../theme';
 
 const styles = StyleSheet.create({
   camera: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  rescanButton: {
+  snapButton: {
     position: 'absolute',
     bottom: 20,
     backgroundColor: theme.palette.primary.red,
@@ -18,9 +18,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 50,
   },
-  rescanText: {
+  snapText: {
     fontSize: 14,
     color: '#fff',
+    fontWeight: '700',
+  },
+  faceBounds: {
+    borderWidth: 1.5,
+    position: 'absolute',
+    borderColor: theme.palette.secondary.yellow,
+  },
+  tooManyFacesView: {
+    backgroundColor: theme.palette.primary.red,
+    padding: 15,
+    borderRadius: 10,
+    position: 'absolute',
+    bottom: 15,
+  },
+  tooManyFacesText: {
+    color: '#fff',
+    fontSize: 14,
     fontWeight: '700',
   },
   lottieView: {
