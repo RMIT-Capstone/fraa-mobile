@@ -85,17 +85,17 @@ const FRAACalendar = () => {
     let startTime = eventDateObject.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true});
 
     return (
-      <TouchableOpacity onPress={() => onEventTouch(new Date(validOn), item.id)} style={styles.item}>
+      <View style={styles.item}>
         <View style={styles.leftItem} />
-        <View style={styles.rightItem}>
+        <TouchableOpacity onPress={() => onEventTouch(new Date(validOn), item.id)} style={styles.rightItem}>
           <Text style={styles.courseName}>{item.courseName}</Text>
           <View style={styles.rightItemRow}>
             <Text style={styles.bottomText}>{item.location}</Text>
             <Text style={styles.bottomText}>{startTime}</Text>
           </View>
           {itemIsDisabled && <Text style={styles.overdue}>Overdue!</Text>}
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     );
   };
 

@@ -20,7 +20,7 @@ import ProfileStackScreens from './src/tabs/tab-screens/profile';
 import ROUTES from './src/tabs/constants';
 
 // custom tab
-import Index from './src/tabs/configs/tab-with-icon';
+import TabWithIcon from './src/tabs/configs/tab-with-icon';
 import ReduxLoading from './src/shared-components/loading/redux-load-screen';
 // add this for testing components
 // import Test from './src/views/test/Test';
@@ -35,7 +35,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={<ReduxLoading />} persistor={persistor}>
         <NavigationContainer>
-          <Tab.Navigator tabBar={props => <Index {...props} />}>
+          <Tab.Navigator tabBar={props => <TabWithIcon {...props} />}>
             <Tab.Screen name={ROUTES.HOME} component={HomeStackScreens} />
             <Tab.Screen name={ROUTES.DASHBOARD} component={DashboardStackScreens} />
             <Tab.Screen name={ROUTES.PROFILE} component={ProfileStackScreens} />

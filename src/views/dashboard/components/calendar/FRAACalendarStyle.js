@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   section: {
-    backgroundColor: '#fff',
-    color: 'grey',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    // color: 'grey',
     // textTransform: 'capitalize',
     borderRadius: 6,
     paddingTop: 0,

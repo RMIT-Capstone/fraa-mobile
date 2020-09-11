@@ -2,7 +2,7 @@ import React from 'react';
 import {object} from 'prop-types';
 import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 
-const Index = ({state, descriptors, navigation}) => {
+const TabWithIcon = ({state, descriptors, navigation}) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
 
   if (focusedOptions.tabBarVisible === false) {
@@ -53,9 +53,7 @@ const Index = ({state, descriptors, navigation}) => {
             key={index}>
             <Text
               style={
-                isFocused
-                  ? [styles.tabTitle, styles.tabTitleFocused]
-                  : [styles.tabTitle, styles.tabTitleUnfocused]
+                isFocused ? [styles.tabTitle, styles.tabTitleFocused] : [styles.tabTitle, styles.tabTitleUnfocused]
               }>
               {label}
             </Text>
@@ -69,6 +67,7 @@ const Index = ({state, descriptors, navigation}) => {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
+    height: 60,
   },
   tabButton: {
     flex: 1,
@@ -88,10 +87,10 @@ const styles = StyleSheet.create({
   },
 });
 
-Index.propTypes = {
+TabWithIcon.propTypes = {
   state: object.isRequired,
   descriptors: object.isRequired,
   navigation: object.isRequired,
 };
 
-export default Index;
+export default TabWithIcon;
