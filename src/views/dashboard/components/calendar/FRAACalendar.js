@@ -119,7 +119,6 @@ const FRAACalendar = () => {
     });
   };
 
-
   return (
     <Agenda
       selected={new Date()}
