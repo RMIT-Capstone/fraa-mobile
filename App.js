@@ -37,10 +37,7 @@ const App = () => {
         <NavigationContainer>
           <Tab.Navigator tabBar={props => <Index {...props} />}>
             <Tab.Screen name={ROUTES.HOME} component={HomeStackScreens} />
-            <Tab.Screen
-              name={ROUTES.DASHBOARD}
-              component={DashboardStackScreens}
-            />
+            <Tab.Screen name={ROUTES.DASHBOARD} component={DashboardStackScreens} />
             <Tab.Screen name={ROUTES.PROFILE} component={ProfileStackScreens} />
             {/*<Tab.Screen*/}
             {/*  name={ROUTES.SETTINGS}*/}

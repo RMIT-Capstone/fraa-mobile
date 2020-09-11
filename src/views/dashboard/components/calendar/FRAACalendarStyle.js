@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   calendar: {
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 0,
@@ -20,32 +19,78 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     borderBottomWidth: 0,
   },
+  eventsText: {
+    backgroundColor: '#fff',
+    color: '#afafaf',
+    fontWeight: '300',
+    textAlign: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
   section: {
     backgroundColor: '#fff',
     color: 'grey',
     // textTransform: 'capitalize',
+    borderRadius: 6,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 20,
+    paddingRight: 0,
   },
   item: {
-    padding: 20,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingRight: 10,
     backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: 'lightgrey',
+    // borderBottomWidth: 1,
+    // borderBottomColor: 'lightgrey',
     flexDirection: 'row',
   },
-  itemHourText: {
+  disabledItem: {
+    backgroundColor: '#c4c4c4',
+  },
+  leftItem: {
+    flex: 3,
+  },
+  rightItem: {
+    flex: 7,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+    backgroundColor: '#fff',
+    padding: 10,
+    marginBottom: 0,
+  },
+  courseName: {
     color: 'black',
+    fontWeight: '600',
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  rightItemRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  bottomText: {
+    color: '#888888',
+    fontWeight: '300',
+  },
+  overdue: {
+    marginTop: 5,
+    color: '#e60028',
   },
   itemDurationText: {
     color: 'grey',
     fontSize: 12,
     marginTop: 4,
     marginLeft: 4,
-  },
-  itemTitleText: {
-    color: 'black',
-    marginLeft: 16,
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   itemButtonContainer: {
     flex: 1,
@@ -55,9 +100,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     height: 52,
     justifyContent: 'center',
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'lightgrey',
-    backgroundColor: '#fff',
   },
   emptyItemText: {
     color: '#000',
