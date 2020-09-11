@@ -86,42 +86,6 @@ const FRAACalendar_1 = () => {
     ],
   };
 
-  const getTheme = () => {
-    const disabledColor = 'grey';
-
-    return {
-      // arrows
-      arrowColor: 'black',
-      arrowStyle: {padding: 0},
-      // month
-      monthTextColor: 'black',
-      textMonthFontSize: 16,
-      textMonthFontFamily: 'HelveticaNeue',
-      textMonthFontWeight: 'bold',
-      // day names
-      textSectionTitleColor: 'black',
-      textDayHeaderFontSize: 12,
-      textDayHeaderFontFamily: 'HelveticaNeue',
-      textDayHeaderFontWeight: 'normal',
-      // dates
-      dayTextColor: 'black',
-      textDayFontSize: 18,
-      textDayFontFamily: 'HelveticaNeue',
-      textDayFontWeight: '500',
-      // textDayStyle: {marginTop: Platform.OS === 'android' ? 2 : 4},
-      // selected date
-      selectedDayBackgroundColor: '#fff',
-      selectedDayTextColor: 'black',
-      // disabled date
-      textDisabledColor: disabledColor,
-      // dot (marked date)
-      dotColor: 'blue',
-      selectedDotColor: 'white',
-      disabledDotColor: disabledColor,
-      dotStyle: {marginTop: -2},
-    };
-  };
-
   const renderEmptyDate = () => {
     return (
       <View style={[styles.agenda, styles.centered]}>
@@ -172,8 +136,7 @@ const FRAACalendar_1 = () => {
       // theme={{
       //   todayButtonTextColor: themeColor
       // }}
-      todayBottomMargin={10}
-      onDateChanged={date => getTodayObject(date)}>
+      todayBottomMargin={10}>
       <ExpandableCalendar
         // horizontal={false}
         // hideArrows
@@ -183,8 +146,8 @@ const FRAACalendar_1 = () => {
         // calendarStyle={styles.calendar}
         // headerStyle={styles.calendar} // for horizontal only
         // disableWeekScroll
-        theme={getTheme()}
-        onDayPress={() => console.log('Hello')}
+        ref={ref => console.log(ref.state)}
+        onDayPress={() => console.log('hellooo')}
         firstDay={1}
       />
       {renderDay()}

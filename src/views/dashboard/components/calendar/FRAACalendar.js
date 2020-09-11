@@ -119,6 +119,7 @@ const FRAACalendar = () => {
     });
   };
 
+
   return (
     <Agenda
       selected={new Date()}
@@ -127,7 +128,6 @@ const FRAACalendar = () => {
       onDayPress={day => getTodayObject(day)}
       items={todayObject}
       rowHasChanged={(r1, r2) => {
-        console.log(r1, r2);
         return r1.id !== r2.id;
       }}
       style={[styles.agenda]}
