@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
+import theme from '../../theme';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.secondary.white,
   },
   centered: {
     justifyContent: 'center',
@@ -46,15 +47,15 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   courseName: {
-    color: '#fff',
+    color: theme.palette.secondary.white,
     fontWeight: '600',
   },
   courseCode: {
-    color: '#fff',
+    color: theme.palette.secondary.white,
     fontWeight: '300',
   },
   coursePercentage: {
-    color: '#fff',
+    color: theme.palette.secondary.white,
     fontWeight: '600',
     fontSize: 20,
     position: 'absolute',
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
   },
   error: {
     fontWeight: '300',
-    color: '#e60028',
+    color: theme.palette.primary.red,
   },
   profileStatisticsContainer: {
     flex: 2,
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
   },
   rightBorder: {
     borderRightWidth: 1,
-    borderColor: '#E6E6E6',
+    borderColor: theme.palette.secondary.white,
   },
   profileStatisticsNumber: {
     fontWeight: '600',
@@ -120,15 +121,15 @@ const styles = StyleSheet.create({
   },
   circle: {
     borderWidth: 12,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.secondary.white,
     height: 120,
     width: 120,
     borderRadius: 60,
-    borderColor: '#AAD75F',
+    borderColor: theme.palette.secondary.green,
   },
   greenText: {
     fontWeight: '600',
-    color: '#AAD75F',
+    color: theme.palette.secondary.green,
     fontSize: 17,
   },
 });

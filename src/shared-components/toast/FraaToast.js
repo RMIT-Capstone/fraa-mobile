@@ -3,10 +3,7 @@ import {connect} from 'react-redux';
 import {object, func} from 'prop-types';
 import {Modal, View, Text, StyleSheet} from 'react-native';
 import theme from '../../theme';
-import {
-  closeToast,
-  getToastState,
-} from '../../config/redux/reducers/ToastReducer';
+import {closeToast, getToastState} from '../../config/redux/reducers/ToastReducer';
 
 const FraaToast = ({toast, handleCloseToast}) => {
   const [toastOpen, setToastOpen] = useState(false);
@@ -41,11 +38,7 @@ const FraaToast = ({toast, handleCloseToast}) => {
     if (toast) {
       return <Text style={styles.toastContentText}>{content}</Text>;
     }
-    return (
-      <Text style={styles.toastContentText}>
-        Something went wrong, toast message is not present.
-      </Text>
-    );
+    return <Text style={styles.toastContentText}>Something went wrong, toast message is not present.</Text>;
   };
 
   return (
@@ -54,16 +47,8 @@ const FraaToast = ({toast, handleCloseToast}) => {
         <View
           style={
             position === 'bottom'
-              ? [
-                  styles.toastContentWrapper,
-                  styles.bottomWrapper,
-                  toastBackground(),
-                ]
-              : [
-                  styles.toastContentWrapper,
-                  styles.topWrapper,
-                  toastBackground(),
-                ]
+              ? [styles.toastContentWrapper, styles.bottomWrapper, toastBackground()]
+              : [styles.toastContentWrapper, styles.topWrapper, toastBackground()]
           }>
           <Text style={styles.toastContentText}>{renderToastContent()}</Text>
         </View>

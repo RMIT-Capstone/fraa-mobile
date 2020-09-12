@@ -8,6 +8,7 @@ const MOCK_SESSIONS = [
     id: '4ISD6g56CAPBv4OSyDuk',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-04T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -17,6 +18,7 @@ const MOCK_SESSIONS = [
     id: 'X5hs4M7H388CULVGV1bF',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-04T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -26,6 +28,7 @@ const MOCK_SESSIONS = [
     id: 'WkHjj6XKd6ddgCEhqAGn',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-05T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -35,6 +38,7 @@ const MOCK_SESSIONS = [
     id: 'j1fedzXkKfGAA8aHIn4K',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-05T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -44,6 +48,7 @@ const MOCK_SESSIONS = [
     id: 'Cxv1k3DxGEDO9g4GpJHP',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-06T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -53,6 +58,7 @@ const MOCK_SESSIONS = [
     id: 'IRtAoqQFJxLx3TNn2oee',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-06T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -62,6 +68,7 @@ const MOCK_SESSIONS = [
     id: 'MCPqCsKAUV96zbvzMCBq',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-07T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -71,6 +78,7 @@ const MOCK_SESSIONS = [
     id: 'g5zm6a51fhTYS5LQIfeg',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-07T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -80,6 +88,7 @@ const MOCK_SESSIONS = [
     id: 'zi5qM3c9HMr3d5YcVvMr',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-08T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -89,6 +98,7 @@ const MOCK_SESSIONS = [
     id: 'MCPqCsKAUV96zbvzMCBq',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-08T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -98,6 +108,7 @@ const MOCK_SESSIONS = [
     id: '7iLhk1fcJSjMN5xJYOxX',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-09T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -107,6 +118,7 @@ const MOCK_SESSIONS = [
     id: 'MCPqCsKAUV96zbvzMCBq',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-09T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -116,6 +128,7 @@ const MOCK_SESSIONS = [
     id: 'FiI287AxcDZnk1MFcAD4',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-09T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -125,6 +138,7 @@ const MOCK_SESSIONS = [
     id: 'MCPqCsKAUV96zbvzMCBq',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-09T06:20:15.202Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -134,6 +148,7 @@ const MOCK_SESSIONS = [
     id: 'o5O7LETieARbP3dmv7v1',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-10T10:40:00.000Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -143,6 +158,7 @@ const MOCK_SESSIONS = [
     id: 'MCPqCsKAUV96zbvzMCBq',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-10T10:40:00.000Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -152,6 +168,7 @@ const MOCK_SESSIONS = [
     id: 'o5O7LETieARbP3dmv7v1',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-11T10:40:00.000Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -161,6 +178,7 @@ const MOCK_SESSIONS = [
     id: 'MCPqCsKAUV96zbvzMCBq',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-11T10:40:00.000Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2081',
@@ -170,6 +188,7 @@ const MOCK_SESSIONS = [
     id: 'o5O7LETieARbP3dmv7v1',
     lecturer: 'Thanh Nguyen Ngoc',
     validOn: '2020-09-12T10:40:00.000Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
     courseCode: 'COSC2082',
@@ -179,6 +198,7 @@ const MOCK_SESSIONS = [
     id: 'MCPqCsKAUV96zbvzMCBq',
     lecturer: 'Vladimir Mariano',
     validOn: '2020-09-12T10:40:00.000Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
   },
 ];
 

@@ -3,7 +3,7 @@ import {object} from 'prop-types';
 import Profile from './Profile';
 
 const ProfileWrapper = ({navigation}) => {
-  const items = [
+  const COURSES = [
     {
       name: 'Engineering Computing 1',
       title: 'OENG1183',
@@ -23,7 +23,7 @@ const ProfileWrapper = ({navigation}) => {
 
   const colors = [{backgroundColor: '#7ae1aa'}, {backgroundColor: '#fc9147'}, {backgroundColor: '#fac800'}];
 
-  return <Profile items={items} colors={colors} navigation={navigation} />;
+  return <Profile courses={COURSES} colors={colors} navigation={navigation} />;
 };
 
 ProfileWrapper.propTypes = {

@@ -1,15 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {Dimensions} from 'react-native';
-const windowWidth = Dimensions.get('window').width;
+import theme from '../../../../theme';
 
 const styles = StyleSheet.create({
-  container: {
-    width: windowWidth,
-  },
-  centered: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   calendar: {
     shadowOffset: {
       width: 0,
@@ -19,9 +11,13 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     borderBottomWidth: 0,
   },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   eventsText: {
-    backgroundColor: '#fff',
-    color: '#afafaf',
+    backgroundColor: theme.palette.secondary.white,
+    color: '#AFAFAF',
     fontWeight: '300',
     textAlign: 'center',
     paddingTop: 5,
@@ -46,9 +42,6 @@ const styles = StyleSheet.create({
     // borderBottomColor: 'lightgrey',
     flexDirection: 'row',
   },
-  disabledItem: {
-    backgroundColor: '#c4c4c4',
-  },
   leftItem: {
     flex: 3,
   },
@@ -64,7 +57,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.secondary.white,
     padding: 10,
     marginBottom: 0,
   },
@@ -84,17 +77,10 @@ const styles = StyleSheet.create({
   },
   overdue: {
     marginTop: 5,
-    color: '#e60028',
+    color: theme.palette.primary.red,
   },
-  itemDurationText: {
-    color: 'grey',
-    fontSize: 12,
-    marginTop: 4,
-    marginLeft: 4,
-  },
-  itemButtonContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
+  disabledItem: {
+    backgroundColor: '#C4C4C4',
   },
   emptyItem: {
     paddingLeft: 20,

@@ -5,7 +5,7 @@ import styles from './ProfileStyle';
 import {navigateTo} from '../../helpers/navigation';
 import ROUTES from '../../tabs/constants';
 
-const Profile = ({navigation, items, colors}) => {
+const Profile = ({navigation, courses, colors}) => {
   return (
     <View style={[styles.container, styles.centered]}>
       <View style={[styles.headerContainer, styles.centered]}>
@@ -37,7 +37,7 @@ const Profile = ({navigation, items, colors}) => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.carouselContainer}>
-            {items.map((item, key) => (
+            {courses.map((item, key) => (
               <View key={key} style={[styles.carouselItemStyle, colors[key]]}>
                 <View style={styles.courseContainer}>
                   <Text style={styles.courseName}>{item.name}</Text>
@@ -65,7 +65,7 @@ const Profile = ({navigation, items, colors}) => {
 
 Profile.propTypes = {
   navigation: object.isRequired,
-  items: arrayOf(object).isRequired,
+  courses: arrayOf(object).isRequired,
   colors: arrayOf(object).isRequired,
 };
 

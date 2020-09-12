@@ -25,13 +25,13 @@ const FRAACalendar = () => {
   // }, []);
 
   // console.log(userSessions);
+  const rightNow = new Date();
 
   let SESSIONS = [];
   let oldEventDate = '';
   MOCK_SESSIONS.forEach(session => {
-    const {courseCode, courseName, createdAt, expireOn, id, lecturer, validOn} = session;
-    let sessionData = {courseCode, courseName, createdAt, expireOn, id, lecturer, validOn};
-    sessionData.location = 'SGS/2.4.041 (Lab-Mac)';
+    const {courseCode, courseName, createdAt, expireOn, id, lecturer, validOn, location} = session;
+    let sessionData = {courseCode, courseName, createdAt, expireOn, id, lecturer, validOn, location};
     const eventDate = validOn.split('T')[0];
     if (oldEventDate !== eventDate) {
       let event = {};
@@ -63,7 +63,7 @@ const FRAACalendar = () => {
   };
 
   const isDisabled = date => {
-    return date < new Date();
+    return date < rightNow;
   };
 
   const onEventTouch = (eventDate, id) => {
@@ -104,7 +104,7 @@ const FRAACalendar = () => {
   };
 
   return (
-    <CalendarProvider date={new Date()} showTodayButton disabledOpacity={0.6} todayBottomMargin={10}>
+    <CalendarProvider date={rightNow} showTodayButton disabledOpacity={0.6} todayBottomMargin={10}>
       <ExpandableCalendar markedDates={getMarkedDates()} style={styles.calendar} firstDay={1} />
       <Text style={styles.eventsText}>EVENTS</Text>
       <AgendaList sections={SESSIONS} renderItem={Item} sectionStyle={[styles.section, styles.centered]} />
