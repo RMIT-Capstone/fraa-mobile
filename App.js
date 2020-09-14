@@ -21,11 +21,11 @@ import ROUTES from './src/tabs/constants';
 
 // custom tab
 import TabWithIcon from './src/tabs/configs/tab-with-icon';
-import ReduxLoading from './src/shared-components/loading/redux-load-screen';
-// add this for testing components
+import ReduxLoading from './src/global-components/loading/redux-load-screen';
+// add this for testing shared-components
 // import Test from './src/views/test/Test';
-import FraaToast from './src/shared-components/toast/FraaToast';
-import FraaDialog from './src/shared-components/dialog';
+import FraaToast from './src/global-components/toast/FraaToast';
+import FraaDialog from './src/global-components/dialog';
 import HomeStackScreens from './src/tabs/tab-screens/home';
 
 const Tab = createBottomTabNavigator();

@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ROUTES from '../../constants';
 import Header from '../../configs/header';
 import Profile from '../../../views/profile';
-import RegisterIdentity from '../../../views/profile/components/register-identity';
+import RegisterIdentity from '../../../views/shared-components/identity-camera';
 
 const ProfileStack = createStackNavigator();
 
@@ -14,7 +14,7 @@ const ProfileStackScreens = () => {
         headerTitle: props => <Header {...props} />,
       }}>
       <ProfileStack.Screen name={ROUTES.PROFILE} component={Profile} />
-      <ProfileStack.Screen name={ROUTES.REGISTER_IDENTITY} component={RegisterIdentity} />
+      <ProfileStack.Screen name={ROUTES.IDENTITY_CAMERA} component={RegisterIdentity} />
     </ProfileStack.Navigator>
   );
 };

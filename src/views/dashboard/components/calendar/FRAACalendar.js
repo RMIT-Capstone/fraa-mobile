@@ -1,14 +1,17 @@
 import React from 'react';
 import {object} from 'prop-types';
+// import axios from 'axios';
 import _ from 'lodash';
 import {Text, TouchableOpacity, View, Alert} from 'react-native';
 import {AgendaList, CalendarProvider, ExpandableCalendar} from 'react-native-calendars';
 import styles from './FRAACalendarStyle';
 import MOCK_SESSIONS from './MockSessions';
+import {navigateTo} from '../../../../helpers/navigation';
+import ROUTES from '../../../../tabs/constants';
 // use this after stage 1
-import SomeComponent from './SomeComponents';
+// import SomeComponent from './SomeComponents';
 
-const FRAACalendar = () => {
+const FRAACalendar = ({navigation}) => {
   // const [userSessions, setUserSessions] = useState([]);
   // const url = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/get_monthly_attendance_sessions';
   // useEffect(() => {
@@ -25,14 +28,9 @@ const FRAACalendar = () => {
   //   }
   //   fetchUserSessions();
   // }, []);
-
-  // useEffect(() => {
-  //   if (sectionListRef !== null) {
-  //     sectionListRef.scrollToSection(2);
-  //   }
-  // }, [sectionListRef]);
-
+  //
   // console.log(userSessions);
+
   const rightNow = new Date();
 
   let SESSIONS = [];
@@ -74,12 +72,12 @@ const FRAACalendar = () => {
     return date < rightNow;
   };
 
-  const onEventTouch = (eventDate, id) => {
+  const onEventTouch = eventDate => {
     const overdue = isDisabled(eventDate);
     if (overdue) {
       Alert.alert('Event is overdue!');
     } else {
-      Alert.alert(`Pressed ${id}`);
+      navigateTo(navigation, ROUTES.IDENTITY_CAMERA, {fromDashboard: true});
     }
   };
 
@@ -119,6 +117,10 @@ const FRAACalendar = () => {
       {/*<SomeComponent />*/}
     </CalendarProvider>
   );
+};
+
+FRAACalendar.propTypes = {
+  navigation: object.isRequired,
 };
 
 export default FRAACalendar;

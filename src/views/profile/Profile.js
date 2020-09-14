@@ -15,7 +15,9 @@ const Profile = ({navigation, courses, colors}) => {
         <View style={[styles.profileInfoContainer, styles.centered]}>
           <Text style={styles.userFullName}>Nguyen Tuan Loc</Text>
           <Text style={styles.userEmail}>s3695769@rmit.edu.vn</Text>
-          <Text onPress={() => navigateTo(navigation, ROUTES.REGISTER_IDENTITY)} style={styles.error}>
+          <Text
+            onPress={() => navigateTo(navigation, ROUTES.IDENTITY_CAMERA, {fromDashboard: false})}
+            style={styles.error}>
             Press here to register identity to FRAA
           </Text>
         </View>

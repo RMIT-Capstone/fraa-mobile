@@ -1,6 +1,6 @@
 import {createActions, handleActions} from 'redux-actions';
 import {createSelector} from 'reselect';
-import DIALOG from '../../../shared-components/dialog/constants';
+import DIALOG from '../../../global-components/dialog/constants';
 
 // INITIAL STATE
 const initialState = {

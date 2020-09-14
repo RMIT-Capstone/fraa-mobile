@@ -5,7 +5,7 @@ import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 import theme from '../../../theme';
 import {openToast} from '../../../config/redux/reducers/ToastReducer';
 import {openDialog} from '../../../config/redux/reducers/DialogReducer';
-import DIALOG from '../../../shared-components/dialog/constants';
+import DIALOG from '../../../global-components/dialog/constants';
 
 const SharedComponentsTest = ({handleOpenToast, handleOpenDialog}) => {
   return (

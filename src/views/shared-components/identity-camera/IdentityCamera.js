@@ -1,12 +1,20 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
-import styles from './RegisterIdentityStyle';
+import styles from './IdentityCameraStyle';
 import LottieView from 'lottie-react-native';
 import {arrayOf, bool, func, object, string} from 'prop-types';
 import {RNCamera} from 'react-native-camera';
-const GenericLoading = require('../../../../assets/lottie-assets/GenericLoading');
+const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
-const RegisterIdentity = ({recognizedFaces, previewImage, loading, takePicture, recapture, onFacesDetected}) => {
+const IdentityCamera = ({
+  previewImage,
+  loading,
+  recognizedFaces,
+  onFacesDetected,
+  takePicture,
+  recapture,
+  registerIdentity,
+}) => {
   const RenderFaceBounds = () => {
     return recognizedFaces.map((face, index) => (
       <View
@@ -31,7 +39,7 @@ const RegisterIdentity = ({recognizedFaces, previewImage, loading, takePicture, 
   );
 
   const SnapButton = ({camera}) => (
-    <TouchableOpacity onPress={() => takePicture(camera)} style={styles.snapButton}>
+    <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture}>
       {loading ? (
         <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
       ) : (
@@ -53,8 +61,11 @@ const RegisterIdentity = ({recognizedFaces, previewImage, loading, takePicture, 
   if (previewImage) {
     return (
       <ImageBackground source={{uri: previewImage}} style={styles.camera}>
-        <View style={styles.snapButton}>
-          <TouchableOpacity onPress={recapture} style={styles.capture}>
+        <View style={styles.snapButtonRow}>
+          <TouchableOpacity onPress={registerIdentity} style={styles.recapture}>
+            <Text style={styles.snapText}>Send Image</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={recapture} style={styles.recapture}>
             <Text style={styles.snapText}>Cancel</Text>
           </TouchableOpacity>
         </View>
@@ -65,7 +76,7 @@ const RegisterIdentity = ({recognizedFaces, previewImage, loading, takePicture, 
   return (
     <RNCamera
       style={styles.camera}
-      type={RNCamera.Constants.Type.back}
+      type={RNCamera.Constants.Type.front}
       onFacesDetected={onFacesDetected}
       androidCameraPermissionOptions={{
         title: 'Permission to use camera',
@@ -97,13 +108,14 @@ const RegisterIdentity = ({recognizedFaces, previewImage, loading, takePicture, 
   );
 };
 
-RegisterIdentity.propTypes = {
-  recognizedFaces: arrayOf(object).isRequired,
+IdentityCamera.propTypes = {
   previewImage: string.isRequired,
   loading: bool.isRequired,
+  recognizedFaces: arrayOf(object).isRequired,
+  onFacesDetected: func.isRequired,
   takePicture: func.isRequired,
   recapture: func.isRequired,
-  onFacesDetected: func.isRequired,
+  registerIdentity: func.isRequired,
 };
 
-export default RegisterIdentity;
+export default IdentityCamera;

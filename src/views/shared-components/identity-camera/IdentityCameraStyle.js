@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import theme from '../../../../theme';
+import theme from '../../../theme';
 
 const styles = StyleSheet.create({
   camera: {
@@ -8,15 +8,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  snapButton: {
+  snapButtonRow: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  recapture: {
+    backgroundColor: theme.palette.primary.red,
+    padding: 15,
+    borderRadius: 16,
+    height: 50,
+    marginRight: 10,
+  },
+  capture: {
     position: 'absolute',
     bottom: 20,
     backgroundColor: theme.palette.primary.red,
     padding: 15,
     borderRadius: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
     height: 50,
+    marginRight: 10,
   },
   snapText: {
     fontSize: 14,
