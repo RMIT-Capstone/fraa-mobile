@@ -5,6 +5,8 @@ import {Text, TouchableOpacity, View, Alert} from 'react-native';
 import {AgendaList, CalendarProvider, ExpandableCalendar} from 'react-native-calendars';
 import styles from './FRAACalendarStyle';
 import MOCK_SESSIONS from './MockSessions';
+// use this after stage 1
+import SomeComponent from './SomeComponents';
 
 const FRAACalendar = () => {
   // const [userSessions, setUserSessions] = useState([]);
@@ -23,6 +25,12 @@ const FRAACalendar = () => {
   //   }
   //   fetchUserSessions();
   // }, []);
+
+  // useEffect(() => {
+  //   if (sectionListRef !== null) {
+  //     sectionListRef.scrollToSection(2);
+  //   }
+  // }, [sectionListRef]);
 
   // console.log(userSessions);
   const rightNow = new Date();
@@ -108,6 +116,7 @@ const FRAACalendar = () => {
       <ExpandableCalendar markedDates={getMarkedDates()} style={styles.calendar} firstDay={1} />
       <Text style={styles.eventsText}>EVENTS</Text>
       <AgendaList sections={SESSIONS} renderItem={Item} sectionStyle={[styles.section, styles.centered]} />
+      {/*<SomeComponent />*/}
     </CalendarProvider>
   );
 };
