@@ -5,7 +5,7 @@ import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
 import theme from '../../../theme';
 import {closeDialog} from '../../../config/redux/reducers/DialogReducer';
 
-const DefaultDialog = ({open, options, handleCloseDialog}) => {
+const InfoDialog = ({open, options, handleCloseDialog}) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -13,8 +13,8 @@ const DefaultDialog = ({open, options, handleCloseDialog}) => {
   }, [open]);
 
   const onDialogClose = () => {
-    handleCloseDialog();
     setDialogOpen(false);
+    handleCloseDialog();
   };
 
   return (
@@ -27,9 +27,6 @@ const DefaultDialog = ({open, options, handleCloseDialog}) => {
           <View style={styles.dialogActionsWrapper}>
             <TouchableOpacity style={[styles.dialogAction, styles.confirmAction]} onPress={onDialogClose}>
               <Text style={styles.actionTitle}>Confirm</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.dialogAction, styles.cancelAction]} onPress={onDialogClose}>
-              <Text style={styles.actionTitle}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -71,16 +68,13 @@ const styles = StyleSheet.create({
   confirmAction: {
     ...theme.button.active,
   },
-  cancelAction: {
-    ...theme.button.disabled,
-  },
   actionTitle: {
     color: '#fff',
     fontWeight: '600',
   },
 });
 
-DefaultDialog.propTypes = {
+InfoDialog.propTypes = {
   open: bool.isRequired,
   options: object.isRequired,
   handleCloseDialog: func.isRequired,
@@ -93,4 +87,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps,
-)(DefaultDialog);
+)(InfoDialog);

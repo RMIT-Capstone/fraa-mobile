@@ -1,8 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {object} from 'prop-types';
+import {connect} from 'react-redux';
+import axios from 'axios';
 import Profile from './Profile';
+import {getUserState} from '../../config/redux/reducers/UserReducer';
 
-const ProfileWrapper = ({navigation}) => {
+const ProfileWrapper = ({navigation, user}) => {
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  // useEffect(() => {
+  //   try {
+  //     (async function fetchRegisterStatus() {
+  //       const {
+  //         data: {msg},
+  //       } = await axios.get('http://159.89.205.12/check-register/trungduong0103@gmail.com');
+  //       setIsRegistered(msg);
+  //     })();
+  //   } catch (errorFetchRegisterStatus) {
+  //     console.warn(errorFetchRegisterStatus);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    setIsRegistered(user.registeredIdentity);
+  }, [user]);
+
   const COURSES = [
     {
       name: 'Engineering Computing 1',
@@ -23,11 +45,18 @@ const ProfileWrapper = ({navigation}) => {
 
   const colors = [{backgroundColor: '#7ae1aa'}, {backgroundColor: '#fc9147'}, {backgroundColor: '#fac800'}];
 
-  return <Profile courses={COURSES} colors={colors} navigation={navigation} />;
+  return <Profile isRegistered={isRegistered} courses={COURSES} colors={colors} navigation={navigation} />;
 };
 
 ProfileWrapper.propTypes = {
   navigation: object.isRequired,
 };
 
-export default ProfileWrapper;
+const mapStateToProps = state => ({
+  user: getUserState(state),
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(ProfileWrapper);

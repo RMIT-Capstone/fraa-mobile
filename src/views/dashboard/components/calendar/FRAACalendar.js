@@ -68,12 +68,28 @@ const FRAACalendar = ({navigation}) => {
     );
   };
 
-  const isDisabled = date => {
+  const isOverdue = date => {
     return date < rightNow;
   };
 
+  //TODO: disable if session is not available yet
+
+  // const isNotThereYet = date => {
+  //   const dateObject = new Date(date);
+  //   if (dateObject.getDate() > rightNow.getDate()) {
+  //     return true;
+  //   } else if (dateObject.getDate() === rightNow.getDate()) {
+  //     if (date > rightNow) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // };
+
   const onEventTouch = eventDate => {
-    const overdue = isDisabled(eventDate);
+    const overdue = isOverdue(eventDate);
+    // const notThereYet = isNotThereYet(new Date(eventDate));
+
     if (overdue) {
       Alert.alert('Event is overdue!');
     } else {
@@ -83,7 +99,8 @@ const FRAACalendar = ({navigation}) => {
 
   const Item = ({item}) => {
     const {validOn} = item;
-    const itemIsDisabled = isDisabled(new Date(validOn));
+    const overdue = isOverdue(new Date(validOn));
+
     if (_.isEmpty(item)) {
       return renderEmptyItem();
     }
@@ -99,7 +116,7 @@ const FRAACalendar = ({navigation}) => {
             <Text style={styles.bottomText}>{item.location}</Text>
             <Text style={styles.bottomText}>{startTime}</Text>
           </View>
-          {itemIsDisabled && <Text style={styles.overdue}>Overdue!</Text>}
+          {overdue && <Text style={styles.overdue}>Overdue!</Text>}
         </TouchableOpacity>
       </View>
     );

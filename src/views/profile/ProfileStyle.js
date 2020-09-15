@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   rightBorder: {
     borderRightWidth: 1,
-    borderColor: theme.palette.secondary.white,
+    borderColor: '#C4C4C4',
   },
   profileStatisticsNumber: {
     fontWeight: '600',

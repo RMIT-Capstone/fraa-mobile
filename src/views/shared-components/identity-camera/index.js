@@ -5,13 +5,19 @@ import {connect} from 'react-redux';
 import IdentityCamera from './IdentityCamera';
 import RNLocation from 'react-native-location';
 import {openDialog} from '../../../config/redux/reducers/DialogReducer';
-import DIALOG from '../../../global-components/dialog/constants';
+// import DIALOG from '../../../global-components/dialog/constants';
+import ROUTES from '../../../tabs/constants';
+import {navigateTo} from '../../../helpers/navigation';
+import {getUserState, setUserRegisteredIdentity} from '../../../config/redux/reducers/UserReducer';
 
 const RegisterIdentityWrapper = ({
-  handleOpenDialog,
+  // handleOpenDialog,
+  user,
   route: {
     params: {fromDashboard},
   },
+  navigation,
+  handleSetUserRegisteredIdentity,
 }) => {
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
@@ -19,7 +25,7 @@ const RegisterIdentityWrapper = ({
   const [previewImage, setPreviewImage] = useState('');
   const [loading, setLoading] = useState(false);
   const identityUrl = 'http://159.89.205.12';
-
+  console.log(user);
   const onFacesDetected = ({faces}) => {
     if (faces) {
       setRecognizedFaces(faces);
@@ -89,10 +95,16 @@ const RegisterIdentityWrapper = ({
       const {data} = await axios(config);
       if (data) {
         setLoading(false);
-        handleOpenDialog(DIALOG.DEFAULT, data);
+        // handleOpenDialog(DIALOG.DEFAULT, data);
+        if (fromDashboard) {
+          navigateTo(navigation, ROUTES.DASHBOARD);
+        } else {
+          handleSetUserRegisteredIdentity(true);
+          navigateTo(navigation, ROUTES.PROFILE);
+        }
       }
     } catch (errorRegisterOrVerifyIdentity) {
-      handleOpenDialog(DIALOG.DEFAULT, 'Something went wrong');
+      // handleOpenDialog(DIALOG.DEFAULT, 'Something went wrong');
       console.log(errorRegisterOrVerifyIdentity);
     }
   };
@@ -112,15 +124,23 @@ const RegisterIdentityWrapper = ({
 };
 
 RegisterIdentityWrapper.propTypes = {
-  handleOpenDialog: func.isRequired,
+  // handleOpenDialog: func.isRequired,
+  user: object.isRequired,
+  handleSetUserRegisteredIdentity: func.isRequired,
   route: object.isRequired,
+  navigation: object.isRequired,
 };
+
+const mapStateToProps = state => ({
+  user: getUserState(state),
+});
 
 const mapDispatchToProps = dispatch => ({
   handleOpenDialog: (type, options) => dispatch(openDialog(type, options)),
+  handleSetUserRegisteredIdentity: registered => dispatch(setUserRegisteredIdentity(registered)),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(RegisterIdentityWrapper);

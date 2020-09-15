@@ -1,11 +1,11 @@
 import React from 'react';
-import {arrayOf, object} from 'prop-types';
+import {arrayOf, object, bool} from 'prop-types';
 import {View, Text, ScrollView} from 'react-native';
 import styles from './ProfileStyle';
 import {navigateTo} from '../../helpers/navigation';
 import ROUTES from '../../tabs/constants';
 
-const Profile = ({navigation, courses, colors}) => {
+const Profile = ({navigation, courses, colors, isRegistered}) => {
   return (
     <View style={[styles.container, styles.centered]}>
       <View style={[styles.headerContainer, styles.centered]}>
@@ -18,7 +18,7 @@ const Profile = ({navigation, courses, colors}) => {
           <Text
             onPress={() => navigateTo(navigation, ROUTES.IDENTITY_CAMERA, {fromDashboard: false})}
             style={styles.error}>
-            Press here to register identity to FRAA
+            {isRegistered ? 'Verified' : 'Press here to register identity to FRAA'}
           </Text>
         </View>
         <View style={[styles.profileStatisticsContainer, styles.centeredRow]}>
@@ -69,6 +69,7 @@ Profile.propTypes = {
   navigation: object.isRequired,
   courses: arrayOf(object).isRequired,
   colors: arrayOf(object).isRequired,
+  isRegistered: bool.isRequired,
 };
 
 export default Profile;

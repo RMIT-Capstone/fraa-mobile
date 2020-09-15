@@ -40,6 +40,16 @@ const MOCK_SESSIONS = [
     location: 'SGS/2.4.041 (Lab-Mac)',
   },
   {
+    courseCode: 'COSC2082',
+    courseName: 'Capstone Part A',
+    createdAt: '2020-09-14T10:59:04.417Z',
+    expireOn: '2020-09-15T12:40:43.992Z',
+    id: 'tXut2pAb2Nd6xE43Pk1f',
+    lecturer: 'Thanh Nguyen Ngoc',
+    validOn: '2020-09-15T12:40:43.992Z',
+    location: 'SGS/2.4.041 (Lab-Mac)',
+  },
+  {
     courseCode: 'COSC2081',
     courseName: 'Programming 1',
     createdAt: '2020-09-14T10:59:08.238Z',
