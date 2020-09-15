@@ -5,19 +5,20 @@ import {connect} from 'react-redux';
 import IdentityCamera from './IdentityCamera';
 import RNLocation from 'react-native-location';
 import {openDialog} from '../../../config/redux/reducers/DialogReducer';
+import DIALOG from '../../../global-components/dialog/constants';
 
 const RegisterIdentityWrapper = ({
-  // handleOpenDialog,
+  handleOpenDialog,
   route: {
     params: {fromDashboard},
   },
 }) => {
-  console.log(fromDashboard);
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [base64Preview, setBase64Preview] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [loading, setLoading] = useState(false);
+  const identityUrl = 'http://159.89.205.12';
 
   const onFacesDetected = ({faces}) => {
     if (faces) {
@@ -72,14 +73,27 @@ const RegisterIdentityWrapper = ({
     setPreviewImage('');
   };
 
-  const registerIdentity = async () => {
+  const registerOrVerifyIdentity = async () => {
+    setLoading(true);
+    const base64Data = new FormData();
+    base64Data.append('image', base64Preview);
+    const url = fromDashboard
+      ? `${identityUrl}/verify/trungduong0103@gmail.com`
+      : `${identityUrl}/register/trungduong0103@gmail.com`;
+    const config = {
+      method: 'POST',
+      url,
+      data: base64Data,
+    };
     try {
-      console.log(base64Preview);
-      const sendImage = await axios.post('159.89.205.12/create/trungduong0103@gmail.com', {
-        image: base64Preview,
-      });
-    } catch (errorSendImage) {
-      console.log(errorSendImage);
+      const {data} = await axios(config);
+      if (data) {
+        setLoading(false);
+        handleOpenDialog(DIALOG.DEFAULT, data);
+      }
+    } catch (errorRegisterOrVerifyIdentity) {
+      handleOpenDialog(DIALOG.DEFAULT, 'Something went wrong');
+      console.log(errorRegisterOrVerifyIdentity);
     }
   };
 
@@ -88,10 +102,11 @@ const RegisterIdentityWrapper = ({
       previewImage={previewImage}
       loading={loading}
       recognizedFaces={recognizedFaces}
+      fromDashboard={fromDashboard}
       onFacesDetected={onFacesDetected}
       takePicture={takePicture}
       recapture={recapture}
-      registerIdentity={registerIdentity}
+      registerOrVerifyIdentity={registerOrVerifyIdentity}
     />
   );
 };

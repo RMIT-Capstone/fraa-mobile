@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 20,
+    width: 180,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -20,7 +21,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 16,
     height: 50,
-    marginRight: 10,
   },
   capture: {
     position: 'absolute',

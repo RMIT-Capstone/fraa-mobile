@@ -1,8 +1,8 @@
 import React from 'react';
+import {arrayOf, bool, func, object, string} from 'prop-types';
 import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
 import styles from './IdentityCameraStyle';
 import LottieView from 'lottie-react-native';
-import {arrayOf, bool, func, object, string} from 'prop-types';
 import {RNCamera} from 'react-native-camera';
 const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
@@ -10,10 +10,11 @@ const IdentityCamera = ({
   previewImage,
   loading,
   recognizedFaces,
+  fromDashboard,
   onFacesDetected,
   takePicture,
   recapture,
-  registerIdentity,
+  registerOrVerifyIdentity,
 }) => {
   const RenderFaceBounds = () => {
     return recognizedFaces.map((face, index) => (
@@ -62,8 +63,12 @@ const IdentityCamera = ({
     return (
       <ImageBackground source={{uri: previewImage}} style={styles.camera}>
         <View style={styles.snapButtonRow}>
-          <TouchableOpacity onPress={registerIdentity} style={styles.recapture}>
-            <Text style={styles.snapText}>Send Image</Text>
+          <TouchableOpacity onPress={registerOrVerifyIdentity} style={styles.recapture}>
+            {loading ? (
+              <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
+            ) : (
+              <Text style={styles.snapText}>{fromDashboard ? 'Verify' : 'Register'}</Text>
+            )}
           </TouchableOpacity>
           <TouchableOpacity onPress={recapture} style={styles.recapture}>
             <Text style={styles.snapText}>Cancel</Text>
@@ -113,9 +118,10 @@ IdentityCamera.propTypes = {
   loading: bool.isRequired,
   recognizedFaces: arrayOf(object).isRequired,
   onFacesDetected: func.isRequired,
+  fromDashboard: bool.isRequired,
   takePicture: func.isRequired,
   recapture: func.isRequired,
-  registerIdentity: func.isRequired,
+  registerOrVerifyIdentity: func.isRequired,
 };
 
 export default IdentityCamera;

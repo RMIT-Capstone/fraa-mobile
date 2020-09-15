@@ -28,9 +28,9 @@ const DefaultDialog = ({open, options, handleCloseDialog}) => {
             <TouchableOpacity style={[styles.dialogAction, styles.confirmAction]} onPress={onDialogClose}>
               <Text style={styles.actionTitle}>Confirm</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.dialogAction, styles.cancelAction]} onPress={onDialogClose}>
-              <Text style={styles.actionTitle}>Cancel</Text>
-            </TouchableOpacity>
+            {/*<TouchableOpacity style={[styles.dialogAction, styles.cancelAction]} onPress={onDialogClose}>*/}
+            {/*  <Text style={styles.actionTitle}>Cancel</Text>*/}
+            {/*</TouchableOpacity>*/}
           </View>
         </View>
       </View>
