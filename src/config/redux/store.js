@@ -8,17 +8,13 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: [''],
+  whitelist: ['user'],
   blacklist: ['toast', 'dialog', 'checkInProcess'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = createStore(
-  persistedReducer,
-  {},
-  composeWithDevTools(applyMiddleware(thunk)),
-);
+const store = createStore(persistedReducer, {}, composeWithDevTools(applyMiddleware(thunk)));
 
 const persistor = persistStore(store);
 

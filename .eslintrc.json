@@ -19,6 +19,7 @@
         "react"
     ],
     "rules": {
-        "react/prop-types": ["error"]
+        "react/prop-types": ["error"],
+        "max-len": ["error", {"code":  120}]
     }
 }

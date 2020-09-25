@@ -5,7 +5,7 @@ import styles from './SettingsStyle';
 const Settings = () => {
   return (
     <View style={styles.centered}>
-      <Text>This is settings</Text>
+      <Text>This page is under development</Text>
     </View>
   );
 };

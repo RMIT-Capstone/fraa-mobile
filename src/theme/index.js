@@ -17,6 +17,7 @@ const theme = {
       purple: '#AA0082',
       lavender: '#C864C8',
       pink: '#FF8199',
+      white: '#fff',
     },
   },
   button: {
