@@ -9,7 +9,7 @@ import styles from './HomeStyle';
 const Home = () => {
   return (
     <View style={styles.centered}>
-      <Text style={styles.text}>This is home</Text>
+      <Text style={styles.text}>This page is under development</Text>
       {/*<Button*/}
       {/*  title="Open Camera"*/}
       {/*  onPress={() => navigateTo(navigation, ROUTES.CHECK_IN)}*/}

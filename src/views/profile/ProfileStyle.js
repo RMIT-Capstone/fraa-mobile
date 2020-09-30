@@ -91,9 +91,13 @@ const styles = StyleSheet.create({
     color: '#888888',
     marginBottom: 5,
   },
-  error: {
-    fontWeight: '300',
+  notVerified: {
+    fontWeight: '500',
     color: theme.palette.primary.red,
+  },
+  verified: {
+    fontWeight: '500',
+    color: theme.palette.secondary.green,
   },
   profileStatisticsContainer: {
     flex: 2,

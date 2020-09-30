@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import IdentityCamera from './IdentityCamera';
 import RNLocation from 'react-native-location';
 import {openDialog} from '../../../config/redux/reducers/DialogReducer';
-// import DIALOG from '../../../global-components/dialog/constants';
+import DIALOG from '../../../global-components/dialog/constants';
 import ROUTES from '../../../tabs/constants';
 import {navigateTo} from '../../../helpers/navigation';
 import {getUserState, setUserRegisteredIdentity} from '../../../config/redux/reducers/UserReducer';
 
 const RegisterIdentityWrapper = ({
-  // handleOpenDialog,
+  handleOpenDialog,
   user,
   route: {
     params: {fromDashboard},
@@ -25,7 +25,7 @@ const RegisterIdentityWrapper = ({
   const [previewImage, setPreviewImage] = useState('');
   const [loading, setLoading] = useState(false);
   const identityUrl = 'http://159.89.205.12';
-  console.log(user);
+
   const onFacesDetected = ({faces}) => {
     if (faces) {
       setRecognizedFaces(faces);
@@ -95,7 +95,7 @@ const RegisterIdentityWrapper = ({
       const {data} = await axios(config);
       if (data) {
         setLoading(false);
-        // handleOpenDialog(DIALOG.DEFAULT, data);
+        handleOpenDialog(DIALOG.DEFAULT, data);
         if (fromDashboard) {
           navigateTo(navigation, ROUTES.DASHBOARD);
         } else {
@@ -104,7 +104,7 @@ const RegisterIdentityWrapper = ({
         }
       }
     } catch (errorRegisterOrVerifyIdentity) {
-      // handleOpenDialog(DIALOG.DEFAULT, 'Something went wrong');
+      handleOpenDialog(DIALOG.DEFAULT, 'Something went wrong');
       console.log(errorRegisterOrVerifyIdentity);
     }
   };
@@ -124,7 +124,7 @@ const RegisterIdentityWrapper = ({
 };
 
 RegisterIdentityWrapper.propTypes = {
-  // handleOpenDialog: func.isRequired,
+  handleOpenDialog: func.isRequired,
   user: object.isRequired,
   handleSetUserRegisteredIdentity: func.isRequired,
   route: object.isRequired,

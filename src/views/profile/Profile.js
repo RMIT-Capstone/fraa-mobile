@@ -1,11 +1,9 @@
 import React from 'react';
-import {arrayOf, object, bool} from 'prop-types';
+import {arrayOf, object, bool, func} from 'prop-types';
 import {View, Text, ScrollView} from 'react-native';
 import styles from './ProfileStyle';
-import {navigateTo} from '../../helpers/navigation';
-import ROUTES from '../../tabs/constants';
 
-const Profile = ({navigation, courses, colors, isRegistered}) => {
+const Profile = ({courses, colors, isRegistered, onVerify}) => {
   return (
     <View style={[styles.container, styles.centered]}>
       <View style={[styles.headerContainer, styles.centered]}>
@@ -15,9 +13,7 @@ const Profile = ({navigation, courses, colors, isRegistered}) => {
         <View style={[styles.profileInfoContainer, styles.centered]}>
           <Text style={styles.userFullName}>Nguyen Tuan Loc</Text>
           <Text style={styles.userEmail}>s3695769@rmit.edu.vn</Text>
-          <Text
-            onPress={() => navigateTo(navigation, ROUTES.IDENTITY_CAMERA, {fromDashboard: false})}
-            style={styles.error}>
+          <Text onPress={() => onVerify(isRegistered)} style={isRegistered ? styles.verified : styles.notVerified}>
             {isRegistered ? 'Verified' : 'Press here to register identity to FRAA'}
           </Text>
         </View>
@@ -66,10 +62,10 @@ const Profile = ({navigation, courses, colors, isRegistered}) => {
 };
 
 Profile.propTypes = {
-  navigation: object.isRequired,
   courses: arrayOf(object).isRequired,
   colors: arrayOf(object).isRequired,
   isRegistered: bool.isRequired,
+  onVerify: func.isRequired,
 };
 
 export default Profile;
