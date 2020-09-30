@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {object} from 'prop-types';
+import {object, func} from 'prop-types';
 import {connect} from 'react-redux';
-import axios from 'axios';
+// import axios from 'axios';
 import Profile from './Profile';
-import {getUserState} from '../../config/redux/reducers/UserReducer';
+import {getUserState, setUserRegisteredIdentity} from '../../config/redux/reducers/UserReducer';
+import {navigateTo} from '../../helpers/navigation';
+import ROUTES from '../../tabs/constants';
 
-const ProfileWrapper = ({navigation, user}) => {
+const ProfileWrapper = ({navigation, user, handleSetUserRegisteredIdentity}) => {
   const [isRegistered, setIsRegistered] = useState(false);
 
   // useEffect(() => {
@@ -45,18 +47,32 @@ const ProfileWrapper = ({navigation, user}) => {
 
   const colors = [{backgroundColor: '#7ae1aa'}, {backgroundColor: '#fc9147'}, {backgroundColor: '#fac800'}];
 
-  return <Profile isRegistered={isRegistered} courses={COURSES} colors={colors} navigation={navigation} />;
+  const onVerify = verified => {
+    if (verified) {
+      handleSetUserRegisteredIdentity(false);
+    } else {
+      navigateTo(navigation, ROUTES.IDENTITY_CAMERA, {fromDashboard: false});
+    }
+  };
+
+  return <Profile isRegistered={isRegistered} courses={COURSES} colors={colors} onVerify={onVerify} />;
 };
 
 ProfileWrapper.propTypes = {
   navigation: object.isRequired,
+  user: object.isRequired,
+  handleSetUserRegisteredIdentity: func.isRequired,
 };
 
 const mapStateToProps = state => ({
   user: getUserState(state),
 });
 
+const mapDispatchToProps = dispatch => ({
+  handleSetUserRegisteredIdentity: registered => dispatch(setUserRegisteredIdentity(registered)),
+});
+
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(ProfileWrapper);
