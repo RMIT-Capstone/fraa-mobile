@@ -7,7 +7,7 @@ import {AgendaList, CalendarProvider, ExpandableCalendar} from 'react-native-cal
 import styles from './FRAACalendarStyle';
 import MOCK_SESSIONS from './MockSessions';
 import {navigateTo} from '../../../../helpers/navigation';
-import ROUTES from '../../../../navigation/constants';
+import ROUTES from '../../../../navigation/routes';
 // use this after stage 1
 // import SomeComponent from './SomeComponents';
 

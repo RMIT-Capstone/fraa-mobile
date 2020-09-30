@@ -6,7 +6,7 @@ import IdentityCamera from './IdentityCamera';
 import RNLocation from 'react-native-location';
 import {openDialog} from '../../../redux/reducers/DialogReducer';
 import DIALOG from '../../../global-components/dialog/constants';
-import ROUTES from '../../../navigation/constants';
+import ROUTES from '../../../navigation/routes';
 import {navigateTo} from '../../../helpers/navigation';
 import {getUserState, setUserRegisteredIdentity} from '../../../redux/reducers/UserReducer';
 

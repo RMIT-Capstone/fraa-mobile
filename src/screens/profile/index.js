@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import Profile from './Profile';
 import {getUserState, setUserRegisteredIdentity} from '../../redux/reducers/UserReducer';
 import {navigateTo} from '../../helpers/navigation';
-import ROUTES from '../../navigation/constants';
+import ROUTES from '../../navigation/routes';
 
 const ProfileWrapper = ({navigation, user, handleSetUserRegisteredIdentity}) => {
   const [isRegistered, setIsRegistered] = useState(false);
@@ -47,7 +47,7 @@ const ProfileWrapper = ({navigation, user, handleSetUserRegisteredIdentity}) => 
 
   const colors = [{backgroundColor: '#7ae1aa'}, {backgroundColor: '#fc9147'}, {backgroundColor: '#fac800'}];
 
-  const onVerify = verified => {
+  const onVerify = (verified) => {
     if (verified) {
       handleSetUserRegisteredIdentity(false);
     } else {
@@ -59,20 +59,17 @@ const ProfileWrapper = ({navigation, user, handleSetUserRegisteredIdentity}) => 
 };
 
 ProfileWrapper.propTypes = {
-  navigation: object.isRequired,
+  navigation: object,
   user: object.isRequired,
   handleSetUserRegisteredIdentity: func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: getUserState(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleSetUserRegisteredIdentity: registered => dispatch(setUserRegisteredIdentity(registered)),
+const mapDispatchToProps = (dispatch) => ({
+  handleSetUserRegisteredIdentity: (registered) => dispatch(setUserRegisteredIdentity(registered)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ProfileWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileWrapper);

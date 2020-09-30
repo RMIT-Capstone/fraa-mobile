@@ -5,7 +5,7 @@ import Home from './Home';
 const HomeWrapper = ({navigation}) => <Home navigation={navigation} />;
 
 HomeWrapper.propTypes = {
-  navigation: object.isRequired,
+  navigation: object,
 };
 
 export default HomeWrapper;

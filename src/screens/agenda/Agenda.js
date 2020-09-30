@@ -1,10 +1,10 @@
 import React from 'react';
 import {object} from 'prop-types';
 import {View} from 'react-native';
-import styles from './DashboardStyle';
+import styles from './AgendaStyle';
 import FRAACalendar from './components/calendar/FRAACalendar';
 
-const Dashboard = ({navigation}) => {
+const Agenda = ({navigation}) => {
   return (
     <View style={styles.centered}>
       <FRAACalendar navigation={navigation} />
@@ -12,8 +12,8 @@ const Dashboard = ({navigation}) => {
   );
 };
 
-Dashboard.propTypes = {
-  navigation: object.isRequired,
+Agenda.propTypes = {
+  navigation: object,
 };
 
-export default Dashboard;
+export default Agenda;
