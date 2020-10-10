@@ -3,7 +3,7 @@ import { arrayOf, object, bool, func } from 'prop-types';
 import { View, Text, ScrollView } from 'react-native';
 import styles from './ProfileStyle';
 
-const Profile = ({ courses, colors, isRegistered, onVerify }) => {
+const Profile = ({ courses, colors, isRegistered, onVerify, reset }) => {
   return (
     <View style={[styles.container, styles.centered]}>
       <View style={[styles.headerContainer, styles.centered]}>
@@ -13,9 +13,10 @@ const Profile = ({ courses, colors, isRegistered, onVerify }) => {
         <View style={[styles.profileInfoContainer, styles.centered]}>
           <Text style={styles.userFullName}>Nguyen Tuan Loc</Text>
           <Text style={styles.userEmail}>s3695769@rmit.edu.vn</Text>
-          <Text onPress={() => onVerify(isRegistered)} style={isRegistered ? styles.verified : styles.notVerified}>
+          <Text onPress={onVerify} style={isRegistered ? styles.verified : styles.notVerified}>
             {isRegistered ? 'Verified' : 'Press here to register identity to FRAA'}
           </Text>
+          {isRegistered && <Text onPress={reset}>Press here to reset</Text>}
         </View>
         <View style={[styles.profileStatisticsContainer, styles.centeredRow]}>
           <View style={[styles.profileStatisticsColumn, styles.rightBorder]}>
@@ -66,6 +67,7 @@ Profile.propTypes = {
   colors: arrayOf(object).isRequired,
   isRegistered: bool.isRequired,
   onVerify: func.isRequired,
+  reset: func.isRequired,
 };
 
 export default Profile;
