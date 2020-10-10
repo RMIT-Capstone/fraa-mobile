@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { object } from 'prop-types';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Agenda from '../agenda';
 import Profile from '../profile';
@@ -15,17 +16,17 @@ const InactiveProfileIcon = require('../../assets/tab-icons/profile/InactiveProf
 const ActiveCalendarIcon = require('../../assets/tab-icons/calendar/ActiveCalendarIcon.png');
 const InactiveCalendarIcon = require('../../assets/tab-icons/calendar/InactiveCalendarIcon.png');
 
-const MainScreen = () => {
+const MainScreen = ({ navigation }) => {
   const [currentTab, setCurrentTab] = useState(ROUTES.HOME);
 
   const TabContent = () => {
     switch (currentTab) {
       case ROUTES.HOME:
-        return <Home />;
+        return <Home navigation={navigation} />;
       case ROUTES.AGENDA:
-        return <Agenda />;
+        return <Agenda navigation={navigation} />;
       case ROUTES.PROFILE:
-        return <Profile />;
+        return <Profile navigation={navigation} />;
       default:
         return (
           <View>
@@ -91,5 +92,9 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
+
+MainScreen.propTypes = {
+  navigation: object.isRequired,
+};
 
 export default MainScreen;

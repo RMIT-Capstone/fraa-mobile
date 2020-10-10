@@ -1,9 +1,9 @@
 import React from 'react';
-import {arrayOf, object, bool, func} from 'prop-types';
-import {View, Text, ScrollView} from 'react-native';
+import { arrayOf, object, bool, func } from 'prop-types';
+import { View, Text, ScrollView } from 'react-native';
 import styles from './ProfileStyle';
 
-const Profile = ({courses, colors, isRegistered, onVerify}) => {
+const Profile = ({ courses, colors, isRegistered, onVerify }) => {
   return (
     <View style={[styles.container, styles.centered]}>
       <View style={[styles.headerContainer, styles.centered]}>

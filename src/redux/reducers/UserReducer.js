@@ -1,5 +1,5 @@
-import {createActions, handleActions} from 'redux-actions';
-import {createSelector} from 'reselect';
+import { createActions, handleActions } from 'redux-actions';
+import { createSelector } from 'reselect';
 
 // INITIAL STATE
 const initialState = {
@@ -10,22 +10,19 @@ const initialState = {
 };
 
 // ACTION CREATORS
-export const {setUser} = createActions({
-  SET_USER: (user) => ({user}),
-});
-
-export const {setUserRegisteredIdentity} = createActions({
-  SET_USER_REGISTERED_IDENTITY: (registered) => registered,
+export const { setUser, setRegisteredIdentity } = createActions({
+  SET_USER: (user) => ({ user }),
+  SET_REGISTERED_IDENTITY: (registered) => ({ registered }),
 });
 
 // ACTION HANDLERS
 export default handleActions(
   {
-    SET_USER: (state, {payload: {user}}) => ({
+    SET_USER: (state, { payload: { user } }) => ({
       ...state,
       user,
     }),
-    SET_USER_REGISTERED_IDENTITY: (state, {payload: registered}) => ({
+    SET_REGISTERED_IDENTITY: (state, { payload: { registered } }) => ({
       ...state,
       registeredIdentity: registered,
     }),
