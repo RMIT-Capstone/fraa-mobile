@@ -7,7 +7,7 @@ import Header from './configs/header';
 import MainScreen from '../screens/main-screen';
 import Home from '../screens/home';
 import Profile from '../screens/profile';
-import Agenda from '../screens/agenda';
+import FRAACalendar from '../screens/calendar';
 
 // routes names
 import ROUTES from './routes';
@@ -25,7 +25,7 @@ const MainStackScreens = () => {
       }}>
       <MainStack.Screen name={ROUTES.MAIN} component={MainScreen} />
       <MainStack.Screen name={ROUTES.HOME} component={Home} />
-      <MainStack.Screen name={ROUTES.AGENDA} component={Agenda} />
+      <MainStack.Screen name={ROUTES.CALENDAR} component={FRAACalendar} />
       <MainStack.Screen name={ROUTES.PROFILE} component={Profile} />
       <MainStack.Screen name={ROUTES.CAMERA} component={FRAACamera} />
     </MainStack.Navigator>

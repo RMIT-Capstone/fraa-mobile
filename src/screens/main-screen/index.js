@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { object } from 'prop-types';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-import Agenda from '../agenda';
+import Agenda from '../calendar';
 import Profile from '../profile';
 import Home from '../home';
 
