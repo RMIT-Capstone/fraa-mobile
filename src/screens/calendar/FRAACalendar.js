@@ -16,6 +16,8 @@ const FRAACalendar = ({ navigation }) => {
 
   let SESSIONS = [];
   let oldEventDate = '';
+
+  // TODO: work on this...
   MOCK_SESSIONS.forEach((session) => {
     const { courseCode, courseName, createdAt, expireOn, id, lecturer, validOn, location } = session;
     let sessionData = { courseCode, courseName, createdAt, expireOn, id, lecturer, validOn, location };
@@ -32,6 +34,8 @@ const FRAACalendar = ({ navigation }) => {
       SESSIONS[index].data.push(sessionData);
     }
   });
+
+  console.log(SESSIONS);
 
   const getMarkedDates = () => {
     let marked = {};
