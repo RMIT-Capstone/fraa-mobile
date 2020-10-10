@@ -7,7 +7,7 @@ import Header from './configs/header';
 import MainScreen from '../screens/main-screen';
 import Home from '../screens/home';
 import Profile from '../screens/profile';
-import FRAACalendar from '../screens/calendar';
+import FRAACalendar from '../screens/calendar/FRAACalendar';
 
 // routes names
 import ROUTES from './routes';

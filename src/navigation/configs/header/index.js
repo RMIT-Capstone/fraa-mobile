@@ -1,7 +1,7 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
-const LOGO = require('../../../assets/logo/Default_Logo.png');
+const LOGO = require('../../../assets/logo/FRAA_LOGO.png');
 
 const Header = () => {
   return <Image style={styles.logo} source={LOGO} />;

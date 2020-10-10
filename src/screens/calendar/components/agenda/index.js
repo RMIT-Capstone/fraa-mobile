@@ -1,28 +1,14 @@
-// import React from 'react';
-// import { View, Text } from 'react-native';
-// import { asCalendarConsumer } from 'react-native-calendars';
-//
-// class FRAAAgenda extends React.Component {
-//   render() {
-//     return (
-//       <View>
-//         <Text> This is agenda </Text>
-//       </View>
-//     );
-//   }
-// }
-//
-// export default asCalendarConsumer(FRAAAgenda);
-
 import React from 'react';
-import { View, Text } from 'react-native';
+import { arrayOf, object, string } from 'prop-types';
+import FRAAAgenda from './FRAAAgenda';
 
-const FRAAAgenda = ({ agendaSessions }) => {
-  return (
-    <View>
-      <Text>{JSON.stringify(agendaSessions)}</Text>
-    </View>
-  );
+const FRAAAgendaWrapper = ({ agendaSessions, selectedDate }) => {
+  return <FRAAAgenda agendaSessions={agendaSessions} selectedDate={selectedDate} />;
 };
 
-export default FRAAAgenda;
+FRAAAgendaWrapper.propTypes = {
+  agendaSessions: arrayOf(object).isRequired,
+  selectedDate: string.isRequired,
+};
+
+export default FRAAAgendaWrapper;

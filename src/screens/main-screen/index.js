@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { object } from 'prop-types';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-import Agenda from '../calendar';
+import FRAACalendar from '../calendar/FRAACalendar';
 import Profile from '../profile';
 import Home from '../home';
 
@@ -23,8 +23,8 @@ const MainScreen = ({ navigation }) => {
     switch (currentTab) {
       case ROUTES.HOME:
         return <Home navigation={navigation} />;
-      case ROUTES.AGENDA:
-        return <Agenda navigation={navigation} />;
+      case ROUTES.CALENDAR:
+        return <FRAACalendar navigation={navigation} />;
       case ROUTES.PROFILE:
         return <Profile navigation={navigation} />;
       default:
@@ -45,10 +45,10 @@ const MainScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => setCurrentTab(ROUTES.HOME)} style={styles.tabButton}>
           <Image style={styles.tabImage} source={currentTab === ROUTES.HOME ? ActiveHomeIcon : InactiveHomeIcon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setCurrentTab(ROUTES.AGENDA)} style={styles.tabButton}>
+        <TouchableOpacity onPress={() => setCurrentTab(ROUTES.CALENDAR)} style={styles.tabButton}>
           <Image
             style={styles.tabImage}
-            source={currentTab === ROUTES.AGENDA ? ActiveCalendarIcon : InactiveCalendarIcon}
+            source={currentTab === ROUTES.CALENDAR ? ActiveCalendarIcon : InactiveCalendarIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setCurrentTab(ROUTES.PROFILE)} style={styles.tabButton}>

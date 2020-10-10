@@ -45,7 +45,7 @@
 		00E356EE1AD99517003FC87E /* fraaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fraaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* fraaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fraaTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* fraa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fraa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* FRAA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FRAA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = fraa/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = fraa/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = fraa/Images.xcassets; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* fraa.app */,
+				13B07F961A680F5B00A75B9A /* FRAA.app */,
 				00E356EE1AD99517003FC87E /* fraaTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* fraa-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* fraa-tvOSTests.xctest */,
@@ -241,7 +241,7 @@
 			);
 			name = fraa;
 			productName = fraa;
-			productReference = 13B07F961A680F5B00A75B9A /* fraa.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* FRAA.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* fraa-tvOS */ = {
@@ -671,6 +671,7 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = fraa/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -678,7 +679,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa;
-				PRODUCT_NAME = fraa;
+				PRODUCT_NAME = FRAA;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -694,6 +695,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S5VZ535TY5;
 				INFOPLIST_FILE = fraa/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -701,7 +703,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa;
-				PRODUCT_NAME = fraa;
+				PRODUCT_NAME = FRAA;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
