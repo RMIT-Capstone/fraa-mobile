@@ -1,52 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { object } from 'prop-types';
+import { arrayOf, object } from 'prop-types';
+import { connect } from 'react-redux';
 import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
 import styles from './CalendarStyle';
 import FRAAAgenda from './components/agenda';
-import MOCK_SESSIONS from './MockSessions';
+import { getAttendanceSessionsState } from '../../redux/reducers/AttendanceSessionsReducer';
 
-const FRAACalendar = ({ navigation }) => {
+const FRAACalendar = ({ navigation, attendanceSessions }) => {
   const todayDate = new Date().toISOString().split('T')[0];
   const [agendaSessions, setAgendaSessions] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(todayDate);
 
   useEffect(() => {
     findPressedDateSession(todayDate);
-  }, [todayDate]);
-
-  let SESSIONS = [];
-  let oldEventDate = '';
-
-  // TODO: work on this...
-  MOCK_SESSIONS.forEach((session) => {
-    const { courseCode, courseName, createdAt, expireOn, id, lecturer, validOn, location } = session;
-    let sessionData = { courseCode, courseName, createdAt, expireOn, id, lecturer, validOn, location };
-    const eventDate = validOn.split('T')[0];
-    if (oldEventDate !== eventDate) {
-      let event = {};
-      oldEventDate = eventDate;
-      event.title = eventDate;
-      event.data = [];
-      event.data.push(sessionData);
-      SESSIONS.push(event);
-    } else {
-      const index = SESSIONS.findIndex((displaySession) => displaySession.title === oldEventDate);
-      SESSIONS[index].data.push(sessionData);
-    }
-  });
-
-  console.log(SESSIONS);
-
-  const getMarkedDates = () => {
-    let marked = {};
-    SESSIONS.forEach((session) => {
-      marked[session.title] = { marked: true };
-    });
-    return marked;
-  };
+  }, []);
 
   const findPressedDateSession = (date) => {
-    const dateSessions = MOCK_SESSIONS.filter((session) => {
+    const dateSessions = attendanceSessions.filter((session) => {
       const { validOn } = session;
       const eventDate = validOn.split('T')[0];
       return eventDate === date;
@@ -54,27 +23,49 @@ const FRAACalendar = ({ navigation }) => {
     setAgendaSessions(dateSessions);
   };
 
-  const onDateChanged = (date) => {
-    findPressedDateSession(date);
-    setSelectedDate(date);
+  const getMarkedDates = () => {
+    let markedDates = {};
+    attendanceSessions.forEach((session) => {
+      const { validOn } = session;
+      const eventDate = validOn.split('T')[0];
+      markedDates[eventDate] = {};
+      markedDates[eventDate].marked = true;
+      markedDates[eventDate].dotColor = '#E60028';
+    });
+    return markedDates;
   };
 
   const now = new Date().toISOString().split('T')[0];
+  const theme = {
+    selectedDayBackgroundColor: '#000054',
+  };
+
   return (
     <CalendarProvider
-      onDateChanged={onDateChanged}
+      onDateChanged={(date) => findPressedDateSession(date)}
       date={now}
       showTodayButton
       disabledOpacity={0.6}
       todayBottomMargin={10}>
-      <ExpandableCalendar markedDates={getMarkedDates()} style={styles.calendar} firstDay={1} />
-      <FRAAAgenda agendaSessions={agendaSessions} selectedDate={selectedDate} />
+      <ExpandableCalendar
+        theme={theme}
+        markedDates={getMarkedDates()}
+        markingType="single"
+        style={styles.calendar}
+        firstDay={1}
+      />
+      <FRAAAgenda agendaSessions={agendaSessions} />
     </CalendarProvider>
   );
 };
 
 FRAACalendar.propTypes = {
   navigation: object.isRequired,
+  attendanceSessions: arrayOf(object).isRequired,
 };
 
-export default FRAACalendar;
+const mapStateToProps = (state) => ({
+  attendanceSessions: getAttendanceSessionsState(state),
+});
+
+export default connect(mapStateToProps, null)(FRAACalendar);

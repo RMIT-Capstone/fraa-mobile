@@ -12,25 +12,25 @@ import { CHECK_IDENTITY_API } from '../../constants/ApiEndpoints';
 const ProfileWrapper = ({ navigation, user, handleSetRegisteredIdentity }) => {
   const { registeredIdentity } = user;
 
-  // useEffect(() => {
-  //   if (!registeredIdentity) {
-  //     try {
-  //       (async function fetchRegisterStatus() {
-  //         const {
-  //           data: { msg },
-  //         } = await axios.get(CHECK_IDENTITY_API);
-  //         handleSetRegisteredIdentity(msg);
-  //       })();
-  //     } catch (errorFetchRegisterStatus) {
-  //       console.warn(errorFetchRegisterStatus);
-  //     }
-  //   }
-  // }, [registeredIdentity, handleSetRegisteredIdentity]);
+  useEffect(() => {
+    if (!registeredIdentity) {
+      try {
+        (async function fetchRegisterStatus() {
+          const {
+            data: { msg },
+          } = await axios.get(CHECK_IDENTITY_API);
+          handleSetRegisteredIdentity(msg);
+        })();
+      } catch (errorFetchRegisterStatus) {
+        console.warn(errorFetchRegisterStatus);
+      }
+    }
+  }, [registeredIdentity, handleSetRegisteredIdentity]);
 
   const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
 
   const onVerify = () => {
-    navigateTo(navigation, ROUTES.IDENTITY_CAMERA, { fromDashboard: false });
+    navigateTo(navigation, ROUTES.CAMERA, { fromDashboard: false });
   };
 
   const reset = () => {

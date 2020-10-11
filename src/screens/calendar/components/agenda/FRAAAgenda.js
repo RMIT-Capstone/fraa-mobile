@@ -1,16 +1,42 @@
-import React from 'react';
-import { arrayOf, object, string } from 'prop-types';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { arrayOf, object, func } from 'prop-types';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import { View, Text, ScrollView, RefreshControl } from 'react-native';
 import styles from './FRAAAgendaStyle';
+import { GET_MONTHLY_ATTENDANCE_SESSIONS } from '../../../../constants/ApiEndpoints';
+import { setAttendanceSessions } from '../../../../redux/reducers/AttendanceSessionsReducer';
 
-const FRAAAgenda = ({ agendaSessions, selectedDate }) => {
-  const todayDate = new Date().toISOString().split('T')[0];
-  const selectedDateObj = new Date(selectedDate);
-  const dateOfSelectedDate = selectedDateObj.getDate();
-  const dayOfWeek = selectedDateObj.toLocaleDateString('EN', { weekday: 'short' }).toUpperCase();
+const FRAAAgenda = ({ agendaSessions, handleSetAttendanceSessions }) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const refetchAttendanceSessions = async () => {
+    try {
+      setRefreshing(true);
+      const request = {
+        courses: ['OENG1183', 'COSC2634'],
+        month: 9,
+        email: 'trungduong0103@gmail.com',
+      };
+
+      const {
+        data: { sessions },
+      } = await axios.post(GET_MONTHLY_ATTENDANCE_SESSIONS, request);
+      if (sessions) {
+        setRefreshing(false);
+        handleSetAttendanceSessions(sessions);
+      }
+    } catch (errorGetAttendanceSessions) {
+      console.warn(errorGetAttendanceSessions);
+    }
+  };
 
   const EmptyAgenda = () => {
-    return <Text>No sessions today.</Text>;
+    return (
+      <View>
+        <Text style={styles.emptyAgendaText}>No sessions today.</Text>
+      </View>
+    );
   };
 
   const transformSessionTime = (time) => {
@@ -19,6 +45,12 @@ const FRAAAgenda = ({ agendaSessions, selectedDate }) => {
   };
 
   const Agenda = () => {
+    const { validOn } = agendaSessions[0];
+    const todayDate = new Date().toISOString().split('T')[0];
+    const selectedDateObj = new Date(validOn);
+    const dateOfSelectedDate = selectedDateObj.getDate();
+    const dayOfWeek = selectedDateObj.toLocaleDateString('EN', { weekday: 'short' }).toUpperCase();
+
     return (
       <>
         <View style={[styles.header, styles.centered]}>
@@ -26,7 +58,7 @@ const FRAAAgenda = ({ agendaSessions, selectedDate }) => {
         </View>
         <View style={[styles.body, styles.row]}>
           <View style={styles.agendaDateColumn}>
-            {todayDate === selectedDate ? (
+            {todayDate === validOn.split('T')[0] ? (
               <Text style={styles.agendaDayOfWeek}>TODAY</Text>
             ) : (
               <View style={styles.centered}>
@@ -58,12 +90,20 @@ const FRAAAgenda = ({ agendaSessions, selectedDate }) => {
     return <Agenda />;
   };
 
-  return <View style={[styles.container, styles.centered]}>{renderAgenda()}</View>;
+  return (
+    <View style={[styles.container, styles.centered]}>
+      <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refetchAttendanceSessions} />}>
+        {renderAgenda()}
+      </ScrollView>
+    </View>
+  );
 };
 
 FRAAAgenda.propTypes = {
   agendaSessions: arrayOf(object).isRequired,
-  selectedDate: string.isRequired,
+  handleSetAttendanceSessions: func.isRequired,
 };
 
-export default FRAAAgenda;
+export default connect(null, {
+  handleSetAttendanceSessions: setAttendanceSessions,
+})(FRAAAgenda);

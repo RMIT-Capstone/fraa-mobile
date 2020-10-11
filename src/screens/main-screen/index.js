@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { object } from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import { object, arrayOf, func } from 'prop-types';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 import FRAACalendar from '../calendar/FRAACalendar';
@@ -8,6 +10,8 @@ import Home from '../home';
 
 import ROUTES from '../../navigation/routes';
 import theme from '../../theme';
+import { getAttendanceSessionsState, setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
+import { GET_MONTHLY_ATTENDANCE_SESSIONS } from '../../constants/ApiEndpoints';
 
 const ActiveHomeIcon = require('../../assets/tab-icons/home/ActiveHomeIcon.png');
 const InactiveHomeIcon = require('../../assets/tab-icons/home/InactiveHomeIcon.png');
@@ -16,8 +20,32 @@ const InactiveProfileIcon = require('../../assets/tab-icons/profile/InactiveProf
 const ActiveCalendarIcon = require('../../assets/tab-icons/calendar/ActiveCalendarIcon.png');
 const InactiveCalendarIcon = require('../../assets/tab-icons/calendar/InactiveCalendarIcon.png');
 
-const MainScreen = ({ navigation }) => {
+const MainScreen = ({ navigation, attendanceSessions, handleSetAttendanceSessions }) => {
   const [currentTab, setCurrentTab] = useState(ROUTES.HOME);
+
+  useEffect(() => {
+    if (attendanceSessions.length === 0) {
+      // must call it here because calling it inside FRAACalendar will mess up with <ExpandableCalendar />
+      // only call if attendance sessions is empty
+      const request = {
+        courses: ['OENG1183', 'COSC2634'],
+        month: 9,
+        email: 'trungduong0103@gmail.com',
+      };
+      try {
+        (async function fetchAttendanceSessions() {
+          const {
+            data: { sessions },
+          } = await axios.post(GET_MONTHLY_ATTENDANCE_SESSIONS, request);
+          if (sessions) {
+            handleSetAttendanceSessions(sessions);
+          }
+        })();
+      } catch (errorFetchAttendanceSessions) {
+        console.warn(errorFetchAttendanceSessions);
+      }
+    }
+  }, [attendanceSessions]);
 
   const TabContent = () => {
     switch (currentTab) {
@@ -95,6 +123,16 @@ const styles = StyleSheet.create({
 
 MainScreen.propTypes = {
   navigation: object.isRequired,
+  attendanceSessions: arrayOf(object).isRequired,
+  handleSetAttendanceSessions: func.isRequired,
 };
 
-export default MainScreen;
+const mapStateToProps = (state) => ({
+  attendanceSessions: getAttendanceSessionsState(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSetAttendanceSessions: (attendanceSessions) => dispatch(setAttendanceSessions(attendanceSessions)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

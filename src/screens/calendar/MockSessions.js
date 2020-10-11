@@ -7,7 +7,7 @@ const MOCK_SESSIONS = [
     createdAt: '2020-10-10T12:11:29.235Z',
     validOn: '2020-10-10T09:35:15.173Z',
     courseCode: 'COSC2634',
-    id: 'dHGiEXPAI1herGzcTy6f',
+    id: '1',
   },
   {
     validOn: '2020-10-10T09:35:15.173Z',
@@ -17,7 +17,7 @@ const MOCK_SESSIONS = [
     lecturer: 'Yossi Nygate',
     expireOn: '2020-10-10T09:40:15.173Z',
     location: 'SGS/2.4.041 (Lab-Mac)',
-    id: 'qDJ8NUIUDoEusLUYsVJo',
+    id: '2',
   },
   {
     expireOn: '2020-10-11T09:40:15.173Z',
@@ -27,7 +27,7 @@ const MOCK_SESSIONS = [
     createdAt: '2020-10-10T12:11:29.235Z',
     validOn: '2020-10-11T09:35:15.173Z',
     courseCode: 'COSC2634',
-    id: 'dHGiEXPAI1herGzcTy6f',
+    id: '3',
   },
   {
     validOn: '2020-10-11T09:35:15.173Z',
@@ -37,7 +37,7 @@ const MOCK_SESSIONS = [
     lecturer: 'Yossi Nygate',
     expireOn: '2020-10-11T09:40:15.173Z',
     location: 'SGS/2.4.041 (Lab-Mac)',
-    id: 'qDJ8NUIUDoEusLUYsVJo',
+    id: '4',
   },
   {
     expireOn: '2020-10-12T09:40:15.173Z',
@@ -47,7 +47,7 @@ const MOCK_SESSIONS = [
     createdAt: '2020-10-10T12:11:29.235Z',
     validOn: '2020-10-12T09:35:15.173Z',
     courseCode: 'COSC2634',
-    id: 'dHGiEXPAI1herGzcTy6f',
+    id: '5',
   },
   {
     validOn: '2020-10-12T09:35:15.173Z',
@@ -57,7 +57,7 @@ const MOCK_SESSIONS = [
     lecturer: 'Yossi Nygate',
     expireOn: '2020-10-12T09:40:15.173Z',
     location: 'SGS/2.4.041 (Lab-Mac)',
-    id: 'qDJ8NUIUDoEusLUYsVJo',
+    id: '6',
   },
 ];
 

@@ -2,6 +2,9 @@ import { StyleSheet } from 'react-native';
 import theme from '../../../../theme';
 
 const styles = StyleSheet.create({
+  emptyAgendaText: {
+    marginTop: 150,
+  },
   container: {
     flex: 1,
     width: '100%',
@@ -11,7 +14,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    flex: 1.5,
+    height: 50,
   },
   headerText: {
     fontWeight: '400',
@@ -19,7 +22,6 @@ const styles = StyleSheet.create({
     color: '#AFAFAF',
   },
   body: {
-    flex: 8,
     width: '100%',
   },
   row: {

@@ -21,6 +21,8 @@
     "rules": {
         "react/prop-types": ["error"],
         "max-len": ["error", {"code":  120}],
-        "object-curly-spacing": ["error", "always"]
+        "object-curly-spacing": ["error", "always"],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": 0
     }
 }
