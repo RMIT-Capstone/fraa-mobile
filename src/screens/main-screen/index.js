@@ -11,7 +11,8 @@ import Home from '../home';
 import ROUTES from '../../navigation/routes';
 import theme from '../../theme';
 import { getAttendanceSessionsState, setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
-import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../constants/ApiEndpoints';
+import { CHECK_IDENTITY_API, GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, GET_USER_API } from '../../constants/ApiEndpoints';
+import { setRegisteredIdentity, setUser } from '../../redux/reducers/UserReducer';
 
 const ActiveHomeIcon = require('../../assets/tab-icons/home/ActiveHomeIcon.png');
 const InactiveHomeIcon = require('../../assets/tab-icons/home/InactiveHomeIcon.png');
@@ -20,7 +21,13 @@ const InactiveProfileIcon = require('../../assets/tab-icons/profile/InactiveProf
 const ActiveCalendarIcon = require('../../assets/tab-icons/calendar/ActiveCalendarIcon.png');
 const InactiveCalendarIcon = require('../../assets/tab-icons/calendar/InactiveCalendarIcon.png');
 
-const MainScreen = ({ navigation, attendanceSessions, handleSetAttendanceSessions }) => {
+const MainScreen = ({
+  navigation,
+  attendanceSessions,
+  handleSetAttendanceSessions,
+  handleSetRegisteredIdentity,
+  handleSetUser,
+}) => {
   const [currentTab, setCurrentTab] = useState(ROUTES.HOME);
 
   useEffect(() => {
@@ -46,6 +53,34 @@ const MainScreen = ({ navigation, attendanceSessions, handleSetAttendanceSession
       }
     }
   }, [attendanceSessions]);
+
+  useEffect(() => {
+    const email = 'trungduong0103@gmail.com';
+
+    const fetchUser = async () => {
+      const { data } = await axios.post(GET_USER_API, { email });
+      if (data) {
+        console.log(data);
+        handleSetUser(data);
+      }
+    };
+
+    const fetchUserIdentity = async () => {
+      const { data } = await axios.get(CHECK_IDENTITY_API);
+      if (data) {
+        const { msg } = data;
+        handleSetRegisteredIdentity(msg);
+      }
+    };
+
+    try {
+      Promise.all([fetchUser(), fetchUserIdentity()]);
+    } catch (errorLoadUser) {
+      console.warn(errorLoadUser);
+    }
+  }, []);
+
+  useEffect(() => {});
 
   const TabContent = () => {
     switch (currentTab) {
@@ -125,6 +160,8 @@ MainScreen.propTypes = {
   navigation: object.isRequired,
   attendanceSessions: arrayOf(object).isRequired,
   handleSetAttendanceSessions: func.isRequired,
+  handleSetUser: func.isRequired,
+  handleSetRegisteredIdentity: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -133,6 +170,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetAttendanceSessions: (attendanceSessions) => dispatch(setAttendanceSessions(attendanceSessions)),
+  handleSetRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
+  handleSetUser: (user) => dispatch(setUser(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

@@ -18,9 +18,21 @@ export const { setUser, setRegisteredIdentity } = createActions({
 // ACTION HANDLERS
 export default handleActions(
   {
-    SET_USER: (state, { payload: { user } }) => ({
+    SET_USER: (
+      state,
+      {
+        payload: {
+          user: {
+            data: { email, subscribedCourses, firstTimePassword, createdAt },
+          },
+        },
+      },
+    ) => ({
       ...state,
-      user,
+      email: email,
+      subscribedCourses: subscribedCourses,
+      firstTimePassword: firstTimePassword,
+      createdAt: createdAt,
     }),
     SET_REGISTERED_IDENTITY: (state, { payload: { registered } }) => ({
       ...state,
