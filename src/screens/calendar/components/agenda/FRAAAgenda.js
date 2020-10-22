@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { View, Text, ScrollView, RefreshControl } from 'react-native';
 import styles from './FRAAAgendaStyle';
-import { GET_MONTHLY_ATTENDANCE_SESSIONS } from '../../../../constants/ApiEndpoints';
+import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../../constants/ApiEndpoints';
 import { setAttendanceSessions } from '../../../../redux/reducers/AttendanceSessionsReducer';
 
 const FRAAAgenda = ({ agendaSessions, handleSetAttendanceSessions }) => {
@@ -14,14 +14,14 @@ const FRAAAgenda = ({ agendaSessions, handleSetAttendanceSessions }) => {
     try {
       setRefreshing(true);
       const request = {
-        courses: ['OENG1183', 'COSC2634'],
-        month: 9,
-        email: 'trungduong0103@gmail.com',
+        courses: ['OENG1183'],
+        startMonth: 9,
+        monthRange: 3,
       };
 
       const {
         data: { sessions },
-      } = await axios.post(GET_MONTHLY_ATTENDANCE_SESSIONS, request);
+      } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
       if (sessions) {
         setRefreshing(false);
         handleSetAttendanceSessions(sessions);

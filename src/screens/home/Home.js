@@ -1,6 +1,6 @@
 import React from 'react';
-import {object} from 'prop-types';
-import {View, Text} from 'react-native';
+import { object } from 'prop-types';
+import { View, Text } from 'react-native';
 import styles from './HomeStyle';
 
 const Home = () => {

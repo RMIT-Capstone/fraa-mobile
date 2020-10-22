@@ -11,7 +11,7 @@ import Home from '../home';
 import ROUTES from '../../navigation/routes';
 import theme from '../../theme';
 import { getAttendanceSessionsState, setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
-import { GET_MONTHLY_ATTENDANCE_SESSIONS } from '../../constants/ApiEndpoints';
+import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../constants/ApiEndpoints';
 
 const ActiveHomeIcon = require('../../assets/tab-icons/home/ActiveHomeIcon.png');
 const InactiveHomeIcon = require('../../assets/tab-icons/home/InactiveHomeIcon.png');
@@ -28,15 +28,15 @@ const MainScreen = ({ navigation, attendanceSessions, handleSetAttendanceSession
       // must call it here because calling it inside FRAACalendar will mess up with <ExpandableCalendar />
       // only call if attendance sessions is empty
       const request = {
-        courses: ['OENG1183', 'COSC2634'],
-        month: 9,
-        email: 'trungduong0103@gmail.com',
+        courses: ['OENG1183'],
+        startMonth: 9,
+        monthRange: 3,
       };
       try {
         (async function fetchAttendanceSessions() {
           const {
             data: { sessions },
-          } = await axios.post(GET_MONTHLY_ATTENDANCE_SESSIONS, request);
+          } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
           if (sessions) {
             handleSetAttendanceSessions(sessions);
           }
