@@ -2,6 +2,9 @@ import { StyleSheet } from 'react-native';
 import theme from '../../theme';
 
 const styles = StyleSheet.create({
+  emptyCoursesText: {
+    marginTop: 35,
+  },
   container: {
     flex: 1,
     backgroundColor: theme.palette.secondary.white,
@@ -73,9 +76,9 @@ const styles = StyleSheet.create({
   },
   mockProfile: {
     backgroundColor: '#c4c4c4',
-    height: 100,
-    width: 100,
-    borderRadius: 50,
+    height: 70,
+    width: 70,
+    borderRadius: 35,
   },
   profileInfoContainer: {
     flex: 2,

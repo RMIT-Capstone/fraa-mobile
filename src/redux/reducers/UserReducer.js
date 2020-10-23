@@ -2,12 +2,7 @@ import { createActions, handleActions } from 'redux-actions';
 import { createSelector } from 'reselect';
 
 // INITIAL STATE
-const initialState = {
-  email: '',
-  oneTimePassword: false,
-  registeredIdentity: false,
-  createdAt: '',
-};
+const initialState = {};
 
 // ACTION CREATORS
 export const { setUser, setRegisteredIdentity } = createActions({
@@ -22,17 +17,17 @@ export default handleActions(
       state,
       {
         payload: {
-          user: {
-            data: { email, subscribedCourses, firstTimePassword, createdAt },
-          },
+          user: { email, displayName, school, subscribedCourses, firstTimePassword, createdAt },
         },
       },
     ) => ({
       ...state,
-      email: email,
-      subscribedCourses: subscribedCourses,
-      firstTimePassword: firstTimePassword,
-      createdAt: createdAt,
+      email,
+      displayName,
+      school,
+      subscribedCourses,
+      firstTimePassword,
+      createdAt,
     }),
     SET_REGISTERED_IDENTITY: (state, { payload: { registered } }) => ({
       ...state,

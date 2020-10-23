@@ -12,7 +12,7 @@ import ROUTES from '../../navigation/routes';
 import theme from '../../theme';
 import { getAttendanceSessionsState, setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 import { CHECK_IDENTITY_API, GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, GET_USER_API } from '../../constants/ApiEndpoints';
-import { setRegisteredIdentity, setUser } from '../../redux/reducers/UserReducer';
+import { getUserState, setRegisteredIdentity, setUser } from '../../redux/reducers/UserReducer';
 
 const ActiveHomeIcon = require('../../assets/tab-icons/home/ActiveHomeIcon.png');
 const InactiveHomeIcon = require('../../assets/tab-icons/home/InactiveHomeIcon.png');
@@ -24,6 +24,7 @@ const InactiveCalendarIcon = require('../../assets/tab-icons/calendar/InactiveCa
 const MainScreen = ({
   navigation,
   attendanceSessions,
+  user,
   handleSetAttendanceSessions,
   handleSetRegisteredIdentity,
   handleSetUser,
@@ -60,7 +61,6 @@ const MainScreen = ({
     const fetchUser = async () => {
       const { data } = await axios.post(GET_USER_API, { email });
       if (data) {
-        console.log(data);
         handleSetUser(data);
       }
     };
@@ -73,14 +73,15 @@ const MainScreen = ({
       }
     };
 
-    try {
-      Promise.all([fetchUser(), fetchUserIdentity()]);
-    } catch (errorLoadUser) {
-      console.warn(errorLoadUser);
+    const { email: reduxEmail } = user;
+    if (!reduxEmail) {
+      try {
+        Promise.all([fetchUser(), fetchUserIdentity()]);
+      } catch (errorLoadUser) {
+        console.warn(errorLoadUser);
+      }
     }
   }, []);
-
-  useEffect(() => {});
 
   const TabContent = () => {
     switch (currentTab) {
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
 MainScreen.propTypes = {
   navigation: object.isRequired,
   attendanceSessions: arrayOf(object).isRequired,
+  user: object.isRequired,
   handleSetAttendanceSessions: func.isRequired,
   handleSetUser: func.isRequired,
   handleSetRegisteredIdentity: func.isRequired,
@@ -166,6 +168,7 @@ MainScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   attendanceSessions: getAttendanceSessionsState(state),
+  user: getUserState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

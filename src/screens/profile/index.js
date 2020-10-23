@@ -1,32 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import Profile from './Profile';
 import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import { navigateTo } from '../../helpers/navigation';
 import ROUTES from '../../navigation/routes';
-import MOCK_COURSES from './MockCourses';
-import { CHECK_IDENTITY_API } from '../../constants/ApiEndpoints';
 
 const ProfileWrapper = ({ navigation, user, handleSetRegisteredIdentity }) => {
-  const { registeredIdentity } = user;
-
-  useEffect(() => {
-    if (!registeredIdentity) {
-      try {
-        (async function fetchRegisterStatus() {
-          const {
-            data: { msg },
-          } = await axios.get(CHECK_IDENTITY_API);
-          handleSetRegisteredIdentity(msg);
-        })();
-      } catch (errorFetchRegisterStatus) {
-        console.warn(errorFetchRegisterStatus);
-      }
-    }
-  }, [registeredIdentity, handleSetRegisteredIdentity]);
-
   const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
 
   const onVerify = () => {
@@ -37,15 +17,7 @@ const ProfileWrapper = ({ navigation, user, handleSetRegisteredIdentity }) => {
     handleSetRegisteredIdentity(false);
   };
 
-  return (
-    <Profile
-      isRegistered={registeredIdentity}
-      courses={MOCK_COURSES}
-      colors={colors}
-      onVerify={onVerify}
-      reset={reset}
-    />
-  );
+  return <Profile user={user} colors={colors} onVerify={onVerify} reset={reset} />;
 };
 
 ProfileWrapper.propTypes = {
