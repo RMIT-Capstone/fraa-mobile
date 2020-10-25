@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from './configs/header';
 
 // tabs
-import MainScreen from '../screens/main-screen';
+import MainScreen from '../screens/main-screen/MainScreen';
 import Home from '../screens/home';
 import Profile from '../screens/profile';
 import FRAACalendar from '../screens/calendar/FRAACalendar';

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { StyleSheet } from 'react-native';
+import { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
-import styles from './CalendarStyle';
 import FRAAAgenda from './components/agenda';
 import { getAttendanceSessionsState } from '../../redux/reducers/AttendanceSessionsReducer';
 
 const FRAACalendar = ({ navigation, attendanceSessions }) => {
+  const { sessions, markedDates } = attendanceSessions;
   const todayDate = new Date().toISOString().split('T')[0];
+  const now = new Date().toISOString().split('T')[0];
   const [agendaSessions, setAgendaSessions] = useState([]);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ const FRAACalendar = ({ navigation, attendanceSessions }) => {
   }, []);
 
   const findPressedDateSession = (date) => {
-    const dateSessions = attendanceSessions.filter((session) => {
+    const dateSessions = sessions.filter((session) => {
       const { validOn } = session;
       const eventDate = validOn.split('T')[0];
       return eventDate === date;
@@ -23,19 +25,6 @@ const FRAACalendar = ({ navigation, attendanceSessions }) => {
     setAgendaSessions(dateSessions);
   };
 
-  const getMarkedDates = () => {
-    let markedDates = {};
-    attendanceSessions.forEach((session) => {
-      const { validOn } = session;
-      const eventDate = validOn.split('T')[0];
-      markedDates[eventDate] = {};
-      markedDates[eventDate].marked = true;
-      markedDates[eventDate].dotColor = '#E60028';
-    });
-    return markedDates;
-  };
-
-  const now = new Date().toISOString().split('T')[0];
   const theme = {
     selectedDayBackgroundColor: '#000054',
   };
@@ -49,7 +38,7 @@ const FRAACalendar = ({ navigation, attendanceSessions }) => {
       todayBottomMargin={10}>
       <ExpandableCalendar
         theme={theme}
-        markedDates={getMarkedDates()}
+        markedDates={markedDates}
         markingType="single"
         style={styles.calendar}
         firstDay={1}
@@ -59,9 +48,17 @@ const FRAACalendar = ({ navigation, attendanceSessions }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
 FRAACalendar.propTypes = {
   navigation: object.isRequired,
-  attendanceSessions: arrayOf(object).isRequired,
+  attendanceSessions: object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

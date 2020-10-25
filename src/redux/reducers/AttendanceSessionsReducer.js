@@ -2,17 +2,24 @@ import { createActions, handleActions } from 'redux-actions';
 import { createSelector } from 'reselect';
 
 // INITIAL STATE
-const initialState = [];
+const initialState = {
+  sessions: [],
+  markedDates: {},
+};
 
 // ACTION CREATORS
 export const { setAttendanceSessions } = createActions({
-  SET_ATTENDANCE_SESSIONS: undefined,
+  SET_ATTENDANCE_SESSIONS: (sessions, markedDates) => ({ sessions, markedDates }),
 });
 
 // ACTION HANDLERS
 export default handleActions(
   {
-    SET_ATTENDANCE_SESSIONS: (state, action) => [...action.payload],
+    SET_ATTENDANCE_SESSIONS: (state, { payload: { sessions, markedDates } }) => ({
+      ...state,
+      sessions,
+      markedDates,
+    }),
   },
   initialState,
 );

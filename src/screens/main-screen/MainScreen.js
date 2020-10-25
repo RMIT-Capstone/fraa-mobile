@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { object, arrayOf, func } from 'prop-types';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { object, func } from 'prop-types';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import styles from './MainScreenStyle';
 
 import FRAACalendar from '../calendar/FRAACalendar';
 import Profile from '../profile';
 import Home from '../home';
 
 import ROUTES from '../../navigation/routes';
-import theme from '../../theme';
 import { getAttendanceSessionsState, setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 import { CHECK_IDENTITY_API, GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, GET_USER_API } from '../../constants/ApiEndpoints';
 import { getUserState, setRegisteredIdentity, setUser } from '../../redux/reducers/UserReducer';
@@ -21,6 +21,7 @@ const InactiveProfileIcon = require('../../assets/tab-icons/profile/InactiveProf
 const ActiveCalendarIcon = require('../../assets/tab-icons/calendar/ActiveCalendarIcon.png');
 const InactiveCalendarIcon = require('../../assets/tab-icons/calendar/InactiveCalendarIcon.png');
 
+// TODO: handle error fetch user or error fetch attendance sessions!
 const MainScreen = ({
   navigation,
   attendanceSessions,
@@ -32,36 +33,19 @@ const MainScreen = ({
   const [currentTab, setCurrentTab] = useState(ROUTES.HOME);
 
   useEffect(() => {
-    if (attendanceSessions.length === 0) {
-      // must call it here because calling it inside FRAACalendar will mess up with <ExpandableCalendar />
-      // only call if attendance sessions is empty
-      const request = {
-        courses: ['OENG1183'],
-        startMonth: 9,
-        monthRange: 3,
-      };
-      try {
-        (async function fetchAttendanceSessions() {
-          const {
-            data: { sessions },
-          } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
-          if (sessions) {
-            handleSetAttendanceSessions(sessions);
-          }
-        })();
-      } catch (errorFetchAttendanceSessions) {
-        console.warn(errorFetchAttendanceSessions);
-      }
-    }
-  }, [attendanceSessions]);
-
-  useEffect(() => {
-    const email = 'trungduong0103@gmail.com';
+    const userRequest = {
+      email: 'trungduong0103@gmail.com',
+    };
 
     const fetchUser = async () => {
-      const { data } = await axios.post(GET_USER_API, { email });
+      const { data } = await axios.post(GET_USER_API, userRequest);
       if (data) {
-        handleSetUser(data);
+        const { error } = data;
+        if (error) {
+          console.warn('error fetchUser: ', error);
+        } else {
+          handleSetUser(data);
+        }
       }
     };
 
@@ -78,10 +62,40 @@ const MainScreen = ({
       try {
         Promise.all([fetchUser(), fetchUserIdentity()]);
       } catch (errorLoadUser) {
-        console.warn(errorLoadUser);
+        console.warn('error load user: ', errorLoadUser);
       }
     }
   }, []);
+
+  useEffect(() => {
+    // must call it here because calling it inside FRAACalendar will mess up with <ExpandableCalendar />
+    // only call if attendance sessions is empty
+    const { sessions } = attendanceSessions;
+    const { subscribedCourses } = user;
+
+    if (sessions.length === 0 && subscribedCourses) {
+      const sessionsRequest = {
+        courses: subscribedCourses,
+        startMonth: 9,
+        monthRange: 3,
+      };
+      try {
+        (async function fetchAttendanceSessions() {
+          const { data } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, sessionsRequest);
+          if (data) {
+            const { sessions: axiosSessions, markedDates, error } = data;
+            if (error) {
+              console.warn('error fetchAttendanceSessions: ', error);
+            } else {
+              handleSetAttendanceSessions(axiosSessions, markedDates);
+            }
+          }
+        })();
+      } catch (errorFetchAttendanceSessions) {
+        console.warn('error fetch sessions: ', errorFetchAttendanceSessions);
+      }
+    }
+  }, [attendanceSessions, user]);
 
   const TabContent = () => {
     switch (currentTab) {
@@ -126,40 +140,9 @@ const MainScreen = ({
   );
 };
 
-const styles = StyleSheet.create({
-  centeredColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 11,
-  },
-  tabs: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    width: '100%',
-    backgroundColor: theme.palette.secondary.white,
-  },
-  tabButton: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tabImage: {
-    width: 30,
-    height: 30,
-    resizeMode: 'contain',
-  },
-});
-
 MainScreen.propTypes = {
   navigation: object.isRequired,
-  attendanceSessions: arrayOf(object).isRequired,
+  attendanceSessions: object.isRequired,
   user: object.isRequired,
   handleSetAttendanceSessions: func.isRequired,
   handleSetUser: func.isRequired,
@@ -172,7 +155,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAttendanceSessions: (attendanceSessions) => dispatch(setAttendanceSessions(attendanceSessions)),
+  handleSetAttendanceSessions: (sessions, markedDates) => dispatch(setAttendanceSessions(sessions, markedDates)),
   handleSetRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
   handleSetUser: (user) => dispatch(setUser(user)),
 });
