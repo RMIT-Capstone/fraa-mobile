@@ -6,7 +6,7 @@ import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
 import FRAAAgenda from './components/agenda';
 import { getAttendanceSessionsState } from '../../redux/reducers/AttendanceSessionsReducer';
 
-const FRAACalendar = ({ navigation, attendanceSessions }) => {
+const FRAACalendar = ({ attendanceSessions }) => {
   const { sessions, markedDates } = attendanceSessions;
   const todayDate = new Date().toISOString().split('T')[0];
   const now = new Date().toISOString().split('T')[0];

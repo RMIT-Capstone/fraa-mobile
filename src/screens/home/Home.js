@@ -6,7 +6,7 @@ import styles from './HomeStyle';
 import { getAttendanceSessionsState } from '../../redux/reducers/AttendanceSessionsReducer';
 const CheckInIcon = require('../../assets/CheckInIcon.png');
 
-const Home = ({ navigation, attendanceSessions }) => {
+const Home = () => {
   // hard code here to avoid restarting app every time code changes to see the effect
   const [sessions, setSessions] = useState([
     {
@@ -14,8 +14,18 @@ const Home = ({ navigation, attendanceSessions }) => {
       location: 'SGS/2.4.041 (Lab-Mac)',
       courseName: 'Capstone Project - Part A',
       createdAt: '2020-10-27T12:55:00.209Z',
-      validOn: '2020-10-28T07:30:00.364Z',
-      expireOn: '2020-10-28T07:40:00.364Z',
+      validOn: '2020-10-28T08:42:00.577Z',
+      expireOn: '2020-10-28T08:43:00.577Z',
+      courseCode: 'OENG1183',
+      id: 'A3eYst4EtyXpSA6RQF98',
+    },
+    {
+      lecturer: 'Yossi Nygate',
+      location: 'SGS/2.4.041 (Lab-Mac)',
+      courseName: 'Capstone Project - Part B',
+      createdAt: '2020-10-27T12:55:00.209Z',
+      validOn: '2020-10-28T08:44:00.577Z',
+      expireOn: '2020-10-28T08:45:00.577Z',
       courseCode: 'OENG1183',
       id: 'A3eYst4EtyXpSA6RQF98',
     },
@@ -43,8 +53,9 @@ const Home = ({ navigation, attendanceSessions }) => {
 
   useEffect(() => {
     setDisplaySession(sessions[0]);
-    let interval = null;
     loadDisplaySession();
+
+    let interval = null;
 
     interval = setInterval(() => {
       loadDisplaySession();

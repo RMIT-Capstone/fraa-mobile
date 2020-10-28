@@ -54,11 +54,13 @@ const MainScreenWrapper = ({
     const { email: reduxEmail } = user;
     if (!reduxEmail) {
       setLoading(true);
-      try {
-        Promise.all([fetchUser(), fetchUserIdentity()]);
-      } catch (errorLoadUser) {
-        setErrors((prevState) => ({ ...prevState, errorLoadUser }));
-      }
+      Promise.all([fetchUser(), fetchUserIdentity()])
+        .then(() => {
+          setLoading(false);
+        })
+        .catch((errorLoadUser) => {
+          setErrors((prevState) => ({ ...prevState, errorLoadUser }));
+        });
     }
   }, []);
 
@@ -67,13 +69,13 @@ const MainScreenWrapper = ({
     const { subscribedCourses } = user;
 
     if (sessions.length === 0 && subscribedCourses) {
-      setLoading(true);
       const sessionsRequest = {
         courses: subscribedCourses,
         startMonth: 9,
         monthRange: 3,
       };
       try {
+        setLoading(true);
         (async () => {
           const { data } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, sessionsRequest);
           if (data) {

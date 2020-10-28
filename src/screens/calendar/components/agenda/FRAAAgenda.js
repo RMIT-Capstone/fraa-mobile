@@ -24,8 +24,8 @@ const FRAAAgenda = ({ agendaSessions, handleSetAttendanceSessions }) => {
       if (data) {
         const { sessions, markedDates } = data;
         handleSetAttendanceSessions(sessions, markedDates);
-        setRefreshing(false);
       }
+      setRefreshing(false);
     } catch (errorGetAttendanceSessions) {
       console.warn(errorGetAttendanceSessions);
     }
