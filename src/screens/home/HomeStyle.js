@@ -39,18 +39,75 @@ const styles = StyleSheet.create({
     width: 360,
     borderRadius: 30,
     marginBottom: 17,
+    padding: 23,
     backgroundColor: theme.palette.secondary.white,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  firstEventRow: {
+    flex: 3,
+    height: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  time: {
+    fontWeight: '400',
+    fontSize: 17,
+    color: '#444444',
+    marginBottom: 40,
+  },
+  courseName: {
+    color: theme.palette.primary.blue,
+    fontWeight: '500',
+    fontSize: 20,
+    marginBottom: 15,
+  },
+  location: {
+    color: '#444444',
+    fontWeight: '400',
+    fontSize: 17,
+  },
+  secondEventRow: {
+    flex: 2,
+    height: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+  },
+  day: {
+    color: theme.palette.primary.red,
+    fontWeight: '500',
+    fontSize: 20,
+    marginBottom: 3,
+  },
+  date: {
+    color: theme.palette.primary.blue,
+    fontWeight: '300',
+    fontSize: 35,
+    marginBottom: 3,
+  },
+  month: {
+    color: '#444444',
+    fontWeight: '400',
+    fontSize: 17,
+    marginBottom: 3,
   },
   checkInBtnContainer: {
-    width: 200,
-    height: 50,
-    borderRadius: 55,
+    width: 228,
+    height: 60,
+    borderRadius: 50,
   },
   activeBtn: {
     backgroundColor: theme.palette.primary.red,
   },
   disabledBtn: {
     backgroundColor: '#FBFBFB',
+    padding: 10,
+  },
+  disabledText: {
+    color: '#888888',
+    fontWeight: '400',
+    fontSize: 13,
   },
   checkInIcon: {
     width: 20,
@@ -59,8 +116,8 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   checkInText: {
-    fontWeight: '500',
     color: theme.palette.secondary.white,
+    fontWeight: '500',
   },
   raised: {
     shadowColor: '#000',
@@ -74,6 +131,18 @@ const styles = StyleSheet.create({
   },
   bottomChildContainer: {
     flex: 2,
+  },
+  infoContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 50,
+    width: 360,
+    height: 88,
+    padding: 25,
+  },
+  infoText: {
+    color: '#444444',
+    fontWeight: '400',
+    fontSize: 15,
   },
 });
 

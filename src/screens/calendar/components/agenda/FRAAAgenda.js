@@ -6,6 +6,7 @@ import { View, Text, ScrollView, RefreshControl } from 'react-native';
 import styles from './FRAAAgendaStyle';
 import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../../constants/ApiEndpoints';
 import { setAttendanceSessions } from '../../../../redux/reducers/AttendanceSessionsReducer';
+import { getUserState } from '../../../../redux/reducers/UserReducer';
 
 const FRAAAgenda = ({ agendaSessions, handleSetAttendanceSessions }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -19,12 +20,11 @@ const FRAAAgenda = ({ agendaSessions, handleSetAttendanceSessions }) => {
         monthRange: 3,
       };
 
-      const {
-        data: { sessions },
-      } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
-      if (sessions) {
+      const { data } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
+      if (data) {
+        const { sessions, markedDates } = data;
+        handleSetAttendanceSessions(sessions, markedDates);
         setRefreshing(false);
-        handleSetAttendanceSessions(sessions);
       }
     } catch (errorGetAttendanceSessions) {
       console.warn(errorGetAttendanceSessions);
@@ -104,6 +104,12 @@ FRAAAgenda.propTypes = {
   handleSetAttendanceSessions: func.isRequired,
 };
 
-export default connect(null, {
-  handleSetAttendanceSessions: setAttendanceSessions,
-})(FRAAAgenda);
+const mapStateToProps = (state) => ({
+  user: getUserState(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSetAttendanceSessions: (sessions, markedDates) => dispatch(setAttendanceSessions(sessions, markedDates)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FRAAAgenda);
