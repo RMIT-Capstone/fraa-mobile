@@ -1,0 +1,11 @@
+const ROUTES = {
+  MAIN: 'MAIN',
+  HOME: 'HOME',
+  SETTINGS: 'SETTINGS',
+  CALENDAR: 'CALENDAR',
+  PROFILE: 'PROFILE',
+  CAMERA: 'CAMERA',
+  TEST: 'TEST',
+};
+
+export default ROUTES;
