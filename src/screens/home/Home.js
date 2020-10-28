@@ -72,10 +72,10 @@ const Home = () => {
     if (sessions.length !== 0 && !isHappening) {
       interval = setInterval(() => {
         let now = new Date();
-        let timeDifference1 = new Date(displaySession.validOn) - now;
-        let truncated = Math.trunc(timeDifference1 / 1000);
+        let upcomingDifference = new Date(displaySession.validOn) - now;
+        let truncated = Math.trunc(upcomingDifference / 1000);
         setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
-      }, 1000);
+      }, 300);
     }
 
     return () => {

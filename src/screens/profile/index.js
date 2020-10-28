@@ -10,7 +10,7 @@ const ProfileWrapper = ({ navigation, user, handleSetRegisteredIdentity }) => {
   const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
 
   const onVerify = () => {
-    navigateTo(navigation, ROUTES.CAMERA, { fromDashboard: false });
+    navigateTo(navigation, ROUTES.CAMERA, { fromHome: false });
   };
 
   const reset = () => {
