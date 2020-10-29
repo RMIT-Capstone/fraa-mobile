@@ -5,6 +5,7 @@ const ROUTES = {
   CALENDAR: 'CALENDAR',
   PROFILE: 'PROFILE',
   CAMERA: 'CAMERA',
+  LOGIN: 'LOGIN',
   TEST: 'TEST',
 };
 

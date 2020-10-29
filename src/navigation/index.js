@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from './configs/header';
@@ -14,6 +15,7 @@ import ROUTES from './routes';
 
 // camera
 import FRAACamera from '../shared-components/camera';
+import Login from '../screens/login/Login';
 
 const MainStack = createStackNavigator();
 
@@ -21,8 +23,15 @@ const MainStackScreens = () => {
   return (
     <MainStack.Navigator
       screenOptions={{
-        headerTitle: (props) => <Header {...props} />,
+        headerTitle: (props) => {
+          // eslint-disable-next-line react/prop-types
+          if (!props.children === ROUTES.LOGIN) {
+            return <Header {...props} />;
+          }
+          return null;
+        },
       }}>
+      <MainStack.Screen name={ROUTES.LOGIN} component={Login} />
       <MainStack.Screen name={ROUTES.MAIN} component={MainScreen} />
       <MainStack.Screen name={ROUTES.HOME} component={Home} />
       <MainStack.Screen name={ROUTES.CALENDAR} component={FRAACalendar} />
