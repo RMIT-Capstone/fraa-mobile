@@ -4,7 +4,7 @@ import axios from 'axios';
 import { object, func } from 'prop-types';
 
 import ROUTES from '../../navigation/routes';
-import { getAttendanceSessionsState, setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
+import { setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 import {
   CHECK_IDENTITY_API,
   GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE,
@@ -16,7 +16,6 @@ import MainScreen from './MainScreen';
 
 const MainScreenWrapper = ({
   navigation,
-  attendanceSessions,
   user,
   handleSetAttendanceSessions,
   handleSetRegisteredIdentity,
@@ -27,72 +26,65 @@ const MainScreenWrapper = ({
   const [errors, setErrors] = useState({ errorLoadUser: '', errorLoadSessions: '' });
 
   useEffect(() => {
+    setLoading(true);
+
     const userRequest = {
       email: DEMO_EMAIL,
+      isLecturer: false,
+    };
+
+    const fetchAttendanceSessions = async (subscribedCourses) => {
+      try {
+        const request = {
+          courses: subscribedCourses,
+          startMonth: 10,
+          monthRange: 3,
+        };
+
+        const { data } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
+        if (data) {
+          const { sessions: axiosSessions, markedDates, error } = data;
+          if (error) {
+            console.warn('error fetchAttendanceSessions: ', error);
+          } else {
+            handleSetAttendanceSessions(axiosSessions, markedDates);
+          }
+        }
+      } catch (errorFetchAttendanceSessions) {
+        console.warn('error fetchAttendanceSessions: ', errorFetchAttendanceSessions);
+      }
     };
 
     const fetchUser = async () => {
-      const { data } = await axios.post(GET_USER_API, userRequest);
-      if (data) {
-        const { error } = data;
-        if (error) {
-          console.warn('error fetchUser: ', error);
-        } else {
-          handleSetUser(data);
-        }
+      const { data, error } = await axios.post(GET_USER_API, userRequest);
+      if (error) {
+        console.warn('error fetchUser: ', error);
+      } else {
+        handleSetUser(data);
+        await fetchAttendanceSessions(data.subscribedCourses);
       }
     };
 
     const fetchUserIdentity = async () => {
-      const { data } = await axios.get(CHECK_IDENTITY_API);
-      if (data) {
-        const { msg } = data;
-        handleSetRegisteredIdentity(msg);
+      const { data, error } = await axios.get(CHECK_IDENTITY_API);
+      if (error) {
+        console.warn('error fetchUserIdentity: ', error);
       }
+      const { msg } = data;
+      handleSetRegisteredIdentity(msg);
     };
 
     const { email: reduxEmail } = user;
     if (!reduxEmail) {
-      setLoading(true);
       Promise.all([fetchUser(), fetchUserIdentity()])
-        .then(() => {
-          setLoading(false);
-        })
+        .then(() => {})
         .catch((errorLoadUser) => {
+          console.warn('error load user: ', errorLoadUser);
           setErrors((prevState) => ({ ...prevState, errorLoadUser }));
         });
     }
+    setLoading(false);
   }, []);
-
-  useEffect(() => {
-    const { sessions } = attendanceSessions;
-    const { subscribedCourses } = user;
-
-    if (sessions.length === 0 && subscribedCourses) {
-      const sessionsRequest = {
-        courses: subscribedCourses,
-        startMonth: 9,
-        monthRange: 3,
-      };
-      try {
-        setLoading(true);
-        (async () => {
-          const { data } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, sessionsRequest);
-          if (data) {
-            const { sessions: axiosSessions, markedDates, error } = data;
-            if (error) {
-              console.warn('error fetchAttendanceSessions: ', error);
-            } else {
-              handleSetAttendanceSessions(axiosSessions, markedDates);
-            }
-          }
-          setLoading(false);
-        })();
-      } catch (errorFetchAttendanceSessions) {
-        console.warn('error fetch sessions: ', errorFetchAttendanceSessions);
-      }
-    }
-  }, [attendanceSessions, user]);
 
   return (
     <MainScreen
@@ -115,7 +107,6 @@ MainScreenWrapper.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  attendanceSessions: getAttendanceSessionsState(state),
   user: getUserState(state),
 });
 

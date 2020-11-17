@@ -1,36 +1,9 @@
-import React, { useState } from 'react';
-import { arrayOf, object, func } from 'prop-types';
-import { connect } from 'react-redux';
-import axios from 'axios';
+import React from 'react';
+import { arrayOf, object, func, bool } from 'prop-types';
 import { View, Text, ScrollView, RefreshControl } from 'react-native';
 import styles from './FRAAAgendaStyle';
-import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../../constants/ApiEndpoints';
-import { setAttendanceSessions } from '../../../../redux/reducers/AttendanceSessionsReducer';
-import { getUserState } from '../../../../redux/reducers/UserReducer';
 
-const FRAAAgenda = ({ agendaSessions, handleSetAttendanceSessions }) => {
-  const [refreshing, setRefreshing] = useState(false);
-
-  const refetchAttendanceSessions = async () => {
-    try {
-      setRefreshing(true);
-      const request = {
-        courses: ['OENG1183'],
-        startMonth: 9,
-        monthRange: 3,
-      };
-
-      const { data } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
-      if (data) {
-        const { sessions, markedDates } = data;
-        handleSetAttendanceSessions(sessions, markedDates);
-      }
-      setRefreshing(false);
-    } catch (errorGetAttendanceSessions) {
-      console.warn(errorGetAttendanceSessions);
-    }
-  };
-
+const FRAAAgenda = ({ agendaSessions, refreshing, refetchAttendanceSessions }) => {
   const EmptyAgenda = () => {
     return (
       <View>
@@ -101,15 +74,8 @@ const FRAAAgenda = ({ agendaSessions, handleSetAttendanceSessions }) => {
 
 FRAAAgenda.propTypes = {
   agendaSessions: arrayOf(object).isRequired,
-  handleSetAttendanceSessions: func.isRequired,
+  refreshing: bool.isRequired,
+  refetchAttendanceSessions: func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  user: getUserState(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleSetAttendanceSessions: (sessions, markedDates) => dispatch(setAttendanceSessions(sessions, markedDates)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FRAAAgenda);
+export default FRAAAgenda;
