@@ -11,7 +11,7 @@ const FRAACamera = ({
   previewImage,
   loading,
   recognizedFaces,
-  fromDashboard,
+  fromHome,
   onFacesDetected,
   takePicture,
   recapture,
@@ -39,6 +39,14 @@ const FRAACamera = ({
       <Text>Loading Camera...</Text>
     </View>
   );
+
+  const CameraMessage = () => {
+    return (
+      <View style={styles.cameraMessageContainer}>
+        <Text style={styles.cameraMessage}>Place your face in the frame</Text>
+      </View>
+    );
+  };
 
   const SnapButton = ({ camera }) => (
     <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture}>
@@ -68,7 +76,7 @@ const FRAACamera = ({
             {loading ? (
               <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
             ) : (
-              <Text style={styles.snapText}>{fromDashboard ? 'Verify' : 'Register'}</Text>
+              <Text style={styles.snapText}>{fromHome ? 'Verify' : 'Register'}</Text>
             )}
           </TouchableOpacity>
           <TouchableOpacity onPress={recapture} style={styles.recapture}>
@@ -101,13 +109,17 @@ const FRAACamera = ({
           return <PendingView />;
         }
         return (
-          recognizedFaces.length !== 0 && (
-            <>
-              <FaceBounds />
-              {recognizedFaces.length === 1 && <SnapButton camera={camera} />}
-              {recognizedFaces.length > 1 && <TooManyFaces />}
-            </>
-          )
+          <>
+            <CameraMessage />
+
+            {recognizedFaces.length !== 0 && (
+              <>
+                <FaceBounds />
+                {recognizedFaces.length === 1 && <SnapButton camera={camera} />}
+                {recognizedFaces.length > 1 && <TooManyFaces />}
+              </>
+            )}
+          </>
         );
       }}
     </RNCamera>
@@ -118,7 +130,7 @@ FRAACamera.propTypes = {
   previewImage: object.isRequired,
   loading: bool.isRequired,
   recognizedFaces: arrayOf(object).isRequired,
-  fromDashboard: bool.isRequired,
+  fromHome: bool.isRequired,
   onFacesDetected: func.isRequired,
   takePicture: func.isRequired,
   recapture: func.isRequired,

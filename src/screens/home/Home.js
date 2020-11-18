@@ -55,7 +55,7 @@ const Home = ({ attendanceSessions, handleSetAttendanceSessions }) => {
         let timeDifference1 = new Date(validOn) - now;
         let truncated = Math.trunc(timeDifference1 / 1000);
         setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
-      }, 1000);
+      }, 300);
     }
 
     return () => {
