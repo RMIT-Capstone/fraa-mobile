@@ -10,10 +10,9 @@ import { setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 
 const FRAACameraWrapper = ({
   route: {
-    params: { fromDashboard },
+    params: { fromHome },
   },
   navigation,
-  handleSetUserRegisteredIdentity,
 }) => {
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewImage, setPreviewImage] = useState({ base64: '', uri: '' });
@@ -51,7 +50,7 @@ const FRAACameraWrapper = ({
     setLoading(true);
     const base64Data = new FormData();
     base64Data.append('image', previewImage.base64);
-    const url = fromDashboard ? `${VERIFY_IDENTITY_API}/${DEMO_EMAIL}` : `${REGISTER_IDENTITY_API}/${DEMO_EMAIL}`;
+    const url = fromHome ? `${VERIFY_IDENTITY_API}/${DEMO_EMAIL}` : `${REGISTER_IDENTITY_API}/${DEMO_EMAIL}`;
     const config = {
       method: 'POST',
       url,
@@ -61,8 +60,8 @@ const FRAACameraWrapper = ({
       const { data } = await axios(config);
       if (data) {
         setLoading(false);
-        if (fromDashboard) {
-          navigateTo(navigation, ROUTES.AGENDA);
+        if (fromHome) {
+          navigateTo(navigation, ROUTES.HOME);
         } else {
           navigateTo(navigation, ROUTES.PROFILE);
         }
@@ -80,7 +79,7 @@ const FRAACameraWrapper = ({
       takePicture={takePicture}
       recognizedFaces={recognizedFaces}
       registerOrVerifyIdentity={registerOrVerifyIdentity}
-      fromDashboard={fromDashboard}
+      fromHome={fromHome}
       recapture={recapture}
     />
   );

@@ -8,6 +8,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  cameraMessageContainer: {
+    position: 'absolute',
+    width: 200,
+    height: 40,
+    top: 60,
+    borderRadius: 55,
+    backgroundColor: '#AFAFAF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cameraMessage: {
+    color: theme.palette.secondary.white,
+    fontWeight: '300',
+  },
   snapButtonRow: {
     flexDirection: 'row',
     position: 'absolute',
