@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
 import FRAAAgenda from './components/agenda';
-import { getAttendanceSessionsState } from '../../redux/reducers/AttendanceSessionsReducer';
+import { getAttendanceSessionsState, setAgendaSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 
-const FRAACalendar = ({ attendanceSessions }) => {
-  const { sessions, markedDates } = attendanceSessions;
+const FRAACalendar = ({ attendanceSessions: { sessions, markedDates }, handleSetAgendaSessions }) => {
   const todayDate = new Date().toISOString().split('T')[0];
   const now = new Date().toISOString().split('T')[0];
-  const [agendaSessions, setAgendaSessions] = useState([]);
 
   useEffect(() => {
-    findPressedDateSession(todayDate);
+    findSessionsByDate(todayDate);
   }, []);
 
-  const findPressedDateSession = (date) => {
+  const findSessionsByDate = (date) => {
     const dateSessions = sessions.filter((session) => {
-      const { validOn } = session;
-      const eventDate = validOn.split('T')[0];
-      return eventDate === date;
+      if (session) {
+        const { validOn } = session;
+        const eventDate = validOn.split('T')[0];
+        return eventDate === date;
+      }
     });
-    setAgendaSessions(dateSessions);
+    handleSetAgendaSessions(dateSessions);
   };
 
   const theme = {
@@ -31,7 +31,7 @@ const FRAACalendar = ({ attendanceSessions }) => {
 
   return (
     <CalendarProvider
-      onDateChanged={(date) => findPressedDateSession(date)}
+      onDateChanged={(date) => findSessionsByDate(date)}
       date={now}
       showTodayButton
       disabledOpacity={0.6}
@@ -43,7 +43,7 @@ const FRAACalendar = ({ attendanceSessions }) => {
         style={styles.calendar}
         firstDay={1}
       />
-      <FRAAAgenda agendaSessions={agendaSessions} />
+      <FRAAAgenda />
     </CalendarProvider>
   );
 };
@@ -59,10 +59,15 @@ const styles = StyleSheet.create({
 FRAACalendar.propTypes = {
   navigation: object.isRequired,
   attendanceSessions: object.isRequired,
+  handleSetAgendaSessions: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   attendanceSessions: getAttendanceSessionsState(state),
 });
 
-export default connect(mapStateToProps, null)(FRAACalendar);
+const mapDispatchToProps = (dispatch) => ({
+  handleSetAgendaSessions: (agendaSessions) => dispatch(setAgendaSessions(agendaSessions)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FRAACalendar);

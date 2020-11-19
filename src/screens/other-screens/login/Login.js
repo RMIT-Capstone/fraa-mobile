@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import theme from '../../theme';
+import theme from '../../../theme';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });

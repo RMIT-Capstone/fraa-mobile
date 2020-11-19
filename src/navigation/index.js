@@ -6,9 +6,9 @@ import Header from './configs/header';
 
 // tabs
 import MainScreen from '../screens/main-screen';
-import Home from '../screens/home/Home';
-import Profile from '../screens/profile';
-import FRAACalendar from '../screens/calendar/FRAACalendar';
+import Home from '../screens/other-screens/home/Home';
+import Profile from '../screens/other-screens/profile';
+import FRAACalendar from '../screens/other-screens/calendar/FRAACalendar';
 
 // routes names
 import ROUTES from './routes';

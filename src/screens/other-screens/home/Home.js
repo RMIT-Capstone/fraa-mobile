@@ -3,58 +3,62 @@ import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 import { View, Text, Image } from 'react-native';
 import styles from './HomeStyle';
-import { getAttendanceSessionsState, setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
+import { getAttendanceSessionsState, setShowSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 
-const CheckInIcon = require('../../assets/CheckInIcon.png');
+const CheckInIcon = require('../../../assets/CheckInIcon.png');
 
-const Home = ({ attendanceSessions, handleSetAttendanceSessions }) => {
-  const { sessions, markedDates } = attendanceSessions;
+const Home = ({ attendanceSessions: { showSessions }, handleSetShowSessions }) => {
+  const [isLoadingSessions, setIsLoadingSessions] = useState(true);
   const [displaySession, setDisplaySession] = useState({});
   const [isHappening, setIsHappening] = useState(false);
   const [timeDifference, setTimeDifference] = useState({ hours: '', minutes: '' });
 
+  // TODO: REMOVE OLD SESSIONS + FIND HAPPENING/UPCOMING SESSIONS
+  // REMOVE OLD SESSIONS
+
   const loadDisplaySession = () => {
-    sessions.forEach((session) => {
-      const { expireOn, validOn } = displaySession;
-      let rightNow = new Date();
+    const rightNow = new Date();
+    const { validOn, expireOn } = displaySession;
+    setIsHappening(rightNow > new Date(validOn) && rightNow < new Date(expireOn));
 
-      if (session) {
-        setIsHappening(rightNow > new Date(validOn) && rightNow < new Date(expireOn));
-      }
+    const timeDifferenceLoad = new Date(validOn) - rightNow;
+    // console.log(timeDifferenceLoad);
+    const truncated = Math.trunc(timeDifferenceLoad / 1000);
+    setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
+  };
 
+  const removeOldSessions = () => {
+    const rightNow = new Date();
+    showSessions.forEach((session) => {
+      const { expireOn } = session;
       if (rightNow > new Date(expireOn)) {
-        let array = sessions.slice(1);
-        handleSetAttendanceSessions(array, markedDates);
+        const array = showSessions.slice(1);
+        handleSetShowSessions(array);
         setDisplaySession(array[0]);
       }
     });
   };
 
   useEffect(() => {
-    setDisplaySession(sessions[0]);
-    loadDisplaySession();
+    if (showSessions.length !== 0) {
+      setDisplaySession(showSessions[0]);
 
-    let interval = null;
-
-    interval = setInterval(() => {
+      removeOldSessions();
       loadDisplaySession();
-    }, 1000);
+    } else {
+      setDisplaySession({});
+    }
 
-    return () => {
-      clearInterval(interval);
-    };
-  });
+    setIsLoadingSessions(false);
+  }, []);
 
   useEffect(() => {
     let interval = null;
+    removeOldSessions();
 
-    if (sessions.length !== 0 && !isHappening) {
-      const { validOn } = displaySession;
+    if (showSessions.length !== 0 && displaySession) {
       interval = setInterval(() => {
-        let now = new Date();
-        let timeDifference1 = new Date(validOn) - now;
-        let truncated = Math.trunc(timeDifference1 / 1000);
-        setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
+        loadDisplaySession();
       }, 300);
     }
 
@@ -68,13 +72,22 @@ const Home = ({ attendanceSessions, handleSetAttendanceSessions }) => {
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   };
 
-  if (sessions.length === 0) {
+  if (isLoadingSessions) {
+    return (
+      <View style={[styles.container, styles.centered]}>
+        <Text>Loading sessions...</Text>
+      </View>
+    );
+  }
+
+  if (showSessions.length === 0 || !displaySession) {
     return (
       <View style={[styles.container, styles.centered]}>
         <Text>No events today. Take a break, get some rest.</Text>
       </View>
     );
   }
+
   const { validOn, courseName, location } = displaySession;
   const today = new Date();
   const validOnDateObject = new Date(validOn);
@@ -127,7 +140,7 @@ const Home = ({ attendanceSessions, handleSetAttendanceSessions }) => {
 Home.propTypes = {
   navigation: object.isRequired,
   attendanceSessions: object.isRequired,
-  handleSetAttendanceSessions: func.isRequired,
+  handleSetShowSessions: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -135,7 +148,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAttendanceSessions: (sessions, markedDates) => dispatch(setAttendanceSessions(sessions, markedDates)),
+  handleSetShowSessions: (showSessions) => dispatch(setShowSessions(showSessions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

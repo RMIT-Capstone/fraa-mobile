@@ -2,9 +2,9 @@ import React from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import Profile from './Profile';
-import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
-import { navigateTo } from '../../helpers/navigation';
-import ROUTES from '../../navigation/routes';
+import { getUserState, setRegisteredIdentity } from '../../../redux/reducers/UserReducer';
+import { navigateTo } from '../../../helpers/navigation';
+import ROUTES from '../../../navigation/routes';
 
 const ProfileWrapper = ({ navigation, user, handleSetRegisteredIdentity }) => {
   const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
