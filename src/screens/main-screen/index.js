@@ -10,26 +10,12 @@ import {
   DEMO_EMAIL,
 } from '../../constants/ApiEndpoints';
 
-import {
-  setAgendaSessions,
-  setAttendanceSessions,
-  setMarkedDates,
-  setShowSessions,
-} from '../../redux/reducers/AttendanceSessionsReducer';
+import { setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 import { getUserState, setRegisteredIdentity, setUser } from '../../redux/reducers/UserReducer';
 
 import MainScreen from './MainScreen';
 
-const MainScreenWrapper = ({
-  navigation,
-  user,
-  handleSetAttendanceSessions,
-  handleSetShowSessions,
-  handleSetAgendaSessions,
-  handleSetMarkedDates,
-  handleSetRegisteredIdentity,
-  handleSetUser,
-}) => {
+const MainScreenWrapper = ({ navigation, user, handleSetAllSessions, handleSetUser, handleSetRegisteredIdentity }) => {
   const [currentTab, setCurrentTab] = useState(ROUTES.HOME);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(undefined);
@@ -59,15 +45,12 @@ const MainScreenWrapper = ({
           console.warn('error fetchAttendanceSessions: ', fetchAttendanceSessionsError);
         } else {
           const { sessions: axiosSessions, markedDates } = data;
-          handleSetAttendanceSessions(axiosSessions);
-          handleSetShowSessions(axiosSessions);
-          handleSetMarkedDates(markedDates);
           const dateSessions = axiosSessions.filter((session) => {
             const { validOn } = session;
             const eventDate = validOn.split('T')[0];
             return eventDate === new Date().toISOString().split('T')[0];
           });
-          handleSetAgendaSessions(dateSessions);
+          handleSetAllSessions(axiosSessions, axiosSessions, dateSessions, markedDates);
         }
       } catch (errorFetchAttendanceSessions) {
         console.warn('error fetchAttendanceSessions: ', errorFetchAttendanceSessions);
@@ -121,10 +104,7 @@ const MainScreenWrapper = ({
 MainScreenWrapper.propTypes = {
   navigation: object.isRequired,
   user: object.isRequired,
-  handleSetAttendanceSessions: func.isRequired,
-  handleSetShowSessions: func.isRequired,
-  handleSetAgendaSessions: func.isRequired,
-  handleSetMarkedDates: func.isRequired,
+  handleSetAllSessions: func.isRequired,
   handleSetUser: func.isRequired,
   handleSetRegisteredIdentity: func.isRequired,
 };
@@ -134,10 +114,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAttendanceSessions: (sessions) => dispatch(setAttendanceSessions(sessions)),
-  handleSetAgendaSessions: (agendaSessions) => dispatch(setAgendaSessions(agendaSessions)),
-  handleSetShowSessions: (showSessions) => dispatch(setShowSessions(showSessions)),
-  handleSetMarkedDates: (markedDates) => dispatch(setMarkedDates(markedDates)),
+  handleSetAllSessions: (sessions, homeScreenSessions, agendaSessions, markedDates) =>
+    dispatch(setAllSessions(sessions, homeScreenSessions, agendaSessions, markedDates)),
   handleSetRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
   handleSetUser: (user) => dispatch(setUser(user)),
 });

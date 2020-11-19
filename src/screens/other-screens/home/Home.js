@@ -3,18 +3,15 @@ import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 import { View, Text, Image } from 'react-native';
 import styles from './HomeStyle';
-import { getAttendanceSessionsState, setShowSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
+import { getAttendanceSessionsState, setHomeScreenSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 
 const CheckInIcon = require('../../../assets/CheckInIcon.png');
 
-const Home = ({ attendanceSessions: { showSessions }, handleSetShowSessions }) => {
+const Home = ({ attendanceSessions: { homeScreenSessions }, handleSetHomeSessions }) => {
   const [isLoadingSessions, setIsLoadingSessions] = useState(true);
   const [displaySession, setDisplaySession] = useState({});
   const [isHappening, setIsHappening] = useState(false);
   const [timeDifference, setTimeDifference] = useState({ hours: '', minutes: '' });
-
-  // TODO: REMOVE OLD SESSIONS + FIND HAPPENING/UPCOMING SESSIONS
-  // REMOVE OLD SESSIONS
 
   const loadDisplaySession = () => {
     const rightNow = new Date();
@@ -22,27 +19,25 @@ const Home = ({ attendanceSessions: { showSessions }, handleSetShowSessions }) =
     setIsHappening(rightNow > new Date(validOn) && rightNow < new Date(expireOn));
 
     const timeDifferenceLoad = new Date(validOn) - rightNow;
-    // console.log(timeDifferenceLoad);
     const truncated = Math.trunc(timeDifferenceLoad / 1000);
     setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
   };
 
   const removeOldSessions = () => {
     const rightNow = new Date();
-    showSessions.forEach((session) => {
+    homeScreenSessions.forEach((session) => {
       const { expireOn } = session;
       if (rightNow > new Date(expireOn)) {
-        const array = showSessions.slice(1);
-        handleSetShowSessions(array);
+        const array = homeScreenSessions.slice(1);
+        handleSetHomeSessions(array);
         setDisplaySession(array[0]);
       }
     });
   };
 
   useEffect(() => {
-    if (showSessions.length !== 0) {
-      setDisplaySession(showSessions[0]);
-
+    if (homeScreenSessions.length !== 0) {
+      setDisplaySession(homeScreenSessions[0]);
       removeOldSessions();
       loadDisplaySession();
     } else {
@@ -56,7 +51,7 @@ const Home = ({ attendanceSessions: { showSessions }, handleSetShowSessions }) =
     let interval = null;
     removeOldSessions();
 
-    if (showSessions.length !== 0 && displaySession) {
+    if (homeScreenSessions.length !== 0 && displaySession) {
       interval = setInterval(() => {
         loadDisplaySession();
       }, 300);
@@ -80,7 +75,7 @@ const Home = ({ attendanceSessions: { showSessions }, handleSetShowSessions }) =
     );
   }
 
-  if (showSessions.length === 0 || !displaySession) {
+  if (homeScreenSessions.length === 0 || !displaySession) {
     return (
       <View style={[styles.container, styles.centered]}>
         <Text>No events today. Take a break, get some rest.</Text>
@@ -140,7 +135,7 @@ const Home = ({ attendanceSessions: { showSessions }, handleSetShowSessions }) =
 Home.propTypes = {
   navigation: object.isRequired,
   attendanceSessions: object.isRequired,
-  handleSetShowSessions: func.isRequired,
+  handleSetHomeSessions: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -148,7 +143,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetShowSessions: (showSessions) => dispatch(setShowSessions(showSessions)),
+  handleSetHomeSessions: (homeScreenSessions) => dispatch(setHomeScreenSessions(homeScreenSessions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

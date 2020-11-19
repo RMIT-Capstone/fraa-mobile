@@ -7,7 +7,7 @@ import { getUserState } from '../../../../../redux/reducers/UserReducer';
 import {
   getAttendanceSessionsState,
   setAgendaSessions,
-  setAttendanceSessions,
+  setSessions,
   setMarkedDates,
 } from '../../../../../redux/reducers/AttendanceSessionsReducer';
 import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../../../constants/ApiEndpoints';
@@ -82,7 +82,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAttendanceSessions: (sessions) => dispatch(setAttendanceSessions(sessions)),
+  handleSetAttendanceSessions: (sessions) => dispatch(setSessions(sessions)),
   handleSetAgendaSessions: (agendaSessions) => dispatch(setAgendaSessions(agendaSessions)),
   handleSetMarkedDates: (markedDates) => dispatch(setMarkedDates(markedDates)),
 });
