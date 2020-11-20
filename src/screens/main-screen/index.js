@@ -30,9 +30,10 @@ const MainScreenWrapper = ({ navigation, user, handleSetAllSessions, handleSetUs
 
     const fetchAttendanceSessions = async (subscribedCourses) => {
       try {
+        const today = new Date();
         const request = {
           courses: subscribedCourses,
-          startMonth: 10,
+          startMonth: today.getMonth(),
           monthRange: 3,
         };
 

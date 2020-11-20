@@ -4,53 +4,34 @@ import { object, func } from 'prop-types';
 import axios from 'axios';
 import FRAAAgenda from './FRAAAgenda';
 import { getUserState } from '../../../../../redux/reducers/UserReducer';
-import {
-  getAttendanceSessionsState,
-  setAgendaSessions,
-  setSessions,
-  setMarkedDates,
-} from '../../../../../redux/reducers/AttendanceSessionsReducer';
+import { getAttendanceSessionsState, setAllSessions } from '../../../../../redux/reducers/AttendanceSessionsReducer';
 import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../../../constants/ApiEndpoints';
 
-const FRAAAgendaWrapper = ({
-  attendanceSessions: { agendaSessions },
-  user,
-  handleSetAttendanceSessions,
-  // handleSetMarkedDates,
-  // handleSetAgendaSessions,
-}) => {
+const FRAAAgendaWrapper = ({ attendanceSessions: { agendaSessions }, user, handleSetAllAttendanceSessions }) => {
   const [refreshing, setRefreshing] = useState(false);
-  console.log(agendaSessions, 'in agenda');
-  const removeOldSessions = (sessions) => {
-    // const now = new Date();
-
-    // const filteredAttendanceSessions = sessions.filter((session) => {
-    //   const { validOn } = session;
-    //   return new Date(validOn) > now;
-    // });
-
-    handleSetAttendanceSessions(sessions);
-    // handleSetAgendaSessions();
-  };
-
+  //TODO: CHECK THIS
   const refetchAttendanceSessions = async () => {
     const { subscribedCourses } = user;
     setRefreshing(true);
     try {
+      const today = new Date();
       const request = {
         courses: subscribedCourses,
-        startMonth: 10,
+        startMonth: today.getMonth(),
         monthRange: 3,
       };
       (async () => {
-        const { data } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
-        if (data) {
-          const { sessions, error } = data;
-          if (error) {
-            console.warn('error fetchAttendanceSessions: ', error);
-          } else {
-            removeOldSessions(sessions);
-          }
+        const { data, error } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
+        if (error) {
+          console.warn('error fetchAttendanceSessions: ', error);
+        } else {
+          const { sessions, markedDates } = data;
+          const dateSessions = sessions.filter((session) => {
+            const { validOn } = session;
+            const eventDate = validOn.split('T')[0];
+            return eventDate === new Date().toISOString().split('T')[0];
+          });
+          handleSetAllAttendanceSessions(sessions, sessions, dateSessions, markedDates);
         }
         setRefreshing(false);
       })();
@@ -71,9 +52,7 @@ const FRAAAgendaWrapper = ({
 FRAAAgendaWrapper.propTypes = {
   attendanceSessions: object.isRequired,
   user: object.isRequired,
-  handleSetAttendanceSessions: func.isRequired,
-  handleSetMarkedDates: func.isRequired,
-  handleSetAgendaSessions: func.isRequired,
+  handleSetAllAttendanceSessions: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -82,9 +61,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAttendanceSessions: (sessions) => dispatch(setSessions(sessions)),
-  handleSetAgendaSessions: (agendaSessions) => dispatch(setAgendaSessions(agendaSessions)),
-  handleSetMarkedDates: (markedDates) => dispatch(setMarkedDates(markedDates)),
+  handleSetAllAttendanceSessions: (session, homeSessions, agendaSessions, markedDates) =>
+    dispatch(setAllSessions(session, homeSessions, agendaSessions, markedDates)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FRAAAgendaWrapper);
