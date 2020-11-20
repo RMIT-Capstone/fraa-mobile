@@ -72,9 +72,10 @@ const MainScreenWrapper = ({ navigation, user, handleSetAllSessions, handleSetUs
       const { data, error: fetchUserIdentityError } = await axios.get(CHECK_IDENTITY_API);
       if (fetchUserIdentityError) {
         console.warn('error fetchUserIdentity: ', fetchUserIdentityError);
+      } else {
+        const { msg } = data;
+        handleSetRegisteredIdentity(msg);
       }
-      const { msg } = data;
-      handleSetRegisteredIdentity(msg);
     };
 
     const { email: reduxEmail } = user;
