@@ -111,7 +111,6 @@ const FRAACamera = ({
         return (
           <>
             <CameraMessage />
-
             {recognizedFaces.length !== 0 && (
               <>
                 <FaceBounds />

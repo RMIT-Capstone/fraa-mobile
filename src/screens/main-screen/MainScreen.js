@@ -5,7 +5,7 @@ import styles from './MainScreenStyle';
 
 import FRAACalendar from '../other-screens/calendar/FRAACalendar';
 import Profile from '../other-screens/profile';
-import Home from '../other-screens/home/Home';
+import Home from '../other-screens/home';
 
 import ROUTES from '../../navigation/routes';
 import Loading from './components/loading/Loading';

@@ -1,67 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { object, func } from 'prop-types';
+import React from 'react';
+import { arrayOf, object, bool } from 'prop-types';
 import { View, Text, Image } from 'react-native';
 import styles from './HomeStyle';
-import { getAttendanceSessionsState, setHomeScreenSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 
 const CheckInIcon = require('../../../assets/CheckInIcon.png');
 
-const Home = ({ attendanceSessions: { homeScreenSessions }, handleSetHomeSessions }) => {
-  const [isLoadingSessions, setIsLoadingSessions] = useState(true);
-  const [displaySession, setDisplaySession] = useState({});
-  const [isHappening, setIsHappening] = useState(false);
-  const [timeDifference, setTimeDifference] = useState({ hours: '', minutes: '' });
-
-  const loadDisplaySession = () => {
-    const rightNow = new Date();
-    const { validOn, expireOn } = displaySession;
-    setIsHappening(rightNow > new Date(validOn) && rightNow < new Date(expireOn));
-
-    const timeDifferenceLoad = new Date(validOn) - rightNow;
-    const truncated = Math.trunc(timeDifferenceLoad / 1000);
-    setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
-  };
-
-  const removeOldSessions = () => {
-    const rightNow = new Date();
-    homeScreenSessions.forEach((session) => {
-      const { expireOn } = session;
-      if (rightNow > new Date(expireOn)) {
-        const array = homeScreenSessions.slice(1);
-        handleSetHomeSessions(array);
-        setDisplaySession(array[0]);
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (homeScreenSessions.length !== 0) {
-      setDisplaySession(homeScreenSessions[0]);
-      removeOldSessions();
-      loadDisplaySession();
-    } else {
-      setDisplaySession({});
-    }
-
-    setIsLoadingSessions(false);
-  }, []);
-
-  useEffect(() => {
-    let interval = null;
-    removeOldSessions();
-
-    if (homeScreenSessions.length !== 0 && displaySession) {
-      interval = setInterval(() => {
-        loadDisplaySession();
-      }, 300);
-    }
-
-    return () => {
-      clearInterval(interval);
-    };
-  });
-
+const Home = ({ navigation, homeScreenSessions, isLoadingSessions, displaySession, isHappening, timeDifference }) => {
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -134,16 +78,15 @@ const Home = ({ attendanceSessions: { homeScreenSessions }, handleSetHomeSession
 
 Home.propTypes = {
   navigation: object.isRequired,
-  attendanceSessions: object.isRequired,
-  handleSetHomeSessions: func.isRequired,
+  homeScreenSessions: arrayOf(object).isRequired,
+  isLoadingSessions: bool.isRequired,
+  displaySession: object,
+  isHappening: bool.isRequired,
+  timeDifference: object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  attendanceSessions: getAttendanceSessionsState(state),
-});
+Home.defaultProps = {
+  displaySession: {},
+};
 
-const mapDispatchToProps = (dispatch) => ({
-  handleSetHomeSessions: (homeScreenSessions) => dispatch(setHomeScreenSessions(homeScreenSessions)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

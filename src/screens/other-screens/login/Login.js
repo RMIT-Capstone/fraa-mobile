@@ -1,13 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import theme from '../../../theme';
+import axios from 'axios';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import LottieView from 'lottie-react-native';
+import styles from './LoginStyle';
+import { SIGN_IN_API } from '../../../constants/ApiEndpoints';
+const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [credentials, setCredentials] = useState({ email: '', password: '', isLecturer: false });
+  const [error, setError] = useState(undefined);
+  const [loading, setLoading] = useState(false);
+
+  const onSignIn = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await axios.post(SIGN_IN_API, credentials);
+      if (error) {
+        console.warn('error onSignIn: ', error);
+      } else {
+        console.log(data);
+      }
+      setLoading(false);
+    } catch (errorOnSignIn) {
+      console.warn('error onSignIn: ', errorOnSignIn);
+      setLoading(false);
+    }
+  };
 
   const { email, password } = credentials;
   return (
-    <View style={[styles.container, styles.centered]}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={[styles.container, styles.centered]}>
       <View style={[styles.topChildContainer, styles.centered]}>
         <Text style={styles.appName}>FRAA</Text>
       </View>
@@ -29,76 +53,18 @@ const Login = () => {
           style={styles.input}
           placeholderTextColor="#888888"
         />
-        <TouchableOpacity style={[styles.signInBtn, styles.centered]}>
-          <Text style={styles.signInText}>Sign In</Text>
+        <Text>AAA</Text>
+        <TouchableOpacity onPress={onSignIn} style={[styles.signInBtn, styles.centered]}>
+          {loading ? (
+            <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
+          ) : (
+            <Text style={styles.signInText}>Sign In</Text>
+          )}
         </TouchableOpacity>
         <Text style={styles.forgotPassword}>Forgot your password ?</Text>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.palette.secondary.white,
-  },
-  centered: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  topChildContainer: {
-    flex: 3,
-  },
-  logo: {
-    height: 60,
-    width: 60,
-    resizeMode: 'contain',
-  },
-  appName: {
-    fontSize: 60,
-    color: '#C4C4C4',
-  },
-  bottomChildContainer: {
-    flex: 6,
-    justifyContent: 'flex-start',
-    width: '100%',
-    padding: 45,
-  },
-  inputLabel: {
-    color: '#444444',
-    fontSize: 17,
-    fontWeight: '600',
-    marginLeft: 10,
-    marginBottom: 10,
-  },
-  input: {
-    height: 50,
-    fontSize: 15,
-    backgroundColor: '#F5F5F5',
-    borderRadius: 53,
-    marginBottom: 25,
-    padding: 15,
-    width: '100%',
-  },
-  signInBtn: {
-    width: '100%',
-    backgroundColor: theme.palette.primary.red,
-    height: 50,
-    borderRadius: 30,
-    marginTop: 25,
-  },
-  signInText: {
-    color: theme.palette.secondary.white,
-    fontSize: 17,
-    fontWeight: '500',
-  },
-  forgotPassword: {
-    marginTop: 25,
-    fontSize: 13,
-    color: '#A6A6A6',
-    textAlign: 'center',
-  },
-});
 
 export default Login;

@@ -15,6 +15,7 @@ import ROUTES from './routes';
 
 // camera
 import FRAACamera from '../shared-components/camera';
+import Login from '../screens/other-screens/login/Login';
 
 const MainStack = createStackNavigator();
 
@@ -30,7 +31,7 @@ const MainStackScreens = () => {
           return null;
         },
       }}>
-      {/*<MainStack.Screen name={ROUTES.LOGIN} component={Login} />*/}
+      <MainStack.Screen name={ROUTES.LOGIN} component={Login} />
       <MainStack.Screen name={ROUTES.MAIN} component={MainScreen} />
       <MainStack.Screen name={ROUTES.HOME} component={Home} />
       <MainStack.Screen name={ROUTES.CALENDAR} component={FRAACalendar} />
