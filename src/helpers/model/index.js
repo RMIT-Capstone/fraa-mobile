@@ -1,5 +1,5 @@
 import RNFetchBlob from 'rn-fetch-blob';
-import { GET_MODEL_S3 } from '../../constants/ApiEndpoints';
+import { MODEL_URL } from '../../constants/ApiEndpoints';
 
 async function downloadFile(DOWNLOAD_URL, DEST_PATH) {
   console.log('Start downloading ......');
@@ -14,11 +14,11 @@ async function downloadFile(DOWNLOAD_URL, DEST_PATH) {
 
 export function getModel() {
   let dirs = RNFetchBlob.fs.dirs;
-  const targetPath = dirs.DocumentDir + '/model/mymodel112.tflite';
+  const targetPath = dirs.DocumentDir + '/mymodel112.tflite';
   RNFetchBlob.fs.exists(targetPath).then((exist) => {
     console.log(`The model is ${exist ? '' : 'not'} existed`);
     if (!exist) {
-      downloadFile(GET_MODEL_S3, targetPath).then(() => console.log('Finished download'));
+      downloadFile(MODEL_URL, targetPath).then(() => console.log('Finished download'));
     }
   });
 }

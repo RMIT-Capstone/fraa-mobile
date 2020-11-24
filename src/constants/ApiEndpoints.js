@@ -8,4 +8,4 @@ export const GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE =
 
 export const DEMO_EMAIL = 'trungduong0103@gmail.com';
 
-export const GET_MODEL_S3 = 'https://tam-terraform-state.s3.ap-southeast-1.amazonaws.com/FRAA/mymodel112.tflite';
+export const MODEL_URL = 'https://tam-terraform-state.s3.ap-southeast-1.amazonaws.com/FRAA/mymodel112.tflite';
