@@ -6,12 +6,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.palette.secondary.white,
   },
+  loginContainer: {
+    flex: 1,
+    padding: 20,
+    width: '100%',
+    justifyContent: 'space-around',
+  },
   centered: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  topChildContainer: {
-    flex: 3,
   },
   logo: {
     height: 60,
@@ -21,9 +24,9 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 60,
     color: '#C4C4C4',
+    textAlign: 'center',
   },
-  bottomChildContainer: {
-    flex: 6,
+  loginBody: {
     justifyContent: 'flex-start',
     width: '100%',
     padding: 45,
@@ -40,16 +43,23 @@ const styles = StyleSheet.create({
     fontSize: 15,
     backgroundColor: '#F5F5F5',
     borderRadius: 53,
-    marginBottom: 25,
     padding: 15,
     width: '100%',
+  },
+  inputError: {
+    color: theme.palette.primary.red,
+    fontSize: 14,
+    fontWeight: '300',
+    marginLeft: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
   signInBtn: {
     width: '100%',
     backgroundColor: theme.palette.primary.red,
     height: 50,
     borderRadius: 30,
-    marginTop: 25,
+    marginTop: 15,
   },
   signInText: {
     color: theme.palette.secondary.white,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { object, func, string, bool } from 'prop-types';
+import { func, string, bool } from 'prop-types';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './MainScreenStyle';
 
@@ -18,15 +18,15 @@ const InactiveProfileIcon = require('../../assets/tab-icons/profile/InactiveProf
 const ActiveCalendarIcon = require('../../assets/tab-icons/calendar/ActiveCalendarIcon.png');
 const InactiveCalendarIcon = require('../../assets/tab-icons/calendar/InactiveCalendarIcon.png');
 
-const MainScreen = ({ navigation, currentTab, setCurrentTab, loading, error }) => {
+const MainScreen = ({ currentTab, setCurrentTab, loading, error }) => {
   const TabContent = () => {
     switch (currentTab) {
       case ROUTES.HOME:
-        return <Home navigation={navigation} />;
+        return <Home />;
       case ROUTES.CALENDAR:
-        return <FRAACalendar navigation={navigation} />;
+        return <FRAACalendar />;
       case ROUTES.PROFILE:
-        return <Profile navigation={navigation} />;
+        return <Profile />;
       default:
         return (
           <View>
@@ -71,7 +71,6 @@ const MainScreen = ({ navigation, currentTab, setCurrentTab, loading, error }) =
 };
 
 MainScreen.propTypes = {
-  navigation: object.isRequired,
   currentTab: string.isRequired,
   setCurrentTab: func.isRequired,
   loading: bool.isRequired,

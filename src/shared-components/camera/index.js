@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
 import axios from 'axios';
-import { navigateTo } from '../../helpers/navigation';
 import { DEMO_EMAIL, REGISTER_IDENTITY_API, VERIFY_IDENTITY_API } from '../../constants/ApiEndpoints';
-import ROUTES from '../../navigation/routes';
-import FRAACamera from './FRAACamera';
 import { setRegisteredIdentity } from '../../redux/reducers/UserReducer';
+import ROUTES from '../../navigation/routes';
+import { navigateTo } from '../../helpers/navigation';
+import { useNavigation } from '@react-navigation/native';
+import FRAACamera from './FRAACamera';
 
 const FRAACameraWrapper = ({
   route: {
     params: { fromHome },
   },
-  navigation,
 }) => {
+  const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewImage, setPreviewImage] = useState({ base64: '', uri: '' });
-
   const [loading, setLoading] = useState(false);
 
   const onFacesDetected = ({ faces }) => {

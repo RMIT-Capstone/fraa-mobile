@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
 });
 
 FRAACalendar.propTypes = {
-  navigation: object.isRequired,
   attendanceSessions: object.isRequired,
   handleSetAgendaSessions: func.isRequired,
 };

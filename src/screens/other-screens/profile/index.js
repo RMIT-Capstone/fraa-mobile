@@ -1,12 +1,14 @@
 import React from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
-import Profile from './Profile';
 import { getUserState, setRegisteredIdentity } from '../../../redux/reducers/UserReducer';
 import { navigateTo } from '../../../helpers/navigation';
+import { useNavigation } from '@react-navigation/native';
+import Profile from './Profile';
 import ROUTES from '../../../navigation/routes';
 
-const ProfileWrapper = ({ navigation, user, handleSetRegisteredIdentity }) => {
+const ProfileWrapper = ({ user, handleSetRegisteredIdentity }) => {
+  const navigation = useNavigation();
   const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
 
   const onVerify = () => {
@@ -21,7 +23,6 @@ const ProfileWrapper = ({ navigation, user, handleSetRegisteredIdentity }) => {
 };
 
 ProfileWrapper.propTypes = {
-  navigation: object.isRequired,
   user: object.isRequired,
   handleSetRegisteredIdentity: func.isRequired,
 };

@@ -323,24 +323,16 @@ PODS:
     - React-Core
     - react-native-camera/RCT (= 3.40.0)
     - react-native-camera/RN (= 3.40.0)
-    - TensorFlowLiteObjC
-    - TensorFlowLiteSwift
   - react-native-camera/FaceDetectorMLKit (3.40.0):
     - Firebase/MLVision
     - Firebase/MLVisionFaceModel
     - React-Core
     - react-native-camera/RCT
     - react-native-camera/RN
-    - TensorFlowLiteObjC
-    - TensorFlowLiteSwift
   - react-native-camera/RCT (3.40.0):
     - React-Core
-    - TensorFlowLiteObjC
-    - TensorFlowLiteSwift
   - react-native-camera/RN (3.40.0):
     - React-Core
-    - TensorFlowLiteObjC
-    - TensorFlowLiteSwift
   - react-native-location (2.5.0):
     - React
   - react-native-safe-area-context (3.1.8):
@@ -405,7 +397,7 @@ PODS:
     - React-Core (= 0.63.3)
     - React-cxxreact (= 0.63.3)
     - React-jsi (= 0.63.3)
-  - RNCAsyncStorage (1.12.0):
+  - RNCAsyncStorage (1.13.2):
     - React
   - RNCMaskedView (0.1.10):
     - React
@@ -418,15 +410,6 @@ PODS:
     - React
   - RNScreens (2.11.0):
     - React
-  - TensorFlowLiteC (2.3.0):
-    - TensorFlowLiteC/Core (= 2.3.0)
-  - TensorFlowLiteC/Core (2.3.0)
-  - TensorFlowLiteObjC (2.3.0):
-    - TensorFlowLiteC (= 2.3.0)
-  - TensorFlowLiteSwift (2.3.0):
-    - TensorFlowLiteSwift/Core (= 2.3.0)
-  - TensorFlowLiteSwift/Core (2.3.0):
-    - TensorFlowLiteC (= 2.3.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -484,7 +467,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -520,9 +503,6 @@ SPEC REPOS:
     - OpenSSL-Universal
     - PromisesObjC
     - Protobuf
-    - TensorFlowLiteC
-    - TensorFlowLiteObjC
-    - TensorFlowLiteSwift
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -587,7 +567,7 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
-    :path: "../node_modules/@react-native-community/async-storage"
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNFBApp:
@@ -645,7 +625,7 @@ SPEC CHECKSUMS:
   React-jsi: df07aa95b39c5be3e41199921509bfa929ed2b9d
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
-  react-native-camera: b2fa6fc3b7e0fe6e68d564c7b2c4a45f41387d82
+  react-native-camera: 35854c4f764a4a6cf61c1c3525888b92f0fe4b31
   react-native-location: 5a40ec1cc6abf2f6d94df979f98ec76c3a415681
   react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937
   React-RCTActionSheet: 53ea72699698b0b47a6421cb1c8b4ab215a774aa
@@ -658,15 +638,12 @@ SPEC CHECKSUMS:
   React-RCTText: 65a6de06a7389098ce24340d1d3556015c38f746
   React-RCTVibration: 8e9fb25724a0805107fc1acc9075e26f814df454
   ReactCommon: 4167844018c9ed375cc01a843e9ee564399e53c3
-  RNCAsyncStorage: 2a692bcb9b69b76a2f1a95f33db057129700af64
+  RNCAsyncStorage: 05bae7ecfab1cbd5441993f1ca098f7c3b3f8d0e
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNFBApp: 7eacc7da7ab19f96c05e434017d44a9f09410da8
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: 0e91da98ab26d5d04c7b59a9b6bd694124caf88c
-  TensorFlowLiteC: 51f50caf5777f740a70e2c1a5dbdc149e7aeb50b
-  TensorFlowLiteObjC: 5b358503636cffcbbafd8b0ac9badb577fd72800
-  TensorFlowLiteSwift: fb152cc1eec36b25b03a23c07f5d58113170af58
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
