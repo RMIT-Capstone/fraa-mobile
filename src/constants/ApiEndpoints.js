@@ -7,3 +7,5 @@ export const GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE =
   'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/get_monthly_attendance_sessions_in_month_range';
 
 export const DEMO_EMAIL = 'trungduong0103@gmail.com';
+
+export const GET_MODEL_S3 = 'https://tam-terraform-state.s3.ap-southeast-1.amazonaws.com/FRAA/mymodel112.tflite';
