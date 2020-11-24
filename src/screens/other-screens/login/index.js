@@ -8,20 +8,18 @@ import { resetRoute } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
 import Login from './Login';
 import { setUser } from '../../../redux/reducers/UserReducer';
+import { closeToast, openToast } from '../../../redux/reducers/ToastReducer';
 
 const LoginWrapper = ({ navigation, handleSetUser }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '', isLecturer: false });
   const [error, setError] = useState({ email: '', otherError: '' });
   const [loading, setLoading] = useState(false);
 
-  const stringIsEmpty = (string) => {
-    return string === '';
-  };
+  const stringIsEmpty = (string) => string === '';
 
   const isEmail = (email) => {
-    let regEx;
     // eslint-disable-next-line no-useless-escape,max-len
-    regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return Boolean(email.match(regEx));
   };
 
@@ -63,10 +61,9 @@ const LoginWrapper = ({ navigation, handleSetUser }) => {
       if (axiosError) {
         console.warn('error setUser: ', axiosError);
         return { success: false };
-      } else {
-        handleSetUser(data);
-        return { success: true };
       }
+      handleSetUser(data);
+      return { success: true };
     } catch (errorSetUser) {
       console.warn('error setUser: ', errorSetUser);
       return { success: false };
@@ -125,6 +122,8 @@ LoginWrapper.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetUser: (user) => dispatch(setUser(user)),
+  handleOpenToast: (type, content) => dispatch(openToast(type, content)),
+  handleCloseToast: () => dispatch(closeToast()),
 });
 
 export default connect(null, mapDispatchToProps)(LoginWrapper);

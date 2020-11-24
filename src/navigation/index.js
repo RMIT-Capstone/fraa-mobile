@@ -12,7 +12,8 @@ const MainStackScreens = () => {
       screenOptions={{
         headerTitle: (props) => {
           // eslint-disable-next-line react/prop-types
-          if (!props.children === ROUTES.LOGIN) {
+          const { children } = props;
+          if (!children === ROUTES.LOGIN) {
             return <Header {...props} />;
           }
           return null;
