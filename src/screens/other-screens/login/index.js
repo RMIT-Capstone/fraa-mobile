@@ -10,7 +10,7 @@ import Login from './Login';
 import { setUser } from '../../../redux/reducers/UserReducer';
 import { closeToast, openToast } from '../../../redux/reducers/ToastReducer';
 
-const LoginWrapper = ({ navigation, handleSetUser }) => {
+const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast, handleCloseToast }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '', isLecturer: false });
   const [error, setError] = useState({ email: '', otherError: '' });
   const [loading, setLoading] = useState(false);
@@ -111,6 +111,8 @@ const LoginWrapper = ({ navigation, handleSetUser }) => {
       error={error}
       loading={loading}
       onSignIn={onSignIn}
+      handleOpenToast={handleOpenToast}
+      handleCloseToast={handleCloseToast}
     />
   );
 };

@@ -14,7 +14,7 @@ import LottieView from 'lottie-react-native';
 import styles from './LoginStyle';
 const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
-const Login = ({ credentials, setCredentials, error, loading, onSignIn }) => {
+const Login = ({ credentials, setCredentials, error, loading, onSignIn, handleOpenToast, handleCloseToast }) => {
   const { email, password, isLecturer } = credentials;
 
   return (
@@ -51,9 +51,14 @@ const Login = ({ credentials, setCredentials, error, loading, onSignIn }) => {
                 <Text style={styles.signInText}>Sign In</Text>
               )}
             </TouchableOpacity>
-            <Text style={styles.forgotPassword}>Forgot your password ?</Text>
+            <Text onPress={() => handleOpenToast()} style={styles.forgotPassword}>
+              Forgot your password ?
+            </Text>
             <Text
-              onPress={() => setCredentials((prevState) => ({ ...prevState, isLecturer: !isLecturer }))}
+              onPress={
+                // () => setCredentials((prevState) => ({ ...prevState, isLecturer: !isLecturer }))
+                () => handleCloseToast()
+              }
               style={styles.forgotPassword}>
               {isLecturer ? 'Login as student' : 'Login as staff'}
             </Text>
