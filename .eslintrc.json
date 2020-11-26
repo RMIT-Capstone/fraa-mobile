@@ -7,7 +7,8 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "@react-native-community",
-    "prettier"
+    "prettier",
+    "airbnb"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -40,7 +41,12 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": 0,
     "react/jsx-closing-bracket-location": 0,
+    "react/jsx-one-expression-per-line": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "no-use-before-define": "off"
+    "react/forbid-prop-types": 0,
+    "implicit-arrow-linebreak": 0,
+    "no-use-before-define": "off",
+    "object-curly-newline": "off",
+    "consistent-return": "off"
   }
 }

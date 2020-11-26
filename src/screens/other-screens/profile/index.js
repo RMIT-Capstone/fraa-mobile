@@ -1,9 +1,9 @@
 import React from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import { getUserState, setRegisteredIdentity } from '../../../redux/reducers/UserReducer';
 import { navigateTo } from '../../../helpers/navigation';
-import { useNavigation } from '@react-navigation/native';
 import Profile from './Profile';
 import ROUTES from '../../../navigation/routes';
 

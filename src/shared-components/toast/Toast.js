@@ -1,24 +1,47 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import React, { useEffect } from 'react';
+import { object, func } from 'prop-types';
+import { connect } from 'react-redux';
+import { Modal, View, Text, StyleSheet, Dimensions } from 'react-native';
+import theme from '../../theme';
+import { closeToast, getToastState } from '../../redux/reducers/ToastReducer';
 
 const windowWidth = Dimensions.get('window').width;
 
-const Toast = () => (
-  <View style={styles.container}>
-    <Text>Hello World!</Text>
-  </View>
-);
+const Toast = ({ toast, handleCloseToast }) => {
+  const { open } = toast;
+
+  useEffect(() => {
+    if (open) {
+      const timeout = setTimeout(() => {
+        handleCloseToast();
+      }, 1300);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [open]);
+
+  return (
+    <Modal animationType="slide" transparent visible={open}>
+      <View style={styles.container}>
+        <Text style={styles.toastText}>Hello World!</Text>
+      </View>
+    </Modal>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    padding: 10,
-    width: windowWidth - 50,
+    width: windowWidth - 110,
     position: 'absolute',
-    marginLeft: 25,
-    bottom: 0,
+    padding: 10,
+    marginLeft: 55,
+    bottom: 15,
     borderWidth: 0.5,
-    backgroundColor: '#000000',
+    borderRadius: 16,
+    backgroundColor: theme.palette.primary.blue,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -27,7 +50,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  toastText: {
+    color: '#ffffff',
   },
 });
 
-export default Toast;
+Toast.propTypes = {
+  toast: object.isRequired,
+  handleCloseToast: func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  toast: getToastState(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleCloseToast: () => dispatch(closeToast()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Toast);

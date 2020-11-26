@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
-import { getAttendanceSessionsState, setHomeScreenSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 import { useNavigation } from '@react-navigation/native';
+import { getAttendanceSessionsState, setHomeScreenSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 import Home from './Home';
 
 const HomeWrapper = ({ attendanceSessions: { homeScreenSessions }, handleSetHomeSessions }) => {

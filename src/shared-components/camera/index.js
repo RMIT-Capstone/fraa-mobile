@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import { DEMO_EMAIL, REGISTER_IDENTITY_API, VERIFY_IDENTITY_API } from '../../constants/ApiEndpoints';
 import { setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
-import { useNavigation } from '@react-navigation/native';
 import FRAACamera from './FRAACamera';
+import { openToast } from '../../redux/reducers/ToastReducer';
 
 const FRAACameraWrapper = ({
   route: {
     params: { fromHome },
   },
+  handleOpenToast,
 }) => {
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
@@ -38,7 +40,7 @@ const FRAACameraWrapper = ({
         setLoading(false);
       }
     } catch (errorCapture) {
-      console.warn(errorCapture);
+      handleOpenToast('Error capture!');
     }
   };
 
@@ -67,7 +69,7 @@ const FRAACameraWrapper = ({
         }
       }
     } catch (errorRegisterOrVerifyIdentity) {
-      console.warn(errorRegisterOrVerifyIdentity);
+      handleOpenToast('Error register/verify identity!');
     }
   };
 
@@ -87,8 +89,9 @@ const FRAACameraWrapper = ({
 
 FRAACameraWrapper.propTypes = {
   route: object.isRequired,
-  navigation: object.isRequired,
-  handleSetUserRegisteredIdentity: func.isRequired,
+  handleOpenToast: func.isRequired,
 };
 
-export default connect(null, { handleSetUserRegisteredIdentity: setRegisteredIdentity })(FRAACameraWrapper);
+export default connect(null, { handleSetUserRegisteredIdentity: setRegisteredIdentity, handleOpenToast: openToast })(
+  FRAACameraWrapper,
+);

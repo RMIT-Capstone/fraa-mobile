@@ -5,7 +5,7 @@ import styles from './HomeStyle';
 
 const CheckInIcon = require('../../../assets/CheckInIcon.png');
 
-const Home = ({ navigation, homeScreenSessions, isLoadingSessions, displaySession, isHappening, timeDifference }) => {
+const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappening, timeDifference }) => {
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -77,7 +77,6 @@ const Home = ({ navigation, homeScreenSessions, isLoadingSessions, displaySessio
 };
 
 Home.propTypes = {
-  navigation: object.isRequired,
   homeScreenSessions: arrayOf(object).isRequired,
   isLoadingSessions: bool.isRequired,
   displaySession: object,

@@ -4,13 +4,11 @@ import { View, Text, ScrollView, RefreshControl } from 'react-native';
 import styles from './FRAAAgendaStyle';
 
 const FRAAAgenda = ({ agendaSessions, refreshing, refetchAttendanceSessions }) => {
-  const EmptyAgenda = () => {
-    return (
-      <View>
-        <Text style={styles.emptyAgendaText}>No sessions today.</Text>
-      </View>
-    );
-  };
+  const EmptyAgenda = () => (
+    <View>
+      <Text style={styles.emptyAgendaText}>No sessions today.</Text>
+    </View>
+  );
 
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
@@ -41,15 +39,18 @@ const FRAAAgenda = ({ agendaSessions, refreshing, refetchAttendanceSessions }) =
             )}
           </View>
           <View style={styles.agendaContentColumn}>
-            {agendaSessions.map((session, index) => (
-              <View key={index} style={styles.agendaItem}>
-                <Text style={styles.sessionCourse}>{session.courseName}</Text>
-                <View style={styles.agendaItemRow}>
-                  <Text style={styles.sessionInfo}>{transformSessionTime(session.validOn)}</Text>
-                  <Text style={styles.sessionInfo}>{session.location}</Text>
+            {agendaSessions.map((session) => {
+              const { id, courseName, validOn: displayValidOn, location } = session;
+              return (
+                <View key={id} style={styles.agendaItem}>
+                  <Text style={styles.sessionCourse}>{courseName}</Text>
+                  <View style={styles.agendaItemRow}>
+                    <Text style={styles.sessionInfo}>{transformSessionTime(displayValidOn)}</Text>
+                    <Text style={styles.sessionInfo}>{location}</Text>
+                  </View>
                 </View>
-              </View>
-            ))}
+              );
+            })}
           </View>
         </View>
       </>

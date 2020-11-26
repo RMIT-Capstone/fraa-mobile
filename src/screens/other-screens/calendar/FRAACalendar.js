@@ -15,6 +15,7 @@ const FRAACalendar = ({ attendanceSessions: { sessions, markedDates }, handleSet
   }, []);
 
   const findSessionsByDate = (date) => {
+    // eslint-disable-next-line array-callback-return
     const dateSessions = sessions.filter((session) => {
       if (session) {
         const { validOn } = session;
@@ -25,9 +26,7 @@ const FRAACalendar = ({ attendanceSessions: { sessions, markedDates }, handleSet
     handleSetAgendaSessions(dateSessions);
   };
 
-  const theme = {
-    selectedDayBackgroundColor: '#000054',
-  };
+  const theme = { selectedDayBackgroundColor: '#000054' };
 
   return (
     <CalendarProvider
@@ -61,9 +60,7 @@ FRAACalendar.propTypes = {
   handleSetAgendaSessions: func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  attendanceSessions: getAttendanceSessionsState(state),
-});
+const mapStateToProps = (state) => ({ attendanceSessions: getAttendanceSessionsState(state) });
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetAgendaSessions: (agendaSessions) => dispatch(setAgendaSessions(agendaSessions)),

@@ -8,9 +8,9 @@ import { resetRoute } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
 import Login from './Login';
 import { setUser } from '../../../redux/reducers/UserReducer';
-import { closeToast, openToast } from '../../../redux/reducers/ToastReducer';
+import { openToast } from '../../../redux/reducers/ToastReducer';
 
-const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast, handleCloseToast }) => {
+const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '', isLecturer: false });
   const [error, setError] = useState({ email: '', otherError: '' });
   const [loading, setLoading] = useState(false);
@@ -59,13 +59,13 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast, handleCloseT
         data: { error: axiosError },
       } = await axios.post(GET_USER_API, userRequest);
       if (axiosError) {
-        console.warn('error setUser: ', axiosError);
+        handleOpenToast('Error fetch user!');
         return { success: false };
       }
       handleSetUser(data);
       return { success: true };
     } catch (errorSetUser) {
-      console.warn('error setUser: ', errorSetUser);
+      handleOpenToast('Error fetch user!');
       return { success: false };
     }
   };
@@ -96,7 +96,7 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast, handleCloseT
         }
         setLoading(false);
       } catch (errorOnSignIn) {
-        console.warn('error onSignIn: ', errorOnSignIn);
+        handleOpenToast('Error fetch user!');
         setLoading(false);
       }
     } else {
@@ -112,7 +112,6 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast, handleCloseT
       loading={loading}
       onSignIn={onSignIn}
       handleOpenToast={handleOpenToast}
-      handleCloseToast={handleCloseToast}
     />
   );
 };
@@ -120,12 +119,12 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast, handleCloseT
 LoginWrapper.propTypes = {
   navigation: object.isRequired,
   handleSetUser: func.isRequired,
+  handleOpenToast: func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetUser: (user) => dispatch(setUser(user)),
   handleOpenToast: (type, content) => dispatch(openToast(type, content)),
-  handleCloseToast: () => dispatch(closeToast()),
 });
 
 export default connect(null, mapDispatchToProps)(LoginWrapper);

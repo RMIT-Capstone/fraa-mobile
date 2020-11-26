@@ -10,21 +10,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     width: '100%',
-    justifyContent: 'space-around',
   },
   centered: {
     justifyContent: 'center',
     alignItems: 'center',
   },
   logo: {
-    height: 60,
-    width: 60,
+    height: 100,
+    width: 100,
     resizeMode: 'contain',
-  },
-  appName: {
-    fontSize: 60,
-    color: '#C4C4C4',
-    textAlign: 'center',
   },
   loginBody: {
     justifyContent: 'flex-start',

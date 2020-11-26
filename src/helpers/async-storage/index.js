@@ -4,6 +4,7 @@ export const storeAsyncStringData = async (key, stringValue) => {
   try {
     await AsyncStorage.setItem(key, stringValue);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.warn(e);
   }
 };
@@ -13,6 +14,7 @@ export const storeAsyncObjectData = async (key, objectValue) => {
     const jsonValue = JSON.stringify(objectValue);
     await AsyncStorage.setItem(key, jsonValue);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.warn(e);
   }
 };
@@ -25,6 +27,7 @@ export const getAsyncStringData = async (key) => {
     }
     return null;
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.warn(e);
   }
 };
@@ -34,6 +37,7 @@ export const getAsyncObjectData = async (key) => {
     const jsonValue = await AsyncStorage.getItem(key);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.warn(e);
   }
 };

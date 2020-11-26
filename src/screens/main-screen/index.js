@@ -4,14 +4,20 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import ROUTES from '../../navigation/routes';
 import { CHECK_IDENTITY_API, GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../constants/ApiEndpoints';
-
 import { setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
-import MainScreen from './MainScreen';
 import { getAsyncStringData } from '../../helpers/async-storage';
 import { navigateTo } from '../../helpers/navigation';
+import { openToast } from '../../redux/reducers/ToastReducer';
+import MainScreen from './MainScreen';
 
-const MainScreenWrapper = ({ navigation, user, handleSetAllSessions, handleSetRegisteredIdentity }) => {
+const MainScreenWrapper = ({
+  navigation,
+  user,
+  handleSetAllSessions,
+  handleSetRegisteredIdentity,
+  handleOpenToast,
+}) => {
   const [currentTab, setCurrentTab] = useState(ROUTES.HOME);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(undefined);
@@ -42,7 +48,7 @@ const MainScreenWrapper = ({ navigation, user, handleSetAllSessions, handleSetRe
           data: { error: fetchAttendanceSessionsError },
         } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
         if (fetchAttendanceSessionsError) {
-          console.warn('error fetchAttendanceSessions: ', fetchAttendanceSessionsError);
+          handleOpenToast('Fetch attendance session error!');
         } else {
           const { sessions: axiosSessions, markedDates } = data;
           const dateSessions = axiosSessions.filter((session) => {
@@ -53,14 +59,14 @@ const MainScreenWrapper = ({ navigation, user, handleSetAllSessions, handleSetRe
           handleSetAllSessions(axiosSessions, axiosSessions, dateSessions, markedDates);
         }
       } catch (errorFetchAttendanceSessions) {
-        console.warn('error fetchAttendanceSessions: ', errorFetchAttendanceSessions);
+        handleOpenToast('Fetch attendance session error!');
       }
     };
 
     const fetchUserIdentity = async () => {
       const { data, error: fetchUserIdentityError } = await axios.get(CHECK_IDENTITY_API);
       if (fetchUserIdentityError) {
-        console.warn('error fetchUserIdentity: ', fetchUserIdentityError);
+        handleOpenToast('Fetch attendance session error!');
       } else {
         const { msg } = data;
         handleSetRegisteredIdentity(msg);
@@ -74,7 +80,7 @@ const MainScreenWrapper = ({ navigation, user, handleSetAllSessions, handleSetRe
       .catch((errorLoadUser) => {
         setLoading(false);
         setError(JSON.stringify(errorLoadUser));
-        console.warn('error load user: ', errorLoadUser);
+        handleOpenToast('Load user error!');
       });
   }, []);
 
@@ -86,16 +92,16 @@ MainScreenWrapper.propTypes = {
   user: object.isRequired,
   handleSetAllSessions: func.isRequired,
   handleSetRegisteredIdentity: func.isRequired,
+  handleOpenToast: func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  user: getUserState(state),
-});
+const mapStateToProps = (state) => ({ user: getUserState(state) });
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetAllSessions: (sessions, homeScreenSessions, agendaSessions, markedDates) =>
     dispatch(setAllSessions(sessions, homeScreenSessions, agendaSessions, markedDates)),
   handleSetRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
+  handleOpenToast: (content) => dispatch(openToast(content)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreenWrapper);
