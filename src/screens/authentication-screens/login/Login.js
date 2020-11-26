@@ -13,11 +13,13 @@ import {
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import styles from './LoginStyle';
+import { navigateTo } from '../../../helpers/navigation';
+import ROUTES from '../../../navigation/routes';
 
 const LOGO = require('../../../assets/logo/FRAA_LOGO.png');
 const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
-const Login = ({ credentials, setCredentials, error, loading, onSignIn, handleOpenToast }) => {
+const Login = ({ navigation, credentials, setCredentials, error, loading, onSignIn }) => {
   const { email, password, isLecturer } = credentials;
   const [logoHidden, setLogoHidden] = useState(false);
 
@@ -71,12 +73,12 @@ const Login = ({ credentials, setCredentials, error, loading, onSignIn, handleOp
             <Text style={styles.inputError}>{error.otherError && error.otherError}</Text>
             <TouchableOpacity onPress={onSignIn} style={[styles.signInBtn, styles.centered]}>
               {loading ? (
-                <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
+                <LottieView source={GenericLoading} autoPlay loop />
               ) : (
                 <Text style={styles.signInText}>Sign In</Text>
               )}
             </TouchableOpacity>
-            <TouchableWithoutFeedback onPress={() => handleOpenToast()}>
+            <TouchableWithoutFeedback onPress={() => navigateTo(navigation, ROUTES.FORGOT_PASSWORD)}>
               <Text style={styles.forgotPassword}>Forgot your password ?</Text>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback
@@ -91,12 +93,12 @@ const Login = ({ credentials, setCredentials, error, loading, onSignIn, handleOp
 };
 
 Login.propTypes = {
+  navigation: object.isRequired,
   credentials: object.isRequired,
   setCredentials: func.isRequired,
   error: object.isRequired,
   loading: bool.isRequired,
   onSignIn: func.isRequired,
-  handleOpenToast: func.isRequired,
 };
 
 export default Login;

@@ -5,36 +5,31 @@ import axios from 'axios';
 import { GET_USER_API, SIGN_IN_API } from '../../../constants/ApiEndpoints';
 import { storeAsyncStringData } from '../../../helpers/async-storage';
 import { resetRoute } from '../../../helpers/navigation';
-import ROUTES from '../../../navigation/routes';
-import Login from './Login';
+import { isEmail, stringIsEmpty } from '../../../helpers/utils';
 import { setUser } from '../../../redux/reducers/UserReducer';
 import { openToast } from '../../../redux/reducers/ToastReducer';
+import ROUTES from '../../../navigation/routes';
+import Login from './Login';
 
 const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '', isLecturer: false });
   const [error, setError] = useState({ email: '', otherError: '' });
   const [loading, setLoading] = useState(false);
 
-  const stringIsEmpty = (string) => string === '';
 
-  const isEmail = (email) => {
-    // eslint-disable-next-line no-useless-escape,max-len
-    const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return Boolean(email.match(regEx));
-  };
 
   const validateInputs = () => {
     const { email, password } = credentials;
     const inputErrors = {};
     if (stringIsEmpty(email)) {
-      inputErrors.email = 'Email must not be empty.';
+      inputErrors.email = 'Email must not be empty';
     } else if (!isEmail(email)) {
-      inputErrors.email = 'Email is invalid.';
+      inputErrors.email = 'Email is invalid';
     }
     if (stringIsEmpty(password)) {
-      inputErrors.otherError = 'Password must not be empty.';
+      inputErrors.otherError = 'Password must not be empty';
     } else if (password.length < 6) {
-      inputErrors.otherError = 'Password must have more than 6 characters.';
+      inputErrors.otherError = 'Password must have more than 6 characters';
     }
 
     return { valid: Object.keys(inputErrors).length === 0, inputErrors };
@@ -106,6 +101,7 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
 
   return (
     <Login
+      navigation={navigation}
       credentials={credentials}
       setCredentials={setCredentials}
       error={error}
