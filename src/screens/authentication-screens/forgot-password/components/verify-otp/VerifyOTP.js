@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, object, bool } from 'prop-types';
+import { string, func, bool } from 'prop-types';
 import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import LottieView from 'lottie-react-native';
-import styles from '../generate-otp/GenerateOTPStyle';
+import styles from '../SharedStyle';
 
 const GenericLoading = require('../../../../../assets/lottie-assets/GenericLoading');
 

@@ -44,7 +44,7 @@ const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail }) 
           handleOpenToast('OTP verified!', 2500);
           setTimeout(() => {
             setScreen(CHANGE_PASSWORD);
-          }, 1500);
+          }, 1000);
         }
         setLoading(false);
       } catch (errorVerifyOTP) {

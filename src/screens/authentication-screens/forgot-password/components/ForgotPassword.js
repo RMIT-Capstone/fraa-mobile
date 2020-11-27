@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { object } from 'prop-types';
 import { View, Text } from 'react-native';
 import GenerateOTP from './generate-otp';
 import VerifyOTP from './verify-otp';
-import ChangePassword from './change-password/ChangePassword';
+import ChangePassword from './change-password';
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ navigation }) => {
   const SCREENS = {
     GENERATE_OTP: 'generate_otp',
     VERIFY_OTP: 'verify_otp',
@@ -20,7 +21,7 @@ const ForgotPassword = () => {
     case SCREENS.VERIFY_OTP:
       return <VerifyOTP screens={SCREENS} setScreen={setScreen} targetEmail={targetEmail} />;
     case SCREENS.CHANGE_PASSWORD:
-      return <ChangePassword screens={SCREENS} setScreen={setScreen} targetEmail={targetEmail} />;
+      return <ChangePassword targetEmail={targetEmail} navigation={navigation} />;
     default:
       return (
         <View>
@@ -28,6 +29,10 @@ const ForgotPassword = () => {
         </View>
       );
   }
+};
+
+ForgotPassword.propTypes = {
+  navigation: object.isRequired,
 };
 
 export default ForgotPassword;

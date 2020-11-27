@@ -37,6 +37,7 @@ const GenerateOTPWrapper = ({ screens, setScreen, handleOpenToast, setTargetEmai
           const { user } = error;
           if (user) setEmailError(user);
           else {
+            setEmailError(JSON.stringify(error));
             handleOpenToast('Error generate OTP!', 2000);
           }
         } else {
@@ -44,7 +45,7 @@ const GenerateOTPWrapper = ({ screens, setScreen, handleOpenToast, setTargetEmai
           setTargetEmail(email);
           setTimeout(() => {
             setScreen(VERIFY_OTP);
-          }, 1500);
+          }, 1000);
         }
         setLoading(false);
       } catch (errorGenerateOTP) {

@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { navigateTo } from '../../../../../helpers/navigation';
-import styles from './GenerateOTPStyle';
+import styles from '../SharedStyle';
 import ROUTES from '../../../../../navigation/routes';
 
 const GenericLoading = require('../../../../../assets/lottie-assets/GenericLoading');
@@ -38,7 +38,7 @@ const GenerateOTP = ({ email, setEmail, emailError, onGenerateOTP, loading, navi
           )}
         </TouchableOpacity>
         <TouchableWithoutFeedback onPress={() => navigateTo(navigation, ROUTES.LOGIN)}>
-          <Text style={styles.goBackText}>Go Back to Login</Text>
+          <Text style={styles.goBackText}>Go back to Login</Text>
         </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>
