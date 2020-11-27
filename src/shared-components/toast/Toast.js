@@ -8,13 +8,13 @@ import { closeToast, getToastState } from '../../redux/reducers/ToastReducer';
 const windowWidth = Dimensions.get('window').width;
 
 const Toast = ({ toast, handleCloseToast }) => {
-  const { open } = toast;
+  const { open, content, duration } = toast;
 
   useEffect(() => {
     if (open) {
       const timeout = setTimeout(() => {
         handleCloseToast();
-      }, 1300);
+      }, duration);
 
       return () => {
         clearTimeout(timeout);
@@ -25,7 +25,7 @@ const Toast = ({ toast, handleCloseToast }) => {
   return (
     <Modal animationType="slide" transparent visible={open}>
       <View style={styles.container}>
-        <Text style={styles.toastText}>Hello World!</Text>
+        <Text style={styles.toastText}>{content}</Text>
       </View>
     </Modal>
   );

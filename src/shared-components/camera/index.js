@@ -40,7 +40,7 @@ const FRAACameraWrapper = ({
         setLoading(false);
       }
     } catch (errorCapture) {
-      handleOpenToast('Error capture!');
+      handleOpenToast('Error capture!', 2000);
     }
   };
 
@@ -69,7 +69,7 @@ const FRAACameraWrapper = ({
         }
       }
     } catch (errorRegisterOrVerifyIdentity) {
-      handleOpenToast('Error register/verify identity!');
+      handleOpenToast('Error register/verify identity!', 2000);
     }
   };
 

@@ -5,21 +5,23 @@ import { createSelector } from 'reselect';
 const initialState = {
   open: false,
   content: '',
+  duration: 1500,
 };
 
 // ACTION CREATORS
 export const { openToast, closeToast } = createActions({
-  OPEN_TOAST: (content) => ({ content }),
+  OPEN_TOAST: (content, duration) => ({ content, duration }),
   CLOSE_TOAST: undefined,
 });
 
 // REDUCERS
 export default handleActions(
   {
-    OPEN_TOAST: (state, { payload: { content } }) => ({
+    OPEN_TOAST: (state, { payload: { content, duration } }) => ({
       ...state,
       open: true,
       content,
+      duration,
     }),
     CLOSE_TOAST: () => ({ ...initialState }),
   },

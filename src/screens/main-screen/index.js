@@ -48,7 +48,7 @@ const MainScreenWrapper = ({
           data: { error: fetchAttendanceSessionsError },
         } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
         if (fetchAttendanceSessionsError) {
-          handleOpenToast('Fetch attendance session error!');
+          handleOpenToast('Fetch attendance session error!', 2000);
         } else {
           const { sessions: axiosSessions, markedDates } = data;
           const dateSessions = axiosSessions.filter((session) => {
@@ -59,14 +59,14 @@ const MainScreenWrapper = ({
           handleSetAllSessions(axiosSessions, axiosSessions, dateSessions, markedDates);
         }
       } catch (errorFetchAttendanceSessions) {
-        handleOpenToast('Fetch attendance session error!');
+        handleOpenToast('Fetch attendance session error!', 2000);
       }
     };
 
     const fetchUserIdentity = async () => {
       const { data, error: fetchUserIdentityError } = await axios.get(CHECK_IDENTITY_API);
       if (fetchUserIdentityError) {
-        handleOpenToast('Fetch attendance session error!');
+        handleOpenToast('Fetch attendance session error!', 2000);
       } else {
         const { msg } = data;
         handleSetRegisteredIdentity(msg);
@@ -80,7 +80,7 @@ const MainScreenWrapper = ({
       .catch((errorLoadUser) => {
         setLoading(false);
         setError(JSON.stringify(errorLoadUser));
-        handleOpenToast('Load user error!');
+        handleOpenToast('Load user error!', 2000);
       });
   }, []);
 
@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleSetAllSessions: (sessions, homeScreenSessions, agendaSessions, markedDates) =>
     dispatch(setAllSessions(sessions, homeScreenSessions, agendaSessions, markedDates)),
   handleSetRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
-  handleOpenToast: (content) => dispatch(openToast(content)),
+  handleOpenToast: (content, duration) => dispatch(openToast(content, duration)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreenWrapper);

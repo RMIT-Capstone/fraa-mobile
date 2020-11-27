@@ -1,29 +1,23 @@
 import { StyleSheet } from 'react-native';
-import theme from '../../../theme';
+import theme from '../../../../../theme';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.palette.secondary.white,
-  },
-  loginContainer: {
-    flex: 1,
-    padding: 20,
-    width: '100%',
-  },
   centered: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logo: {
-    height: 100,
-    width: 100,
-    resizeMode: 'contain',
-  },
-  loginBody: {
-    justifyContent: 'flex-start',
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
-    padding: 45,
+    padding: 20,
+    backgroundColor: theme.palette.secondary.white,
+  },
+  innerContainer: {
+    flex: 1,
+    width: '80%',
+    top: 200,
   },
   inputLabel: {
     color: '#444444',
@@ -32,6 +26,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
   },
+  inputError: {
+    color: theme.palette.primary.red,
+    fontSize: 12,
+    fontWeight: '300',
+    marginLeft: 10,
+    marginTop: 15,
+  },
   input: {
     height: 50,
     fontSize: 15,
@@ -39,28 +40,20 @@ const styles = StyleSheet.create({
     borderRadius: 53,
     padding: 15,
     width: '100%',
-    marginBottom: 10,
   },
-  inputError: {
-    color: theme.palette.primary.red,
-    fontSize: 12,
-    fontWeight: '300',
-    marginLeft: 10,
-    marginBottom: 15,
-  },
-  signInBtn: {
+  btn: {
     width: '100%',
     backgroundColor: theme.palette.primary.red,
     height: 50,
     borderRadius: 30,
     marginTop: 15,
   },
-  signInText: {
+  btnText: {
     color: theme.palette.secondary.white,
     fontSize: 17,
     fontWeight: '500',
   },
-  forgotPassword: {
+  goBackText: {
     marginTop: 25,
     fontSize: 13,
     color: '#A6A6A6',

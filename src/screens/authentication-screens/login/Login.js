@@ -21,6 +21,7 @@ const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
 const Login = ({ navigation, credentials, setCredentials, error, loading, onSignIn }) => {
   const { email, password, isLecturer } = credentials;
+  const { email: emailError, otherError } = error;
   const [logoHidden, setLogoHidden] = useState(false);
 
   const hideLogo = () => ({ display: 'none' });
@@ -60,7 +61,7 @@ const Login = ({ navigation, credentials, setCredentials, error, loading, onSign
               style={styles.input}
               placeholderTextColor="#888888"
             />
-            <Text style={styles.inputError}>{error.email && error.email}</Text>
+            {emailError !== '' && <Text style={styles.inputError}>{emailError}</Text>}
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
               onChangeText={(text) => setCredentials((prevState) => ({ ...prevState, password: text }))}
@@ -70,7 +71,7 @@ const Login = ({ navigation, credentials, setCredentials, error, loading, onSign
               style={styles.input}
               placeholderTextColor="#888888"
             />
-            <Text style={styles.inputError}>{error.otherError && error.otherError}</Text>
+            {otherError !== '' && <Text style={styles.inputError}>{otherError}</Text>}
             <TouchableOpacity onPress={onSignIn} style={[styles.signInBtn, styles.centered]}>
               {loading ? (
                 <LottieView source={GenericLoading} autoPlay loop />

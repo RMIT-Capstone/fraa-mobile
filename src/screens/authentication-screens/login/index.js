@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 import axios from 'axios';
-import { GET_USER_API, SIGN_IN_API } from '../../../constants/ApiEndpoints';
+import { useFocusEffect } from '@react-navigation/native';
 import { storeAsyncStringData } from '../../../helpers/async-storage';
 import { resetRoute } from '../../../helpers/navigation';
 import { isEmail, stringIsEmpty } from '../../../helpers/utils';
 import { setUser } from '../../../redux/reducers/UserReducer';
 import { openToast } from '../../../redux/reducers/ToastReducer';
+import { GET_USER_API, SIGN_IN_API } from '../../../constants/ApiEndpoints';
 import ROUTES from '../../../navigation/routes';
 import Login from './Login';
 
@@ -16,7 +17,11 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
   const [error, setError] = useState({ email: '', otherError: '' });
   const [loading, setLoading] = useState(false);
 
-
+  useFocusEffect(
+    useCallback(() => {
+      setError({ email: '', otherError: '' });
+    }, []),
+  );
 
   const validateInputs = () => {
     const { email, password } = credentials;
@@ -38,7 +43,7 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
   useEffect(() => {
     const { email, password } = credentials;
     if (!stringIsEmpty(email) || !stringIsEmpty(password)) {
-      setError({ email: '', password: '' });
+      setError({ email: '', otherError: '' });
     }
   }, [credentials]);
 
@@ -54,13 +59,13 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
         data: { error: axiosError },
       } = await axios.post(GET_USER_API, userRequest);
       if (axiosError) {
-        handleOpenToast('Error fetch user!');
+        handleOpenToast('Error fetch user!', 2000);
         return { success: false };
       }
       handleSetUser(data);
       return { success: true };
     } catch (errorSetUser) {
-      handleOpenToast('Error fetch user!');
+      handleOpenToast('Error fetch user!', 2000);
       return { success: false };
     }
   };
@@ -87,11 +92,13 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
           const { success } = await setUserInRedux();
           if (success) {
             resetRoute(navigation, ROUTES.MAIN);
+          } else {
+            handleOpenToast('Error set user to redux!', 2000);
           }
         }
         setLoading(false);
       } catch (errorOnSignIn) {
-        handleOpenToast('Error fetch user!');
+        handleOpenToast('Error fetch user!', 2000);
         setLoading(false);
       }
     } else {
@@ -107,7 +114,6 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
       error={error}
       loading={loading}
       onSignIn={onSignIn}
-      handleOpenToast={handleOpenToast}
     />
   );
 };
@@ -120,7 +126,7 @@ LoginWrapper.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetUser: (user) => dispatch(setUser(user)),
-  handleOpenToast: (type, content) => dispatch(openToast(type, content)),
+  handleOpenToast: (content, duration) => dispatch(openToast(content, duration)),
 });
 
 export default connect(null, mapDispatchToProps)(LoginWrapper);
