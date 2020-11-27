@@ -1,14 +1,15 @@
 import React from 'react';
-import { object, func, string, bool } from 'prop-types';
+import { func, string, bool } from 'prop-types';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './MainScreenStyle';
 
-import FRAACalendar from '../calendar/FRAACalendar';
-import Profile from '../profile';
-import Home from '../home/Home';
-import Loading from './components/loading/Loading';
+import FRAACalendar from '../other-screens/calendar/FRAACalendar';
+import Profile from '../other-screens/profile';
+import Home from '../other-screens/home';
 
 import ROUTES from '../../navigation/routes';
+import Loading from './components/loading/Loading';
+import Error from './components/error/Error';
 
 const ActiveHomeIcon = require('../../assets/tab-icons/home/ActiveHomeIcon.png');
 const InactiveHomeIcon = require('../../assets/tab-icons/home/InactiveHomeIcon.png');
@@ -17,15 +18,15 @@ const InactiveProfileIcon = require('../../assets/tab-icons/profile/InactiveProf
 const ActiveCalendarIcon = require('../../assets/tab-icons/calendar/ActiveCalendarIcon.png');
 const InactiveCalendarIcon = require('../../assets/tab-icons/calendar/InactiveCalendarIcon.png');
 
-const MainScreen = ({ navigation, currentTab, setCurrentTab, loading, errors }) => {
+const MainScreen = ({ currentTab, setCurrentTab, loading, error }) => {
   const TabContent = () => {
     switch (currentTab) {
       case ROUTES.HOME:
-        return <Home navigation={navigation} />;
+        return <Home />;
       case ROUTES.CALENDAR:
-        return <FRAACalendar navigation={navigation} />;
+        return <FRAACalendar />;
       case ROUTES.PROFILE:
-        return <Profile navigation={navigation} />;
+        return <Profile />;
       default:
         return (
           <View>
@@ -37,40 +38,47 @@ const MainScreen = ({ navigation, currentTab, setCurrentTab, loading, errors }) 
 
   if (loading) {
     return <Loading />;
-  } else {
-    return (
-      <View style={[styles.container, styles.centeredColumn]}>
-        <View style={styles.content}>
-          <TabContent />
-        </View>
-        <View style={styles.tabs}>
-          <TouchableOpacity onPress={() => setCurrentTab(ROUTES.HOME)} style={styles.tabButton}>
-            <Image style={styles.tabImage} source={currentTab === ROUTES.HOME ? ActiveHomeIcon : InactiveHomeIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setCurrentTab(ROUTES.CALENDAR)} style={styles.tabButton}>
-            <Image
-              style={styles.tabImage}
-              source={currentTab === ROUTES.CALENDAR ? ActiveCalendarIcon : InactiveCalendarIcon}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setCurrentTab(ROUTES.PROFILE)} style={styles.tabButton}>
-            <Image
-              style={styles.tabImage}
-              source={currentTab === ROUTES.PROFILE ? ActiveProfileIcon : InactiveProfileIcon}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
   }
+
+  if (error) {
+    return <Error error={error} />;
+  }
+
+  return (
+    <View style={[styles.container, styles.centeredColumn]}>
+      <View style={styles.content}>
+        <TabContent />
+      </View>
+      <View style={styles.tabs}>
+        <TouchableOpacity onPress={() => setCurrentTab(ROUTES.HOME)} style={styles.tabButton}>
+          <Image style={styles.tabImage} source={currentTab === ROUTES.HOME ? ActiveHomeIcon : InactiveHomeIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setCurrentTab(ROUTES.CALENDAR)} style={styles.tabButton}>
+          <Image
+            style={styles.tabImage}
+            source={currentTab === ROUTES.CALENDAR ? ActiveCalendarIcon : InactiveCalendarIcon}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setCurrentTab(ROUTES.PROFILE)} style={styles.tabButton}>
+          <Image
+            style={styles.tabImage}
+            source={currentTab === ROUTES.PROFILE ? ActiveProfileIcon : InactiveProfileIcon}
+          />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 };
 
 MainScreen.propTypes = {
-  navigation: object.isRequired,
   currentTab: string.isRequired,
   setCurrentTab: func.isRequired,
   loading: bool.isRequired,
-  errors: object.isRequired,
+  error: string,
+};
+
+MainScreen.defaultProps = {
+  error: '',
 };
 
 export default MainScreen;

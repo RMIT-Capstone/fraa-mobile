@@ -1,128 +1,107 @@
 import React, { useState, useEffect } from 'react';
+import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { object, func } from 'prop-types';
-
 import ROUTES from '../../navigation/routes';
-import { getAttendanceSessionsState, setAttendanceSessions } from '../../redux/reducers/AttendanceSessionsReducer';
-import {
-  CHECK_IDENTITY_API,
-  GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE,
-  GET_USER_API,
-  DEMO_EMAIL,
-} from '../../constants/ApiEndpoints';
-import { getUserState, setRegisteredIdentity, setUser } from '../../redux/reducers/UserReducer';
+import { CHECK_IDENTITY_API, GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../constants/ApiEndpoints';
+import { setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
+import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
+import { getAsyncStringData } from '../../helpers/async-storage';
+import { navigateTo } from '../../helpers/navigation';
+import { openToast } from '../../redux/reducers/ToastReducer';
 import MainScreen from './MainScreen';
 
 const MainScreenWrapper = ({
   navigation,
-  attendanceSessions,
   user,
-  handleSetAttendanceSessions,
+  handleSetAllSessions,
   handleSetRegisteredIdentity,
-  handleSetUser,
+  handleOpenToast,
 }) => {
   const [currentTab, setCurrentTab] = useState(ROUTES.HOME);
   const [loading, setLoading] = useState(true);
-  const [errors, setErrors] = useState({ errorLoadUser: '', errorLoadSessions: '' });
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
-    const userRequest = {
-      email: DEMO_EMAIL,
-    };
+    (async () => {
+      const value = await getAsyncStringData('fbToken');
+      if (!value) {
+        navigateTo(navigation, ROUTES.LOGIN);
+      }
+    })();
+  }, []);
 
-    const fetchUser = async () => {
-      const { data } = await axios.post(GET_USER_API, userRequest);
-      if (data) {
-        const { error } = data;
-        if (error) {
-          console.warn('error fetchUser: ', error);
+  useEffect(() => {
+    setLoading(true);
+
+    const fetchAttendanceSessions = async () => {
+      const { subscribedCourses } = user;
+      try {
+        const today = new Date();
+        const request = {
+          courses: subscribedCourses,
+          startMonth: today.getMonth(),
+          monthRange: 3,
+        };
+        const {
+          data,
+          data: { error: fetchAttendanceSessionsError },
+        } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
+        if (fetchAttendanceSessionsError) {
+          handleOpenToast('Fetch attendance session error!', 2000);
         } else {
-          handleSetUser(data);
+          const { sessions: axiosSessions, markedDates } = data;
+          const dateSessions = axiosSessions.filter((session) => {
+            const { validOn } = session;
+            const eventDate = validOn.split('T')[0];
+            return eventDate === new Date().toISOString().split('T')[0];
+          });
+          handleSetAllSessions(axiosSessions, axiosSessions, dateSessions, markedDates);
         }
+      } catch (errorFetchAttendanceSessions) {
+        handleOpenToast('Fetch attendance session error!', 2000);
       }
     };
 
     const fetchUserIdentity = async () => {
-      const { data } = await axios.get(CHECK_IDENTITY_API);
-      if (data) {
+      const { data, error: fetchUserIdentityError } = await axios.get(CHECK_IDENTITY_API);
+      if (fetchUserIdentityError) {
+        handleOpenToast('Fetch attendance session error!', 2000);
+      } else {
         const { msg } = data;
         handleSetRegisteredIdentity(msg);
       }
     };
 
-    const { email: reduxEmail } = user;
-    if (!reduxEmail) {
-      setLoading(true);
-      Promise.all([fetchUser(), fetchUserIdentity()])
-        .then(() => {
-          setLoading(false);
-        })
-        .catch((errorLoadUser) => {
-          setErrors((prevState) => ({ ...prevState, errorLoadUser }));
-        });
-    }
+    Promise.all([fetchAttendanceSessions(), fetchUserIdentity()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((errorLoadUser) => {
+        setLoading(false);
+        setError(JSON.stringify(errorLoadUser));
+        handleOpenToast('Load user error!', 2000);
+      });
   }, []);
 
-  useEffect(() => {
-    const { sessions } = attendanceSessions;
-    const { subscribedCourses } = user;
-
-    if (sessions.length === 0 && subscribedCourses) {
-      const sessionsRequest = {
-        courses: subscribedCourses,
-        startMonth: 9,
-        monthRange: 3,
-      };
-      try {
-        setLoading(true);
-        (async () => {
-          const { data } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, sessionsRequest);
-          if (data) {
-            const { sessions: axiosSessions, markedDates, error } = data;
-            if (error) {
-              console.warn('error fetchAttendanceSessions: ', error);
-            } else {
-              handleSetAttendanceSessions(axiosSessions, markedDates);
-            }
-          }
-          setLoading(false);
-        })();
-      } catch (errorFetchAttendanceSessions) {
-        console.warn('error fetch sessions: ', errorFetchAttendanceSessions);
-      }
-    }
-  }, [attendanceSessions, user]);
-
-  return (
-    <MainScreen
-      currentTab={currentTab}
-      setCurrentTab={setCurrentTab}
-      navigation={navigation}
-      loading={loading}
-      errors={errors}
-    />
-  );
+  return <MainScreen currentTab={currentTab} setCurrentTab={setCurrentTab} loading={loading} error={error} />;
 };
 
 MainScreenWrapper.propTypes = {
   navigation: object.isRequired,
-  attendanceSessions: object.isRequired,
   user: object.isRequired,
-  handleSetAttendanceSessions: func.isRequired,
-  handleSetUser: func.isRequired,
+  handleSetAllSessions: func.isRequired,
   handleSetRegisteredIdentity: func.isRequired,
+  handleOpenToast: func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  attendanceSessions: getAttendanceSessionsState(state),
-  user: getUserState(state),
-});
+const mapStateToProps = (state) => ({ user: getUserState(state) });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAttendanceSessions: (sessions, markedDates) => dispatch(setAttendanceSessions(sessions, markedDates)),
+  handleSetAllSessions: (sessions, homeScreenSessions, agendaSessions, markedDates) =>
+    dispatch(setAllSessions(sessions, homeScreenSessions, agendaSessions, markedDates)),
   handleSetRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
-  handleSetUser: (user) => dispatch(setUser(user)),
+  handleOpenToast: (content, duration) => dispatch(openToast(content, duration)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreenWrapper);

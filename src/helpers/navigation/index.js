@@ -8,7 +8,7 @@ export function replaceTo(navigationProp: Object, screenName: string, options: O
 
 export function resetRoute(navigationProp: Object, screenName: string) {
   navigationProp.reset({
-    routes: [{name: screenName}],
+    routes: [{ name: screenName }],
   });
 }
 

@@ -17,9 +17,10 @@ const FRAACamera = ({
   recapture,
   registerOrVerifyIdentity,
 }) => {
-  const FaceBounds = () => {
-    return recognizedFaces.map((face, index) => (
+  const FaceBounds = () =>
+    recognizedFaces.map((face, index) => (
       <View
+        /* eslint-disable-next-line react/no-array-index-key */
         key={index}
         style={[
           styles.faceBounds,
@@ -32,7 +33,6 @@ const FRAACamera = ({
         ]}
       />
     ));
-  };
 
   const PendingView = () => (
     <View style={styles.camera}>
@@ -40,13 +40,11 @@ const FRAACamera = ({
     </View>
   );
 
-  const CameraMessage = () => {
-    return (
-      <View style={styles.cameraMessageContainer}>
-        <Text style={styles.cameraMessage}>Place your face in the frame</Text>
-      </View>
-    );
-  };
+  const CameraMessage = () => (
+    <View style={styles.cameraMessageContainer}>
+      <Text style={styles.cameraMessage}>Place your face in the frame</Text>
+    </View>
+  );
 
   const SnapButton = ({ camera }) => (
     <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture}>
@@ -111,7 +109,6 @@ const FRAACamera = ({
         return (
           <>
             <CameraMessage />
-
             {recognizedFaces.length !== 0 && (
               <>
                 <FaceBounds />

@@ -6,13 +6,11 @@ import styles from './ProfileStyle';
 const Profile = ({ user, colors, onVerify, reset }) => {
   const { email, displayName, school, registeredIdentity, subscribedCourses } = user;
 
-  const EmptyCourses = () => {
-    return (
-      <View style={styles.centered}>
-        <Text style={styles.emptyCoursesText}>You are not subscribed to any courses.</Text>
-      </View>
-    );
-  };
+  const EmptyCourses = () => (
+    <View style={styles.centered}>
+      <Text style={styles.emptyCoursesText}>You are not subscribed to any courses.</Text>
+    </View>
+  );
 
   return (
     <View style={[styles.container, styles.centered]}>
@@ -49,11 +47,11 @@ const Profile = ({ user, colors, onVerify, reset }) => {
           ) : (
             <>
               <ScrollView
-                horizontal={true}
+                horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.carouselContainer}>
                 {subscribedCourses.map((item, key) => (
-                  <View key={key} style={[styles.carouselItemStyle, colors[key]]}>
+                  <View key={item} style={[styles.carouselItemStyle, colors[key]]}>
                     <View style={styles.courseContainer}>
                       <Text style={styles.courseName}>{item}</Text>
                       <Text style={styles.courseCode}>{item}</Text>
