@@ -3,12 +3,12 @@ import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal, View, Text, StyleSheet, Dimensions } from 'react-native';
 import theme from '../../theme';
-import { closeToast, getToastState } from '../../redux/reducers/ToastReducer';
+import { closeToast, getToastState, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
 
 const windowWidth = Dimensions.get('window').width;
 
 const Toast = ({ toast, handleCloseToast }) => {
-  const { open, content, duration } = toast;
+  const { open, type, content, duration } = toast;
 
   useEffect(() => {
     if (open) {
@@ -22,9 +22,22 @@ const Toast = ({ toast, handleCloseToast }) => {
     }
   }, [open]);
 
+  const backgroundColor = () => {
+    switch (type) {
+      case TOAST_TYPES.INFO:
+        return { backgroundColor: theme.palette.primary.blue };
+      case TOAST_TYPES.SUCCESS:
+        return { backgroundColor: theme.palette.secondary.green };
+      case TOAST_TYPES.ERROR:
+        return { backgroundColor: theme.palette.primary.red };
+      default:
+        return { backgroundColor: '#00000' };
+    }
+  };
+
   return (
     <Modal animationType="slide" transparent visible={open}>
-      <View style={styles.container}>
+      <View style={[styles.container, backgroundColor()]}>
         <Text style={styles.toastText}>{content}</Text>
       </View>
     </Modal>
@@ -41,7 +54,6 @@ const styles = StyleSheet.create({
     bottom: 15,
     borderWidth: 0.5,
     borderRadius: 16,
-    backgroundColor: theme.palette.primary.blue,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
