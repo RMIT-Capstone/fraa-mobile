@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { isEmail, stringIsEmpty } from '../../../../../helpers/utils';
 import { GENERATE_OTP_API } from '../../../../../constants/ApiEndpoints';
-import { openToast } from '../../../../../redux/reducers/ToastReducer';
+import { openToast, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
 import GenerateOTP from './GenerateOTP';
 
 const GenerateOTPWrapper = ({ screens, setScreen, handleOpenToast, setTargetEmail }) => {
@@ -38,10 +38,10 @@ const GenerateOTPWrapper = ({ screens, setScreen, handleOpenToast, setTargetEmai
           if (user) setEmailError(user);
           else {
             setEmailError(JSON.stringify(error));
-            handleOpenToast('Error generate OTP!', 2000);
+            handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', 2000);
           }
         } else {
-          handleOpenToast('OTP code sent!', 2500);
+          handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP code sent!', 2500);
           setTargetEmail(email);
           setTimeout(() => {
             setScreen(VERIFY_OTP);
@@ -50,7 +50,7 @@ const GenerateOTPWrapper = ({ screens, setScreen, handleOpenToast, setTargetEmai
         setLoading(false);
       } catch (errorGenerateOTP) {
         setLoading(false);
-        handleOpenToast('Error generate OTP!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', 2000);
       }
     }
   };
@@ -75,7 +75,7 @@ GenerateOTPWrapper.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleOpenToast: (content, duration) => dispatch(openToast(content, duration)),
+  handleOpenToast: (type, content, duration) => dispatch(openToast(type, content, duration)),
 });
 
 export default connect(null, mapDispatchToProps)(GenerateOTPWrapper);
