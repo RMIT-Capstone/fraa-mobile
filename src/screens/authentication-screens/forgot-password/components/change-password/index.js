@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { string, object, func } from 'prop-types';
 import axios from 'axios';
 import { stringIsEmpty } from '../../../../../helpers/utils';
-import { openToast } from '../../../../../redux/reducers/ToastReducer';
+import { openToast, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
 import { CHANGE_PASSWORD_API } from '../../../../../constants/ApiEndpoints';
 import ROUTES from '../../../../../navigation/routes';
 import ChangePassword from './ChangePassword';
@@ -37,14 +37,14 @@ const ChangePasswordWrapper = ({ targetEmail, navigation, handleOpenToast }) => 
         if (axiosError) {
           setError(JSON.stringify(axiosError));
         } else {
-          handleOpenToast('Password changed successfully!', 2500);
+          handleOpenToast(TOAST_TYPES.SUCCESS, 'Password changed successfully!', 2500);
           setTimeout(() => {
             resetRoute(navigation, ROUTES.LOGIN);
           }, 1000);
         }
         setLoading(false);
       } catch (errorOnChangePassword) {
-        handleOpenToast('Error change password!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error change password!', 2000);
         setLoading(false);
       }
     }
@@ -68,7 +68,7 @@ ChangePasswordWrapper.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleOpenToast: (content, duration) => dispatch(openToast(content, duration)),
+  handleOpenToast: (type, content, duration) => dispatch(openToast(type, content, duration)),
 });
 
 export default connect(null, mapDispatchToProps)(ChangePasswordWrapper);

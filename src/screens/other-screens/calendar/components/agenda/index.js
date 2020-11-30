@@ -5,7 +5,7 @@ import axios from 'axios';
 import FRAAAgenda from './FRAAAgenda';
 import { getUserState } from '../../../../../redux/reducers/UserReducer';
 import { getAttendanceSessionsState, setAllSessions } from '../../../../../redux/reducers/AttendanceSessionsReducer';
-import { openToast } from '../../../../../redux/reducers/ToastReducer';
+import { openToast, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
 import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../../../constants/ApiEndpoints';
 
 const FRAAAgendaWrapper = ({
@@ -29,7 +29,7 @@ const FRAAAgendaWrapper = ({
       (async () => {
         const { data, error } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
         if (error) {
-          handleOpenToast('Error refetch attendance sessions!', 2000);
+          handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', 2000);
         } else {
           const { sessions, markedDates } = data;
           const dateSessions = sessions.filter((session) => {
@@ -43,7 +43,7 @@ const FRAAAgendaWrapper = ({
       })();
     } catch (errorRefetchAttendanceSessions) {
       setRefreshing(false);
-      handleOpenToast('Error refetch attendance sessions!', 2000);
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', 2000);
     }
   };
   return (
@@ -70,7 +70,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleSetAllAttendanceSessions: (session, homeSessions, agendaSessions, markedDates) =>
     dispatch(setAllSessions(session, homeSessions, agendaSessions, markedDates)),
-  handleOpenToast: (content, duration) => dispatch(openToast(content, duration)),
+  handleOpenToast: (type, content, duration) => dispatch(openToast(type, content, duration)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FRAAAgendaWrapper);
