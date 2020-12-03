@@ -15,8 +15,8 @@ const MainStackScreens = () => (
       // eslint-disable-next-line react/jsx-props-no-spreading
       headerTitle: (props) => <Header {...props} />,
     }}>
-    <MainStack.Screen options={{ headerShown: false }} name={ROUTES.TUTORIALS} component={Tutorials} />
     <MainStack.Screen options={{ headerShown: false }} name={ROUTES.LOGIN} component={Login} />
+    <MainStack.Screen options={{ headerShown: false }} name={ROUTES.TUTORIALS} component={Tutorials} />
     <MainStack.Screen options={{ headerShown: false }} name={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
     <MainStack.Screen name={ROUTES.MAIN} component={MainScreen} />
   </MainStack.Navigator>
