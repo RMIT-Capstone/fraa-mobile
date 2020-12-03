@@ -91,7 +91,7 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
           await storeAsyncStringData('fbToken', token);
           const { success } = await setUserInRedux();
           if (success) {
-            resetRoute(navigation, ROUTES.TUTORIALS);
+            resetRoute(navigation, ROUTES.MAIN);
           } else {
             handleOpenToast('Error set user to redux!', 2000);
           }

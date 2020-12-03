@@ -17,9 +17,28 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
   },
+  header: {
+    position: 'relative',
+    flex: 1,
+    width: '100%',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#44444444',
+  },
+  fixedIconWrapper: {
+    position: 'absolute',
+    right: 20,
+  },
+  fixedIcon: {
+    width: 25,
+    height: 25,
+    resizeMode: 'contain',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
   headerContainer: {
     flex: 5,
-    paddingTop: 25,
   },
   bodyContainer: {
     flex: 6,
