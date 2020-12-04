@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { string, object, func } from 'prop-types';
+import { string, object, func, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { stringIsEmpty } from '../../../../../helpers/utils';
@@ -7,7 +7,7 @@ import { openToast, TOAST_TYPES } from '../../../../../redux/reducers/ToastReduc
 import { VERIFY_OTP_API } from '../../../../../constants/ApiEndpoints';
 import VerifyOTP from './VerifyOTP';
 
-const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail }) => {
+const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail, fromProfile }) => {
   const [OTP, setOTP] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,15 @@ const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail }) 
   };
 
   return (
-    <VerifyOTP loading={loading} onVerifyOTP={onVerifyOTP} error={error} OTP={OTP} setOTP={setOTP} goBack={goBack} />
+    <VerifyOTP
+      loading={loading}
+      onVerifyOTP={onVerifyOTP}
+      error={error}
+      OTP={OTP}
+      setOTP={setOTP}
+      goBack={goBack}
+      fromProfile={fromProfile}
+    />
   );
 };
 
@@ -68,6 +76,11 @@ VerifyOTPWrapper.propTypes = {
   setScreen: func.isRequired,
   handleOpenToast: func.isRequired,
   targetEmail: string.isRequired,
+  fromProfile: bool,
+};
+
+VerifyOTPWrapper.defaultProps = {
+  fromProfile: false,
 };
 
 const mapDispatchToProps = (dispatch) => ({

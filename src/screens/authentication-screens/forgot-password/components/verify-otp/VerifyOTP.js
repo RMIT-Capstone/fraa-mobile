@@ -16,7 +16,7 @@ import styles from '../SharedStyle';
 
 const GenericLoading = require('../../../../../assets/lottie-assets/GenericLoading');
 
-const VerifyOTP = ({ OTP, setOTP, onVerifyOTP, goBack, error, loading }) => (
+const VerifyOTP = ({ OTP, setOTP, onVerifyOTP, goBack, error, loading, fromProfile }) => (
   <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.innerContainer}>
@@ -36,9 +36,11 @@ const VerifyOTP = ({ OTP, setOTP, onVerifyOTP, goBack, error, loading }) => (
             <Text style={styles.btnText}>Verify OTP</Text>
           )}
         </TouchableOpacity>
-        <TouchableWithoutFeedback onPress={goBack}>
-          <Text style={styles.goBackText}>Go Back</Text>
-        </TouchableWithoutFeedback>
+        {!fromProfile && (
+          <TouchableWithoutFeedback onPress={goBack}>
+            <Text style={styles.goBackText}>Go Back</Text>
+          </TouchableWithoutFeedback>
+        )}
       </View>
     </TouchableWithoutFeedback>
   </KeyboardAvoidingView>
@@ -51,10 +53,12 @@ VerifyOTP.propTypes = {
   error: string,
   loading: bool.isRequired,
   goBack: func.isRequired,
+  fromProfile: bool,
 };
 
 VerifyOTP.defaultProps = {
   error: '',
+  fromProfile: false,
 };
 
 export default VerifyOTP;

@@ -79,7 +79,8 @@ const Login = ({ navigation, credentials, setCredentials, error, loading, onSign
                 <Text style={styles.signInText}>Sign In</Text>
               )}
             </TouchableOpacity>
-            <TouchableWithoutFeedback onPress={() => navigateTo(navigation, ROUTES.FORGOT_PASSWORD)}>
+            <TouchableWithoutFeedback
+              onPress={() => navigateTo(navigation, ROUTES.FORGOT_PASSWORD, { fromProfile: false, email: '' })}>
               <Text style={styles.forgotPassword}>Forgot your password ?</Text>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback

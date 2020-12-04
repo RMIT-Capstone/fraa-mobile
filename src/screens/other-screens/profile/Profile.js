@@ -84,7 +84,7 @@ const Profile = ({ user, colors, onVerify, reset, showSettings, setShowSettings 
             </View>
           </View>
         </View>
-        <SettingsPopUp showSettings={showSettings} />
+        <SettingsPopUp showSettings={showSettings} setShowSettings={setShowSettings} email={user.email} />
       </View>
     </TouchableWithoutFeedback>
   );
