@@ -7,7 +7,7 @@ import { storeAsyncStringData } from '../../../helpers/async-storage';
 import { resetRoute } from '../../../helpers/navigation';
 import { isEmail, stringIsEmpty } from '../../../helpers/utils';
 import { setUser } from '../../../redux/reducers/UserReducer';
-import { openToast } from '../../../redux/reducers/ToastReducer';
+import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
 import { GET_USER_API, SIGN_IN_API } from '../../../constants/ApiEndpoints';
 import ROUTES from '../../../navigation/routes';
 import Login from './Login';
@@ -93,12 +93,12 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
           if (success) {
             resetRoute(navigation, ROUTES.MAIN);
           } else {
-            handleOpenToast('Error set user to redux!', 2000);
+            handleOpenToast(TOAST_TYPES.ERROR, 'Error set user to redux!', TOAST_POSITIONS.BOTTOM, 2000);
           }
         }
         setLoading(false);
       } catch (errorOnSignIn) {
-        handleOpenToast('Error fetch user!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error fetch user!', TOAST_POSITIONS.BOTTOM, 2000);
         setLoading(false);
       }
     } else {
@@ -126,7 +126,7 @@ LoginWrapper.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetUser: (user) => dispatch(setUser(user)),
-  handleOpenToast: (content, duration) => dispatch(openToast(content, duration)),
+  handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 
 export default connect(null, mapDispatchToProps)(LoginWrapper);

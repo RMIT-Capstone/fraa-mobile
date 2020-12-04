@@ -8,7 +8,7 @@ import { setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
 import FRAACamera from './FRAACamera';
-import { openToast } from '../../redux/reducers/ToastReducer';
+import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
 
 const FRAACameraWrapper = ({
   route: {
@@ -40,7 +40,7 @@ const FRAACameraWrapper = ({
         setLoading(false);
       }
     } catch (errorCapture) {
-      handleOpenToast('Error capture!', 2000);
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };
 
@@ -69,7 +69,7 @@ const FRAACameraWrapper = ({
         }
       }
     } catch (errorRegisterOrVerifyIdentity) {
-      handleOpenToast('Error register/verify identity!', 2000);
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error register/verify identity!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };
 

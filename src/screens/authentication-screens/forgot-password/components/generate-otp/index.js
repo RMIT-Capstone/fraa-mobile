@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { isEmail, stringIsEmpty } from '../../../../../helpers/utils';
 import { GENERATE_OTP_API } from '../../../../../constants/ApiEndpoints';
-import { openToast, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
+import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
 import GenerateOTP from './GenerateOTP';
 
 const GenerateOTPWrapper = ({ screens, setScreen, handleOpenToast, setTargetEmail, fromProfile }) => {
@@ -38,10 +38,10 @@ const GenerateOTPWrapper = ({ screens, setScreen, handleOpenToast, setTargetEmai
           if (user) setEmailError(user);
           else {
             setEmailError(JSON.stringify(error));
-            handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', 2000);
+            handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', TOAST_POSITIONS.BOTTOM, 2000);
           }
         } else {
-          handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP code sent!', 2000);
+          handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP code sent!', TOAST_POSITIONS.BOTTOM, 2000);
           setTargetEmail(email);
           setTimeout(() => {
             setScreen(VERIFY_OTP);
@@ -50,7 +50,7 @@ const GenerateOTPWrapper = ({ screens, setScreen, handleOpenToast, setTargetEmai
         setLoading(false);
       } catch (errorGenerateOTP) {
         setLoading(false);
-        handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', TOAST_POSITIONS.BOTTOM, 2000);
       }
     }
   };
@@ -81,7 +81,7 @@ GenerateOTPWrapper.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleOpenToast: (type, content, duration) => dispatch(openToast(type, content, duration)),
+  handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 
 export default connect(null, mapDispatchToProps)(GenerateOTPWrapper);

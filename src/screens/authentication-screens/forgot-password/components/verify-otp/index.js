@@ -3,7 +3,7 @@ import { string, object, func, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { stringIsEmpty } from '../../../../../helpers/utils';
-import { openToast, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
+import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
 import { VERIFY_OTP_API } from '../../../../../constants/ApiEndpoints';
 import VerifyOTP from './VerifyOTP';
 
@@ -41,14 +41,14 @@ const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail, fr
             }
           }
         } else {
-          handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP verified!', 2500);
+          handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP verified!', TOAST_POSITIONS.BOTTOM, 2500);
           setTimeout(() => {
             setScreen(CHANGE_PASSWORD);
           }, 1000);
         }
         setLoading(false);
       } catch (errorVerifyOTP) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Error verify OTP!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error verify OTP!', TOAST_POSITIONS.BOTTOM, 2000);
         setLoading(false);
       }
     }
@@ -84,7 +84,7 @@ VerifyOTPWrapper.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleOpenToast: (type, content, duration) => dispatch(openToast(type, content, duration)),
+  handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 
 export default connect(null, mapDispatchToProps)(VerifyOTPWrapper);

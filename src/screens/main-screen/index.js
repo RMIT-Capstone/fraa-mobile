@@ -8,7 +8,7 @@ import { setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import { getAsyncStringData } from '../../helpers/async-storage';
 import { navigateTo } from '../../helpers/navigation';
-import { openToast, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
+import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
 import MainScreen from './MainScreen';
 
 const MainScreenWrapper = ({
@@ -48,7 +48,7 @@ const MainScreenWrapper = ({
           request,
         );
         if (fetchAttendanceSessionsError) {
-          handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', 2000);
+          handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
         } else {
           const { sessions: axiosSessions, markedDates } = data;
           const dateSessions = axiosSessions.filter((session) => {
@@ -59,14 +59,14 @@ const MainScreenWrapper = ({
           handleSetAllSessions(axiosSessions, axiosSessions, dateSessions, markedDates);
         }
       } catch (errorFetchAttendanceSessions) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
       }
     };
 
     const fetchUserIdentity = async () => {
       const { data, error: fetchUserIdentityError } = await axios.get(CHECK_IDENTITY_API);
       if (fetchUserIdentityError) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
       } else {
         const { msg } = data;
         handleSetRegisteredIdentity(msg);
@@ -80,7 +80,7 @@ const MainScreenWrapper = ({
       .catch((errorLoadUser) => {
         setLoading(false);
         setError(JSON.stringify(errorLoadUser));
-        handleOpenToast(TOAST_TYPES.ERROR, 'Load user error!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Load user error!', TOAST_POSITIONS.BOTTOM, 2000);
       });
   }, []);
 
@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleSetAllSessions: (sessions, homeScreenSessions, agendaSessions, markedDates) =>
     dispatch(setAllSessions(sessions, homeScreenSessions, agendaSessions, markedDates)),
   handleSetRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
-  handleOpenToast: (type, content, duration) => dispatch(openToast(type, content, duration)),
+  handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreenWrapper);

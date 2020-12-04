@@ -9,7 +9,7 @@ import { resetUser } from '../../../../../redux/reducers/UserReducer';
 import { navigateTo, resetRoute } from '../../../../../helpers/navigation';
 import ROUTES from '../../../../../navigation/routes';
 import { GENERATE_OTP_API } from '../../../../../constants/ApiEndpoints';
-import { openToast, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
+import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -37,12 +37,12 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
         data: { error },
       } = await axios.post(GENERATE_OTP_API, { email });
       if (error) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', TOAST_POSITIONS.BOTTOM, 2000);
       } else {
-        handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP code sent!', 2000);
+        handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP code sent!', TOAST_POSITIONS.BOTTOM, 2000);
       }
     } catch (errorGenerateOTP) {
-      handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', 2000);
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error generate OTP!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };
 
@@ -52,7 +52,8 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
       navigateTo(navigation, ROUTES.FORGOT_PASSWORD, { fromProfile: true, email });
       await generateOTP();
     } else if (option === 'About') {
-      handleOpenToast(TOAST_TYPES.INFO, 'Work in progress...', 1000);
+      setShowSettings(false);
+      handleOpenToast(TOAST_TYPES.INFO, 'Work in progress...', TOAST_POSITIONS.TOP, 1000);
     } else {
       resetRoute(navigation, ROUTES.LOGIN);
       handleResetUser();
@@ -127,7 +128,7 @@ SettingsPopUp.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => ({
   handleResetUser: () => dispatch(resetUser()),
-  handleOpenToast: (type, content, duration) => dispatch(openToast(type, content, duration)),
+  handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 
 export default connect(null, mapDispatchToProps)(SettingsPopUp);

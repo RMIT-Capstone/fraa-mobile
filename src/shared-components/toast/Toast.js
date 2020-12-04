@@ -3,12 +3,12 @@ import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal, View, Text, StyleSheet, Dimensions } from 'react-native';
 import theme from '../../theme';
-import { closeToast, getToastState, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
+import { closeToast, getToastState, TOAST_POSITIONS, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
 
 const windowWidth = Dimensions.get('window').width;
 
 const Toast = ({ toast, handleCloseToast }) => {
-  const { open, type, content, duration } = toast;
+  const { open, type, content, position, duration } = toast;
 
   useEffect(() => {
     if (open) {
@@ -35,9 +35,20 @@ const Toast = ({ toast, handleCloseToast }) => {
     }
   };
 
+  const toastPosition = () => {
+    switch (position) {
+      case TOAST_POSITIONS.BOTTOM:
+        return { bottom: 15 };
+      case TOAST_POSITIONS.TOP:
+        return { top: 20 };
+      default:
+        return { bottom: 15 };
+    }
+  };
+
   return (
-    <Modal animationType="slide" transparent visible={open}>
-      <View style={[styles.container, backgroundColor()]}>
+    <Modal animationType="fade" transparent visible={open}>
+      <View style={[styles.container, backgroundColor(), toastPosition()]}>
         <Text style={styles.toastText}>{content}</Text>
       </View>
     </Modal>
@@ -46,12 +57,12 @@ const Toast = ({ toast, handleCloseToast }) => {
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 2,
     height: 50,
     width: windowWidth - 110,
     position: 'absolute',
     padding: 10,
     marginLeft: 55,
-    bottom: 15,
     borderRadius: 16,
     shadowColor: '#000',
     shadowOffset: {
