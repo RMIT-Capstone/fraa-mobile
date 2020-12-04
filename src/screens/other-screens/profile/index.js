@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import ROUTES from '../../../navigation/routes';
 const ProfileWrapper = ({ user, handleSetRegisteredIdentity }) => {
   const navigation = useNavigation();
   const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
+  const [showSettings, setShowSettings] = useState(false);
 
   const onVerify = () => {
     navigateTo(navigation, ROUTES.CAMERA, { fromHome: false });
@@ -19,7 +20,16 @@ const ProfileWrapper = ({ user, handleSetRegisteredIdentity }) => {
     handleSetRegisteredIdentity(false);
   };
 
-  return <Profile user={user} colors={colors} onVerify={onVerify} reset={reset} />;
+  return (
+    <Profile
+      user={user}
+      colors={colors}
+      onVerify={onVerify}
+      reset={reset}
+      showSettings={showSettings}
+      setShowSettings={setShowSettings}
+    />
+  );
 };
 
 ProfileWrapper.propTypes = {

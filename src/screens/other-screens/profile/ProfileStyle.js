@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StatusBar, StyleSheet } from 'react-native';
 import theme from '../../../theme';
 
 const styles = StyleSheet.create({
@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.palette.secondary.white,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 10,
   },
   centered: {
     justifyContent: 'center',
@@ -17,9 +18,28 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
   },
+  header: {
+    position: 'relative',
+    flex: 1,
+    width: '100%',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#44444444',
+  },
+  fixedIconWrapper: {
+    position: 'absolute',
+    right: 20,
+  },
+  fixedIcon: {
+    width: 25,
+    height: 25,
+    resizeMode: 'contain',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
   headerContainer: {
     flex: 5,
-    paddingTop: 25,
   },
   bodyContainer: {
     flex: 6,

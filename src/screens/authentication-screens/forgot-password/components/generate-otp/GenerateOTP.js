@@ -17,7 +17,7 @@ import ROUTES from '../../../../../navigation/routes';
 
 const GenericLoading = require('../../../../../assets/lottie-assets/GenericLoading');
 
-const GenerateOTP = ({ email, setEmail, emailError, onGenerateOTP, loading, navigation }) => (
+const GenerateOTP = ({ email, setEmail, emailError, onGenerateOTP, loading, navigation, fromProfile }) => (
   <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.innerContainer}>
@@ -37,9 +37,11 @@ const GenerateOTP = ({ email, setEmail, emailError, onGenerateOTP, loading, navi
             <Text style={styles.btnText}>Generate OTP</Text>
           )}
         </TouchableOpacity>
-        <TouchableWithoutFeedback onPress={() => navigateTo(navigation, ROUTES.LOGIN)}>
-          <Text style={styles.goBackText}>Go back to Login</Text>
-        </TouchableWithoutFeedback>
+        {!fromProfile && (
+          <TouchableWithoutFeedback onPress={() => navigateTo(navigation, ROUTES.LOGIN)}>
+            <Text style={styles.goBackText}>Go back to Login</Text>
+          </TouchableWithoutFeedback>
+        )}
       </View>
     </TouchableWithoutFeedback>
   </KeyboardAvoidingView>
@@ -52,6 +54,11 @@ GenerateOTP.propTypes = {
   onGenerateOTP: func.isRequired,
   loading: bool.isRequired,
   navigation: object.isRequired,
+  fromProfile: bool,
+};
+
+GenerateOTP.defaultProps = {
+  fromProfile: false,
 };
 
 export default GenerateOTP;

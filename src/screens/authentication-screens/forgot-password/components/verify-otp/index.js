@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { string, object, func } from 'prop-types';
+import { string, object, func, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { stringIsEmpty } from '../../../../../helpers/utils';
-import { openToast, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
+import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
 import { VERIFY_OTP_API } from '../../../../../constants/ApiEndpoints';
 import VerifyOTP from './VerifyOTP';
 
-const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail }) => {
+const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail, fromProfile }) => {
   const [OTP, setOTP] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -41,14 +41,14 @@ const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail }) 
             }
           }
         } else {
-          handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP verified!', 2500);
+          handleOpenToast(TOAST_TYPES.SUCCESS, 'OTP verified!', TOAST_POSITIONS.BOTTOM, 2500);
           setTimeout(() => {
             setScreen(CHANGE_PASSWORD);
           }, 1000);
         }
         setLoading(false);
       } catch (errorVerifyOTP) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Error verify OTP!', 2000);
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error verify OTP!', TOAST_POSITIONS.BOTTOM, 2000);
         setLoading(false);
       }
     }
@@ -59,7 +59,15 @@ const VerifyOTPWrapper = ({ screens, setScreen, handleOpenToast, targetEmail }) 
   };
 
   return (
-    <VerifyOTP loading={loading} onVerifyOTP={onVerifyOTP} error={error} OTP={OTP} setOTP={setOTP} goBack={goBack} />
+    <VerifyOTP
+      loading={loading}
+      onVerifyOTP={onVerifyOTP}
+      error={error}
+      OTP={OTP}
+      setOTP={setOTP}
+      goBack={goBack}
+      fromProfile={fromProfile}
+    />
   );
 };
 
@@ -68,10 +76,15 @@ VerifyOTPWrapper.propTypes = {
   setScreen: func.isRequired,
   handleOpenToast: func.isRequired,
   targetEmail: string.isRequired,
+  fromProfile: bool,
+};
+
+VerifyOTPWrapper.defaultProps = {
+  fromProfile: false,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleOpenToast: (type, content, duration) => dispatch(openToast(type, content, duration)),
+  handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 
 export default connect(null, mapDispatchToProps)(VerifyOTPWrapper);

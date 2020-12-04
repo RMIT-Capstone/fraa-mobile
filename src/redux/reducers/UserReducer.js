@@ -5,9 +5,10 @@ import { createSelector } from 'reselect';
 const initialState = {};
 
 // ACTION CREATORS
-export const { setUser, setRegisteredIdentity } = createActions({
+export const { setUser, setRegisteredIdentity, resetUser } = createActions({
   SET_USER: (user) => ({ user }),
   SET_REGISTERED_IDENTITY: (registered) => ({ registered }),
+  RESET_USER: undefined,
 });
 
 // ACTION HANDLERS
@@ -33,6 +34,7 @@ export default handleActions(
       ...state,
       registeredIdentity: registered,
     }),
+    RESET_USER: () => initialState,
   },
   initialState,
 );

@@ -6,23 +6,23 @@ export function replaceTo(navigationProp: Object, screenName: string, options: O
   navigationProp.replace(screenName, options);
 }
 
-export function resetRoute(navigationProp: Object, screenName: string) {
+export function resetRoute(navigationProp: Object, screenName: string, params?: Object) {
   navigationProp.reset({
-    routes: [{ name: screenName }],
+    routes: [{ name: screenName, params }],
   });
 }
 
-//push to a new screen
+// push to a new screen
 export function pushTo(navigationProp: Object, screenName: string, propParams?: Object) {
   navigationProp.push(screenName, propParams);
 }
 
-//go back one screen
+// go back one screen
 export function goBack(navigationProp: Object) {
   navigationProp.goBack();
 }
 
-//go to the first screen in the stack
+// go to the first screen in the stack
 export function goToFirstScreenInStack(navigationProp: Object) {
   navigationProp.popToTop();
 }
