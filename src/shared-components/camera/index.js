@@ -19,6 +19,8 @@ const FRAACameraWrapper = ({
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewImage, setPreviewImage] = useState({ base64: '', uri: '' });
+  const [verifyResult, setVerifyResult] = useState(undefined);
+  const [verifiedCount, setVerifiedCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const onFacesDetected = ({ faces }) => {
@@ -29,18 +31,35 @@ const FRAACameraWrapper = ({
     }
   };
 
+  const path = 'user';
+  const userID = 'UserID';
+
+  const onFacesVerified = ({ result }) => {
+    // console.log('face verify result:' + result);
+    // eslint-disable-next-line no-param-reassign
+    result = parseFloat(result);
+    setVerifyResult(result);
+    if (result < 0.1) {
+      setVerifiedCount(verifiedCount + 1);
+    }
+    if (verifiedCount > 5) {
+      setVerifiedCount('you passed verifying phase');
+    }
+  };
+
   const takePicture = async (camera) => {
-    const options = { quality: 0.5, base64: true };
+    const options = { quality: 0.5, base64: true, path, user: userID };
     setLoading(true);
     try {
       const data = await camera.takePictureAsync(options);
       if (data) {
+
         const { uri, base64 } = data;
         setPreviewImage({ base64, uri });
         setLoading(false);
       }
     } catch (errorCapture) {
-      handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 2000);
+      console.warn(errorCapture);
     }
   };
 
@@ -63,9 +82,9 @@ const FRAACameraWrapper = ({
       if (data) {
         setLoading(false);
         if (fromHome) {
-          navigateTo(navigation, ROUTES.HOME);
+          navigateTo(navigation, ROUTES.MAIN);
         } else {
-          navigateTo(navigation, ROUTES.PROFILE);
+          navigateTo(navigation, ROUTES.MAIN);
         }
       }
     } catch (errorRegisterOrVerifyIdentity) {
@@ -78,6 +97,10 @@ const FRAACameraWrapper = ({
       previewImage={previewImage}
       loading={loading}
       onFacesDetected={onFacesDetected}
+      onFacesVerified={onFacesVerified}
+      verifyResult={verifyResult}
+      path={path}
+      userID={userID}
       takePicture={takePicture}
       recognizedFaces={recognizedFaces}
       registerOrVerifyIdentity={registerOrVerifyIdentity}

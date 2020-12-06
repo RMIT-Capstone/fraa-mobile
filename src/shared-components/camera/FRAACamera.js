@@ -13,10 +13,15 @@ const FRAACamera = ({
   recognizedFaces,
   fromHome,
   onFacesDetected,
+  onFacesVerified,
+  verifyResult,
+  path,
+  userID,
   takePicture,
   recapture,
   registerOrVerifyIdentity,
 }) => {
+
   const FaceBounds = () =>
     recognizedFaces.map((face, index) => (
       <View
@@ -82,6 +87,51 @@ const FRAACamera = ({
           </TouchableOpacity>
         </View>
       </ImageBackground>
+    );
+  }
+
+  if (!fromHome) {
+    return (
+      <RNCamera
+        style={styles.camera}
+        type={RNCamera.Constants.Type.front}
+        onFacesDetected={onFacesDetected}
+        onFacesVerified={onFacesVerified}
+        path={path}
+        // user="true_img.png"
+        user={`${userID}.png`}
+        modelURL="https://tam-terraform-state.s3-ap-southeast-1.amazonaws.com/FRAA/"
+        modelFileName="mymodel112.tflite"
+        androidCameraPermissionOptions={{
+          title: 'Permission to use camera',
+          message: 'We need your permission to use your camera',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+        }}
+        androidRecordAudioPermissionOptions={{
+          title: 'Permission to use audio recording',
+          message: 'We need your permission to use your audio',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+        }}>
+        {({ camera, status }) => {
+          if (status !== 'READY') {
+            return <PendingView />;
+          }
+          return (
+            <>
+              <CameraMessage />
+              {recognizedFaces.length !== 0 && (
+                <>
+                  <FaceBounds />
+                  {recognizedFaces.length === 1 && <SnapButton camera={camera} />}
+                  {recognizedFaces.length > 1 && <TooManyFaces />}
+                </>
+              )}
+            </>
+          );
+        }}
+      </RNCamera>
     );
   }
 

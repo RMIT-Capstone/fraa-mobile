@@ -6129,10 +6129,9 @@ react-native-calendars@^1.403.0:
     react-native-swipe-gestures "^1.0.5"
     xdate "^0.8.0"
 
-react-native-camera@^3.35.0:
+"react-native-camera@https://github.com/s3687636/react-native-camera.git":
   version "3.40.0"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.40.0.tgz#69845991e46b0892cc2b50322d49b18f292c3202"
-  integrity sha512-Ur0hZqZcl3SntTVMB9GxuiLYpQxqwgzhQVb+7EGae4WjfDzQEwlGF0bJ7UpZyeUTb1oZmsiSib58xUckn11XMw==
+  resolved "https://github.com/s3687636/react-native-camera.git#099defa9baa4e178caee266087ae7b83d0aa698a"
   dependencies:
     prop-types "^15.6.2"
 
