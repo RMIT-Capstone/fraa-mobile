@@ -1,11 +1,13 @@
 import React from 'react';
 import { arrayOf, object, bool } from 'prop-types';
-import { View, Text, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styles from './HomeStyle';
+import { navigateTo } from '../../../helpers/navigation';
+import ROUTES from '../../../navigation/routes';
 
 const CheckInIcon = require('../../../assets/CheckInIcon.png');
 
-const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappening, timeDifference }) => {
+const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappening, timeDifference, navigation }) => {
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -54,10 +56,12 @@ const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappeni
           </View>
         </View>
         {isHappening ? (
-          <View style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
+          <TouchableOpacity
+            onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false })}
+            style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
             <Image source={CheckInIcon} style={styles.checkInIcon} />
             <Text style={styles.checkInText}>Check In</Text>
-          </View>
+          </TouchableOpacity>
         ) : (
           <View style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
             <Text style={styles.disabledText}>

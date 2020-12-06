@@ -31,18 +31,20 @@ const FRAACameraWrapper = ({
     }
   };
 
-  const path = 'user';
-  const userID = 'UserID';
+  const path = 'User';
+  const userID = 'imageName';
 
   const onFacesVerified = ({ result }) => {
     // console.log('face verify result:' + result);
     // eslint-disable-next-line no-param-reassign
     result = parseFloat(result);
     setVerifyResult(result);
+    console.log(result);
     if (result < 0.1) {
       setVerifiedCount(verifiedCount + 1);
     }
     if (verifiedCount > 5) {
+      console.log('verified!');
       setVerifiedCount('you passed verifying phase');
     }
   };
@@ -53,7 +55,6 @@ const FRAACameraWrapper = ({
     try {
       const data = await camera.takePictureAsync(options);
       if (data) {
-
         const { uri, base64 } = data;
         setPreviewImage({ base64, uri });
         setLoading(false);

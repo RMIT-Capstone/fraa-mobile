@@ -21,7 +21,6 @@ const FRAACamera = ({
   recapture,
   registerOrVerifyIdentity,
 }) => {
-
   const FaceBounds = () =>
     recognizedFaces.map((face, index) => (
       <View
@@ -79,7 +78,7 @@ const FRAACamera = ({
             {loading ? (
               <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
             ) : (
-              <Text style={styles.snapText}>{fromHome ? 'Verify' : 'Register'}</Text>
+              <Text style={styles.snapText}>{!fromHome ? 'Verify' : 'Register'}</Text>
             )}
           </TouchableOpacity>
           <TouchableOpacity onPress={recapture} style={styles.recapture}>
@@ -99,7 +98,7 @@ const FRAACamera = ({
         onFacesVerified={onFacesVerified}
         path={path}
         // user="true_img.png"
-        user={`${userID}.png`}
+        user={userID}
         modelURL="https://tam-terraform-state.s3-ap-southeast-1.amazonaws.com/FRAA/"
         modelFileName="mymodel112.tflite"
         androidCameraPermissionOptions={{
@@ -140,6 +139,7 @@ const FRAACamera = ({
       style={styles.camera}
       type={RNCamera.Constants.Type.front}
       onFacesDetected={onFacesDetected}
+
       androidCameraPermissionOptions={{
         title: 'Permission to use camera',
         message: 'We need your permission to use your camera',
