@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, object, func, bool } from 'prop-types';
+import { arrayOf, object, func, bool, number, string } from 'prop-types';
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { RNCamera } from 'react-native-camera';
@@ -44,11 +44,17 @@ const FRAACamera = ({
     </View>
   );
 
-  const CameraMessage = () => (
+  const TopCameraMessage = () => (
     <View style={styles.cameraMessageContainer}>
       <Text style={styles.cameraMessage}>Place your face in the frame</Text>
     </View>
   );
+
+  const BottomCameraMessage = () => {
+    <View style={styles.cameraMessageContainer}>
+      <Text style={styles.cameraMessage}>Place your face in the frame</Text>
+    </View>
+  }
 
   const SnapButton = ({ camera }) => (
     <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture}>
@@ -139,7 +145,6 @@ const FRAACamera = ({
       style={styles.camera}
       type={RNCamera.Constants.Type.front}
       onFacesDetected={onFacesDetected}
-
       androidCameraPermissionOptions={{
         title: 'Permission to use camera',
         message: 'We need your permission to use your camera',
@@ -179,6 +184,10 @@ FRAACamera.propTypes = {
   recognizedFaces: arrayOf(object).isRequired,
   fromHome: bool.isRequired,
   onFacesDetected: func.isRequired,
+  onFacesVerified: func.isRequired,
+  verifyResult: number.isRequired,
+  path: string.isRequired,
+  userID: string.isRequired,
   takePicture: func.isRequired,
   recapture: func.isRequired,
   registerOrVerifyIdentity: func.isRequired,

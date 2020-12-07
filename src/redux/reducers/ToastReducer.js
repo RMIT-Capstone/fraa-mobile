@@ -39,7 +39,7 @@ export default handleActions(
       position,
       duration,
     }),
-    CLOSE_TOAST: () => ({ ...initialState }),
+    CLOSE_TOAST: () => initialState,
   },
   initialState,
 );

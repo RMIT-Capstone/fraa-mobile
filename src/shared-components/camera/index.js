@@ -4,7 +4,7 @@ import { func, object } from 'prop-types';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { DEMO_EMAIL, REGISTER_IDENTITY_API, VERIFY_IDENTITY_API } from '../../constants/ApiEndpoints';
-import { setRegisteredIdentity } from '../../redux/reducers/UserReducer';
+import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
 import FRAACamera from './FRAACamera';
@@ -14,14 +14,16 @@ const FRAACameraWrapper = ({
   route: {
     params: { fromHome },
   },
+  user: { id },
   handleOpenToast,
+  handleSetUserRegisteredIdentity,
 }) => {
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewImage, setPreviewImage] = useState({ base64: '', uri: '' });
-  const [verifyResult, setVerifyResult] = useState(undefined);
-  const [verifiedCount, setVerifiedCount] = useState(0);
+  const [verifyResult, setVerifyResult] = useState({ count: 0, message: 'Scanning...' });
   const [loading, setLoading] = useState(false);
+  const path = 'User';
 
   const onFacesDetected = ({ faces }) => {
     if (faces) {
@@ -31,26 +33,19 @@ const FRAACameraWrapper = ({
     }
   };
 
-  const path = 'User';
-  const userID = 'imageName';
-
-  const onFacesVerified = ({ result }) => {
-    // console.log('face verify result:' + result);
-    // eslint-disable-next-line no-param-reassign
-    result = parseFloat(result);
-    setVerifyResult(result);
-    console.log(result);
-    if (result < 0.1) {
-      setVerifiedCount(verifiedCount + 1);
+  const onFacesVerified = ({ faceResult }) => {
+    const parsedResult = parseFloat(faceResult);
+    const { count } = verifyResult;
+    if (parsedResult < 0.1) {
+      setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
     }
-    if (verifiedCount > 5) {
-      console.log('verified!');
-      setVerifiedCount('you passed verifying phase');
+    if (count > 5) {
+      setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
     }
   };
 
   const takePicture = async (camera) => {
-    const options = { quality: 0.5, base64: true, path, user: userID };
+    const options = { quality: 0.5, base64: true, path, user: id };
     setLoading(true);
     try {
       const data = await camera.takePictureAsync(options);
@@ -60,7 +55,7 @@ const FRAACameraWrapper = ({
         setLoading(false);
       }
     } catch (errorCapture) {
-      console.warn(errorCapture);
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };
 
@@ -101,7 +96,7 @@ const FRAACameraWrapper = ({
       onFacesVerified={onFacesVerified}
       verifyResult={verifyResult}
       path={path}
-      userID={userID}
+      userID={id}
       takePicture={takePicture}
       recognizedFaces={recognizedFaces}
       registerOrVerifyIdentity={registerOrVerifyIdentity}
@@ -113,9 +108,18 @@ const FRAACameraWrapper = ({
 
 FRAACameraWrapper.propTypes = {
   route: object.isRequired,
+  user: object.isRequired,
+  handleSetUserRegisteredIdentity: func.isRequired,
   handleOpenToast: func.isRequired,
 };
 
-export default connect(null, { handleSetUserRegisteredIdentity: setRegisteredIdentity, handleOpenToast: openToast })(
-  FRAACameraWrapper,
-);
+const mapStateToProps = (state) => ({
+  user: getUserState(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSetUserRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
+  handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FRAACameraWrapper);

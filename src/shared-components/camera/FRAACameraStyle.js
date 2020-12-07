@@ -12,11 +12,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 200,
     height: 40,
-    top: 60,
     borderRadius: 55,
-    backgroundColor: '#AFAFAF',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  topCameraMessageContainer: {
+    top: 60,
+    backgroundColor: '#AFAFAF',
+  },
+  bottomCameraMessageContainer: {
+    bottom: 60,
+    backgroundColor: theme.palette.primary.blue,
   },
   cameraMessage: {
     color: theme.palette.secondary.white,

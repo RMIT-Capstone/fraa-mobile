@@ -18,11 +18,12 @@ export default handleActions(
       state,
       {
         payload: {
-          user: { email, displayName, school, subscribedCourses, firstTimePassword, createdAt },
+          user: { id, email, displayName, school, subscribedCourses, firstTimePassword, createdAt },
         },
       },
     ) => ({
       ...state,
+      id,
       email,
       displayName,
       school,
