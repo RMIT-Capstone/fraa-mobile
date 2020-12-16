@@ -10,6 +10,7 @@ import { navigateTo, resetRoute } from '../../../../../helpers/navigation';
 import ROUTES from '../../../../../navigation/routes';
 import { GENERATE_OTP_API } from '../../../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
+import { removeAsyncStorageData } from '../../../../../helpers/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -55,8 +56,12 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
       setShowSettings(false);
       handleOpenToast(TOAST_TYPES.INFO, 'Work in progress...', TOAST_POSITIONS.TOP, 1000);
     } else {
-      resetRoute(navigation, ROUTES.LOGIN);
+      await removeAsyncStorageData('fbToken');
       handleResetUser();
+      handleOpenToast(TOAST_TYPES.INFO, 'Logged out', TOAST_POSITIONS.BOTTOM, 1500);
+      setTimeout(() => {
+        resetRoute(navigation, ROUTES.LOGIN);
+      }, 1000);
     }
   };
 
@@ -73,7 +78,7 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
   const renderOptions = ({ item }) => <Item item={item} />;
 
   return (
-    <Modal animation="slide" transparent visible={showSettings} onRequestClose={() => setShowSettings(false)}>
+    <Modal animation="fade" transparent visible={showSettings} onRequestClose={() => setShowSettings(false)}>
       <TouchableOpacity onPress={() => setShowSettings(false)} style={styles.topTouchable} />
       <View style={styles.bottomTouchable}>
         <FlatList data={OPTIONS} renderItem={renderOptions} keyExtractor={(item) => item.id} />
@@ -102,8 +107,8 @@ const styles = StyleSheet.create({
   item: {
     height: 50,
     width: windowWidth,
-    borderBottomWidth: 0.2,
-    borderBottomColor: '#444444',
+    borderTopWidth: 0.2,
+    borderTopColor: '#444444',
   },
   optionsText: {
     fontWeight: '500',

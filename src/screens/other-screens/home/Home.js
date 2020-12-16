@@ -29,7 +29,11 @@ const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappeni
     );
   }
 
-  const { validOn, courseName, location } = displaySession;
+  const {
+    validOn,
+    location,
+    course: { courseName },
+  } = displaySession;
   const today = new Date();
   const validOnDateObject = new Date(validOn);
   const dateOfValidOn = validOnDateObject.getDate();
@@ -81,6 +85,7 @@ const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappeni
 };
 
 Home.propTypes = {
+  navigation: object.isRequired,
   homeScreenSessions: arrayOf(object).isRequired,
   isLoadingSessions: bool.isRequired,
   displaySession: object,

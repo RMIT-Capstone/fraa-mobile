@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import { DEMO_EMAIL, REGISTER_IDENTITY_API, VERIFY_IDENTITY_API } from '../../constants/ApiEndpoints';
 import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
@@ -20,7 +18,7 @@ const FRAACameraWrapper = ({
 }) => {
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
-  const [previewImage, setPreviewImage] = useState({ base64: '', uri: '' });
+  const [previewUri, setPreviewUri] = useState('');
   const [verifyResult, setVerifyResult] = useState({ count: 0, message: 'Scanning...' });
   const [loading, setLoading] = useState(false);
   const path = 'User';
@@ -33,7 +31,7 @@ const FRAACameraWrapper = ({
     }
   };
 
-  const onFacesVerified = ({ faceResult }) => {
+  const onFacesVerified = ({ result: faceResult }) => {
     const parsedResult = parseFloat(faceResult);
     const { count } = verifyResult;
     if (parsedResult < 0.1) {
@@ -41,6 +39,9 @@ const FRAACameraWrapper = ({
     }
     if (count > 5) {
       setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
+      setTimeout(() => {
+        navigateTo(navigation, ROUTES.MAIN);
+      }, 2000);
     }
   };
 
@@ -50,47 +51,49 @@ const FRAACameraWrapper = ({
     try {
       const data = await camera.takePictureAsync(options);
       if (data) {
-        const { uri, base64 } = data;
-        setPreviewImage({ base64, uri });
+        const { uri } = data;
         setLoading(false);
+        setPreviewUri(uri);
+        handleSetUserRegisteredIdentity(true);
+        handleOpenToast(TOAST_TYPES.SUCCESS, 'Identity verified!', TOAST_POSITIONS.BOTTOM, 2000);
+        setTimeout(() => {
+          navigateTo(navigation, ROUTES.MAIN);
+        }, 1000);
       }
     } catch (errorCapture) {
       handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };
 
-  const recapture = () => {
-    setPreviewImage({ base64: '', uri: '' });
-  };
-
-  const registerOrVerifyIdentity = async () => {
-    setLoading(true);
-    const base64Data = new FormData();
-    base64Data.append('image', previewImage.base64);
-    const url = fromHome ? `${VERIFY_IDENTITY_API}/${DEMO_EMAIL}` : `${REGISTER_IDENTITY_API}/${DEMO_EMAIL}`;
-    const config = {
-      method: 'POST',
-      url,
-      data: base64Data,
-    };
-    try {
-      const { data } = await axios(config);
-      if (data) {
-        setLoading(false);
-        if (fromHome) {
-          navigateTo(navigation, ROUTES.MAIN);
-        } else {
-          navigateTo(navigation, ROUTES.MAIN);
-        }
-      }
-    } catch (errorRegisterOrVerifyIdentity) {
-      handleOpenToast(TOAST_TYPES.ERROR, 'Error register/verify identity!', TOAST_POSITIONS.BOTTOM, 2000);
-    }
-  };
+  // const registerOrVerifyIdentity = async () => {
+  //   setLoading(true);
+  //   const base64Data = new FormData();
+  //   base64Data.append('image', previewImage.base64);
+  //   const url = fromHome ? `${VERIFY_IDENTITY_API}/${DEMO_EMAIL}` : `${REGISTER_IDENTITY_API}/${DEMO_EMAIL}`;
+  //   const config = {
+  //     method: 'POST',
+  //     url,
+  //     data: base64Data,
+  //   };
+  //   try {
+  //     const { data } = await axios(config);
+  //     if (data) {
+  //       setLoading(false);
+  //       if (fromHome) {
+  //         navigateTo(navigation, ROUTES.MAIN);
+  //         handleSetUserRegisteredIdentity(true);
+  //       } else {
+  //         navigateTo(navigation, ROUTES.MAIN);
+  //       }
+  //     }
+  //   } catch (errorRegisterOrVerifyIdentity) {
+  //     handleOpenToast(TOAST_TYPES.ERROR, 'Error register/verify identity!', TOAST_POSITIONS.BOTTOM, 2000);
+  //   }
+  // };
 
   return (
     <FRAACamera
-      previewImage={previewImage}
+      previewUri={previewUri}
       loading={loading}
       onFacesDetected={onFacesDetected}
       onFacesVerified={onFacesVerified}
@@ -99,9 +102,7 @@ const FRAACameraWrapper = ({
       userID={id}
       takePicture={takePicture}
       recognizedFaces={recognizedFaces}
-      registerOrVerifyIdentity={registerOrVerifyIdentity}
       fromHome={fromHome}
-      recapture={recapture}
     />
   );
 };
@@ -109,8 +110,8 @@ const FRAACameraWrapper = ({
 FRAACameraWrapper.propTypes = {
   route: object.isRequired,
   user: object.isRequired,
-  handleSetUserRegisteredIdentity: func.isRequired,
   handleOpenToast: func.isRequired,
+  handleSetUserRegisteredIdentity: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

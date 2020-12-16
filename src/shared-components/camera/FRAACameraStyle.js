@@ -5,6 +5,8 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
     width: '100%',
+  },
+  centered: {
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -13,8 +15,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 40,
     borderRadius: 55,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   topCameraMessageContainer: {
     top: 60,

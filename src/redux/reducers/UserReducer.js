@@ -5,9 +5,10 @@ import { createSelector } from 'reselect';
 const initialState = {};
 
 // ACTION CREATORS
-export const { setUser, setRegisteredIdentity, resetUser } = createActions({
+export const { setUser, setRegisteredIdentity, setUserStats, resetUser } = createActions({
   SET_USER: (user) => ({ user }),
   SET_REGISTERED_IDENTITY: (registered) => ({ registered }),
+  SET_USER_STATS: ({ missed, total }) => ({ missed, total }),
   RESET_USER: undefined,
 });
 
@@ -18,7 +19,17 @@ export default handleActions(
       state,
       {
         payload: {
-          user: { id, email, displayName, school, subscribedCourses, firstTimePassword, createdAt },
+          user: {
+            id,
+            email,
+            displayName,
+            school,
+            isLecturer,
+            totalAttendedEventsCount,
+            subscribedCourses,
+            firstTimePassword,
+            createdAt,
+          },
         },
       },
     ) => ({
@@ -27,6 +38,8 @@ export default handleActions(
       email,
       displayName,
       school,
+      isLecturer,
+      totalAttendedSessions: totalAttendedEventsCount,
       subscribedCourses,
       firstTimePassword,
       createdAt,
@@ -34,6 +47,11 @@ export default handleActions(
     SET_REGISTERED_IDENTITY: (state, { payload: { registered } }) => ({
       ...state,
       registeredIdentity: registered,
+    }),
+    SET_USER_STATS: (state, { payload: { missed, total } }) => ({
+      ...state,
+      missedSessions: missed,
+      totalSessions: total,
     }),
     RESET_USER: () => initialState,
   },

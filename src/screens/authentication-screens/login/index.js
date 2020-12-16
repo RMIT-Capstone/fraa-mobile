@@ -6,13 +6,13 @@ import { useFocusEffect } from '@react-navigation/native';
 import { storeAsyncStringData } from '../../../helpers/async-storage';
 import { resetRoute } from '../../../helpers/navigation';
 import { isEmail, stringIsEmpty } from '../../../helpers/utils';
-import { setUser } from '../../../redux/reducers/UserReducer';
+import { setUser, setUserStats } from '../../../redux/reducers/UserReducer';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
-import { GET_USER_API, SIGN_IN_API } from '../../../constants/ApiEndpoints';
+import { ATTENDANCE_STATS_NO_GROUPING, CURRENT_SEMESTER, SIGN_IN_API } from '../../../constants/ApiEndpoints';
 import ROUTES from '../../../navigation/routes';
 import Login from './Login';
 
-const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
+const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleOpenToast }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '', isLecturer: false });
   const [error, setError] = useState({ email: '', otherError: '' });
   const [loading, setLoading] = useState(false);
@@ -47,26 +47,23 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
     }
   }, [credentials]);
 
-  const setUserInRedux = async () => {
-    const { email, isLecturer } = credentials;
-    const userRequest = {
-      email,
-      isLecturer,
-    };
+  const setUserInRedux = async (user, token) => {
+    await storeAsyncStringData('fbToken', token);
+    handleSetUser(user);
+  };
+
+  const fetchUserStats = async (email, courses) => {
     try {
       const {
-        data,
-        data: { error: axiosError },
-      } = await axios.post(GET_USER_API, userRequest);
-      if (axiosError) {
-        handleOpenToast('Error fetch user!', 2000);
-        return { success: false };
+        data: { success, error: errorAxios },
+      } = await axios.post(ATTENDANCE_STATS_NO_GROUPING, { email, courses, semester: CURRENT_SEMESTER });
+      if (errorAxios) {
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error fetch user stats!', TOAST_POSITIONS.BOTTOM, 1500);
+      } else {
+        handleSetUserStats(success);
       }
-      handleSetUser(data);
-      return { success: true };
-    } catch (errorSetUser) {
-      handleOpenToast('Error fetch user!', 2000);
-      return { success: false };
+    } catch (errorFetchUserStats) {
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error fetch user stats!', TOAST_POSITIONS.BOTTOM, 1500);
     }
   };
 
@@ -81,20 +78,24 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
         } = await axios.post(SIGN_IN_API, credentials);
         if (errorAxios) {
           if (errorAxios === 'Password is incorrect') {
-            setError((prevState) => ({ ...prevState, otherError: 'Password is incorrect.' }));
+            setError((prevState) => ({ ...prevState, otherError: 'Password is incorrect' }));
           } else {
-            const { student, lecturer } = errorAxios;
-            setError((prevState) => ({ ...prevState, otherError: student || lecturer }));
+            const { user } = errorAxios;
+            setError((prevState) => ({ ...prevState, otherError: user }));
           }
         } else {
-          const { token } = data;
-          await storeAsyncStringData('fbToken', token);
-          const { success } = await setUserInRedux();
-          if (success) {
+          const {
+            success: {
+              user,
+              token,
+              user: { email, subscribedCourses },
+            },
+          } = data;
+          await Promise.all([setUserInRedux(user, token), fetchUserStats(email, subscribedCourses)]);
+          handleOpenToast(TOAST_TYPES.SUCCESS, 'Signed in!', TOAST_POSITIONS.BOTTOM, 2000);
+          setTimeout(() => {
             resetRoute(navigation, ROUTES.MAIN);
-          } else {
-            handleOpenToast(TOAST_TYPES.ERROR, 'Error set user to redux!', TOAST_POSITIONS.BOTTOM, 2000);
-          }
+          }, 1500);
         }
         setLoading(false);
       } catch (errorOnSignIn) {
@@ -121,11 +122,13 @@ const LoginWrapper = ({ navigation, handleSetUser, handleOpenToast }) => {
 LoginWrapper.propTypes = {
   navigation: object.isRequired,
   handleSetUser: func.isRequired,
+  handleSetUserStats: func.isRequired,
   handleOpenToast: func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetUser: (user) => dispatch(setUser(user)),
+  handleSetUserStats: (stats) => dispatch(setUserStats(stats)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 

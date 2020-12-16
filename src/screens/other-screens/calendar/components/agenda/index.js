@@ -31,12 +31,15 @@ const FRAAAgendaWrapper = ({
         if (error) {
           handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
         } else {
-          const { sessions, markedDates } = data;
+          const {
+            success: { sessions, markedDates },
+          } = data;
           const dateSessions = sessions.filter((session) => {
             const { validOn } = session;
             const eventDate = validOn.split('T')[0];
             return eventDate === new Date().toISOString().split('T')[0];
           });
+          // TODO: set agenda sessions
           handleSetAllAttendanceSessions(sessions, sessions, dateSessions, markedDates);
         }
         setRefreshing(false);

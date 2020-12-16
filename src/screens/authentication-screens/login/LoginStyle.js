@@ -1,14 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import theme from '../../../theme';
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.palette.secondary.white,
+    width: windowWidth,
   },
   loginContainer: {
     flex: 1,
-    padding: 20,
+    paddingTop: 100,
     width: '100%',
   },
   centered: {

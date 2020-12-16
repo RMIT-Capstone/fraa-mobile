@@ -41,3 +41,12 @@ export const getAsyncObjectData = async (key) => {
     console.warn(e);
   }
 };
+
+export const removeAsyncStorageData = async (key) => {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn(e);
+  }
+};

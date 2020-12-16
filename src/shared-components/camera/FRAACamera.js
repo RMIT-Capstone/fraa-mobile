@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, object, func, bool, number, string } from 'prop-types';
+import { arrayOf, object, func, bool, string } from 'prop-types';
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { RNCamera } from 'react-native-camera';
@@ -8,7 +8,7 @@ import styles from './FRAACameraStyle';
 const GenericLoading = require('../../assets/lottie-assets/GenericLoading');
 
 const FRAACamera = ({
-  previewImage,
+  previewUri,
   loading,
   recognizedFaces,
   fromHome,
@@ -18,9 +18,8 @@ const FRAACamera = ({
   path,
   userID,
   takePicture,
-  recapture,
-  registerOrVerifyIdentity,
 }) => {
+  const { message } = verifyResult;
   const FaceBounds = () =>
     recognizedFaces.map((face, index) => (
       <View
@@ -39,22 +38,22 @@ const FRAACamera = ({
     ));
 
   const PendingView = () => (
-    <View style={styles.camera}>
+    <View style={[styles.camera, styles.centered]}>
       <Text>Loading Camera...</Text>
     </View>
   );
 
   const TopCameraMessage = () => (
-    <View style={styles.cameraMessageContainer}>
+    <View style={[styles.cameraMessageContainer, styles.topCameraMessageContainer, styles.centered]}>
       <Text style={styles.cameraMessage}>Place your face in the frame</Text>
     </View>
   );
 
-  const BottomCameraMessage = () => {
-    <View style={styles.cameraMessageContainer}>
-      <Text style={styles.cameraMessage}>Place your face in the frame</Text>
+  const BottomCameraMessage = () => (
+    <View style={[styles.cameraMessageContainer, styles.bottomCameraMessageContainer, styles.centered]}>
+      <Text style={styles.cameraMessage}>{message}</Text>
     </View>
-  }
+  );
 
   const SnapButton = ({ camera }) => (
     <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture}>
@@ -76,29 +75,14 @@ const FRAACamera = ({
     </View>
   );
 
-  if (previewImage.uri) {
-    return (
-      <ImageBackground source={{ uri: previewImage.uri }} style={styles.camera}>
-        <View style={styles.snapButtonRow}>
-          <TouchableOpacity onPress={registerOrVerifyIdentity} style={styles.recapture}>
-            {loading ? (
-              <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
-            ) : (
-              <Text style={styles.snapText}>{!fromHome ? 'Verify' : 'Register'}</Text>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity onPress={recapture} style={styles.recapture}>
-            <Text style={styles.snapText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    );
+  if (previewUri) {
+    return <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]} />;
   }
 
   if (!fromHome) {
     return (
       <RNCamera
-        style={styles.camera}
+        style={[styles.camera, styles.centered]}
         type={RNCamera.Constants.Type.front}
         onFacesDetected={onFacesDetected}
         onFacesVerified={onFacesVerified}
@@ -119,17 +103,17 @@ const FRAACamera = ({
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
         }}>
-        {({ camera, status }) => {
+        {({ status }) => {
           if (status !== 'READY') {
             return <PendingView />;
           }
           return (
             <>
-              <CameraMessage />
+              <TopCameraMessage />
+              <BottomCameraMessage />
               {recognizedFaces.length !== 0 && (
                 <>
                   <FaceBounds />
-                  {recognizedFaces.length === 1 && <SnapButton camera={camera} />}
                   {recognizedFaces.length > 1 && <TooManyFaces />}
                 </>
               )}
@@ -142,7 +126,7 @@ const FRAACamera = ({
 
   return (
     <RNCamera
-      style={styles.camera}
+      style={[styles.camera, styles.centered]}
       type={RNCamera.Constants.Type.front}
       onFacesDetected={onFacesDetected}
       androidCameraPermissionOptions={{
@@ -163,7 +147,7 @@ const FRAACamera = ({
         }
         return (
           <>
-            <CameraMessage />
+            <TopCameraMessage />
             {recognizedFaces.length !== 0 && (
               <>
                 <FaceBounds />
@@ -179,18 +163,16 @@ const FRAACamera = ({
 };
 
 FRAACamera.propTypes = {
-  previewImage: object.isRequired,
+  previewUri: string.isRequired,
   loading: bool.isRequired,
   recognizedFaces: arrayOf(object).isRequired,
   fromHome: bool.isRequired,
   onFacesDetected: func.isRequired,
   onFacesVerified: func.isRequired,
-  verifyResult: number.isRequired,
+  verifyResult: object.isRequired,
   path: string.isRequired,
   userID: string.isRequired,
   takePicture: func.isRequired,
-  recapture: func.isRequired,
-  registerOrVerifyIdentity: func.isRequired,
 };
 
 export default FRAACamera;

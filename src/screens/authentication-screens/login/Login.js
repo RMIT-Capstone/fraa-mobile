@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Platform,
   Keyboard,
+  ScrollView,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import styles from './LoginStyle';
@@ -49,7 +50,7 @@ const Login = ({ navigation, credentials, setCredentials, error, loading, onSign
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.container, styles.centered]}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScrollView keyboardShouldPersistTaps="handled" onPress={Keyboard.dismiss} style={styles.container}>
         <View style={[styles.loginContainer, styles.centered]}>
           <Image source={LOGO} style={[styles.logo, logoHidden ? hideLogo() : null]} />
           <View style={styles.loginBody}>
@@ -72,7 +73,12 @@ const Login = ({ navigation, credentials, setCredentials, error, loading, onSign
               placeholderTextColor="#888888"
             />
             {otherError !== '' && <Text style={styles.inputError}>{otherError}</Text>}
-            <TouchableOpacity onPress={onSignIn} style={[styles.signInBtn, styles.centered]}>
+            <TouchableOpacity
+              onPress={() => {
+                onSignIn();
+                Keyboard.dismiss();
+              }}
+              style={[styles.signInBtn, styles.centered]}>
               {loading ? (
                 <LottieView source={GenericLoading} autoPlay loop />
               ) : (
@@ -89,7 +95,7 @@ const Login = ({ navigation, credentials, setCredentials, error, loading, onSign
             </TouchableWithoutFeedback>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

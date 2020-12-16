@@ -40,7 +40,12 @@ const FRAAAgenda = ({ agendaSessions, refreshing, refetchAttendanceSessions }) =
           </View>
           <View style={styles.agendaContentColumn}>
             {agendaSessions.map((session) => {
-              const { id, courseName, validOn: displayValidOn, location } = session;
+              const {
+                id,
+                validOn: displayValidOn,
+                location,
+                course: { courseName },
+              } = session;
               return (
                 <View key={id} style={styles.agendaItem}>
                   <Text style={styles.sessionCourse}>{courseName}</Text>

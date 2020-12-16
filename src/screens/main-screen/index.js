@@ -50,7 +50,9 @@ const MainScreenWrapper = ({
         if (fetchAttendanceSessionsError) {
           handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
         } else {
-          const { sessions: axiosSessions, markedDates } = data;
+          const {
+            success: { sessions: axiosSessions, markedDates },
+          } = data;
           const dateSessions = axiosSessions.filter((session) => {
             const { validOn } = session;
             const eventDate = validOn.split('T')[0];
