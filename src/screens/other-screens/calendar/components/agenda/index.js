@@ -49,6 +49,7 @@ const FRAAAgendaWrapper = ({
       handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };
+
   return (
     <FRAAAgenda
       agendaSessions={agendaSessions}

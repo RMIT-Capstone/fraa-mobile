@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, object, bool } from 'prop-types';
+import { arrayOf, object, bool, string } from 'prop-types';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styles from './HomeStyle';
 import { navigateTo } from '../../../helpers/navigation';
@@ -7,7 +7,15 @@ import ROUTES from '../../../navigation/routes';
 
 const CheckInIcon = require('../../../assets/CheckInIcon.png');
 
-const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappening, timeDifference, navigation }) => {
+const Home = ({
+  email,
+  homeScreenSessions,
+  isLoadingSessions,
+  displaySession,
+  isHappening,
+  timeDifference,
+  navigation,
+}) => {
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -34,7 +42,42 @@ const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappeni
     validOn,
     location,
     course: { courseName },
+    attendees,
   } = displaySession;
+
+  const checkedIn = () => attendees.includes(email);
+
+  const renderCheckInButton = () => {
+    if (checkedIn()) {
+      return (
+        <TouchableOpacity
+          onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
+          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+          <Text style={styles.disabledText}>Checked In!</Text>
+        </TouchableOpacity>
+      );
+    }
+    if (isHappening) {
+      return (
+        <TouchableOpacity
+          onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
+          style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
+          <Image source={CheckInIcon} style={styles.checkInIcon} />
+          <Text style={styles.checkInText}>Check In</Text>
+        </TouchableOpacity>
+      );
+    }
+
+    return (
+      <View style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+        <Text style={styles.disabledText}>
+          {timeDifference.hours} hours and {timeDifference.minutes} minutes
+        </Text>
+        <Text style={styles.disabledText}>before session</Text>
+      </View>
+    );
+  };
+
   const today = new Date();
   const validOnDateObject = new Date(validOn);
   const dateOfValidOn = validOnDateObject.getDate();
@@ -60,21 +103,7 @@ const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappeni
             <Text style={styles.month}>{monthOfValidOn}</Text>
           </View>
         </View>
-        {isHappening ? (
-          <TouchableOpacity
-            onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
-            style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
-            <Image source={CheckInIcon} style={styles.checkInIcon} />
-            <Text style={styles.checkInText}>Check In</Text>
-          </TouchableOpacity>
-        ) : (
-          <View style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
-            <Text style={styles.disabledText}>
-              {timeDifference.hours} hours and {timeDifference.minutes} minutes
-            </Text>
-            <Text style={styles.disabledText}>before session</Text>
-          </View>
-        )}
+        {renderCheckInButton()}
       </View>
       <View style={[styles.bottomChildContainer, styles.centered]}>
         <View style={[styles.infoContainer, styles.raised, styles.centered]}>
@@ -86,6 +115,7 @@ const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappeni
 };
 
 Home.propTypes = {
+  email: string.isRequired,
   navigation: object.isRequired,
   homeScreenSessions: arrayOf(object).isRequired,
   isLoadingSessions: bool.isRequired,

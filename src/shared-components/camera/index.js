@@ -8,15 +8,17 @@ import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
 import FRAACamera from './FRAACamera';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
-import { REGISTER_ATTENDANCE } from '../../constants/ApiEndpoints';
+import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, REGISTER_ATTENDANCE } from '../../constants/ApiEndpoints';
+import { setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 
 const FRAACameraWrapper = ({
   route: {
     params: { fromHome, id: sessionId },
   },
-  user: { id: userId, email },
+  user: { id: userId, email, subscribedCourses },
   handleOpenToast,
   handleSetUserRegisteredIdentity,
+  handleSetAllAttendanceSessions,
 }) => {
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
@@ -30,6 +32,35 @@ const FRAACameraWrapper = ({
       setRecognizedFaces(faces);
     } else {
       setRecognizedFaces([]);
+    }
+  };
+
+  const refetchAttendanceSessions = async () => {
+    try {
+      const today = new Date();
+      const request = {
+        courses: subscribedCourses,
+        startMonth: today.getMonth(),
+        monthRange: 3,
+      };
+      (async () => {
+        const { data, error } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
+        if (error) {
+          handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
+        } else {
+          const {
+            success: { sessions, markedDates },
+          } = data;
+          const dateSessions = sessions.filter((session) => {
+            const { validOn } = session;
+            const eventDate = validOn.split('T')[0];
+            return eventDate === new Date().toISOString().split('T')[0];
+          });
+          handleSetAllAttendanceSessions(sessions, sessions, dateSessions, markedDates);
+        }
+      })();
+    } catch (errorRefetchAttendanceSessions) {
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };
 
@@ -47,6 +78,7 @@ const FRAACameraWrapper = ({
           sessionId,
         });
         if (data) {
+          await refetchAttendanceSessions();
           setTimeout(() => {
             navigateTo(navigation, ROUTES.MAIN);
           }, 1000);
@@ -124,6 +156,7 @@ FRAACameraWrapper.propTypes = {
   user: object.isRequired,
   handleOpenToast: func.isRequired,
   handleSetUserRegisteredIdentity: func.isRequired,
+  handleSetAllAttendanceSessions: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -131,6 +164,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  handleSetAllAttendanceSessions: (session, homeSessions, agendaSessions, markedDates) =>
+    dispatch(setAllSessions(session, homeSessions, agendaSessions, markedDates)),
   handleSetUserRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });

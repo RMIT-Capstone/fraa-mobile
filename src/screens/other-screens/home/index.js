@@ -4,8 +4,9 @@ import { object, func } from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 import { getAttendanceSessionsState, setHomeScreenSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 import Home from './Home';
+import { getUserState } from '../../../redux/reducers/UserReducer';
 
-const HomeWrapper = ({ attendanceSessions: { homeScreenSessions }, handleSetHomeSessions }) => {
+const HomeWrapper = ({ user: { email }, attendanceSessions: { homeScreenSessions }, handleSetHomeSessions }) => {
   const navigation = useNavigation();
   const [isLoadingSessions, setIsLoadingSessions] = useState(true);
   const [displaySession, setDisplaySession] = useState({});
@@ -23,6 +24,7 @@ const HomeWrapper = ({ attendanceSessions: { homeScreenSessions }, handleSetHome
   };
 
   const removeOldSessions = () => {
+    setIsLoadingSessions(true);
     const rightNow = new Date();
     homeScreenSessions.forEach((session) => {
       const { expireOn } = session;
@@ -32,12 +34,13 @@ const HomeWrapper = ({ attendanceSessions: { homeScreenSessions }, handleSetHome
         setDisplaySession(array[0]);
       }
     });
+    setIsLoadingSessions(false);
   };
 
   useEffect(() => {
+    removeOldSessions();
     if (homeScreenSessions.length !== 0) {
       setDisplaySession(homeScreenSessions[0]);
-      removeOldSessions();
       loadDisplaySession();
     } else {
       setDisplaySession({});
@@ -53,7 +56,7 @@ const HomeWrapper = ({ attendanceSessions: { homeScreenSessions }, handleSetHome
     if (homeScreenSessions.length !== 0 && displaySession) {
       interval = setInterval(() => {
         loadDisplaySession();
-      }, 1000);
+      }, 100);
     }
 
     return () => {
@@ -63,6 +66,7 @@ const HomeWrapper = ({ attendanceSessions: { homeScreenSessions }, handleSetHome
 
   return (
     <Home
+      email={email}
       isLoadingSessions={isLoadingSessions}
       timeDifference={timeDifference}
       navigation={navigation}
@@ -74,11 +78,13 @@ const HomeWrapper = ({ attendanceSessions: { homeScreenSessions }, handleSetHome
 };
 
 HomeWrapper.propTypes = {
+  user: object.isRequired,
   attendanceSessions: object.isRequired,
   handleSetHomeSessions: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  user: getUserState(state),
   attendanceSessions: getAttendanceSessionsState(state),
 });
 
