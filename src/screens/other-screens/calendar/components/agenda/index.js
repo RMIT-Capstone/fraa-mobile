@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { object, func } from 'prop-types';
+import { object, func, string } from 'prop-types';
 import axios from 'axios';
 import FRAAAgenda from './FRAAAgenda';
 import { getUserState } from '../../../../../redux/reducers/UserReducer';
@@ -13,6 +13,7 @@ const FRAAAgendaWrapper = ({
   user,
   handleSetAllAttendanceSessions,
   handleOpenToast,
+  selectedDate,
 }) => {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -37,9 +38,8 @@ const FRAAAgendaWrapper = ({
           const dateSessions = sessions.filter((session) => {
             const { validOn } = session;
             const eventDate = validOn.split('T')[0];
-            return eventDate === new Date().toISOString().split('T')[0];
+            return eventDate === selectedDate;
           });
-          // TODO: set agenda sessions
           handleSetAllAttendanceSessions(sessions, sessions, dateSessions, markedDates);
         }
         setRefreshing(false);
@@ -63,6 +63,7 @@ FRAAAgendaWrapper.propTypes = {
   user: object.isRequired,
   handleSetAllAttendanceSessions: func.isRequired,
   handleOpenToast: func.isRequired,
+  selectedDate: string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

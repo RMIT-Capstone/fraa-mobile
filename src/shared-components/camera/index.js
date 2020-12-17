@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
+import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
 import FRAACamera from './FRAACamera';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
+import { REGISTER_ATTENDANCE } from '../../constants/ApiEndpoints';
 
 const FRAACameraWrapper = ({
   route: {
-    params: { fromHome },
+    params: { fromHome, id: sessionId },
   },
-  user: { id },
+  user: { id: userId, email },
   handleOpenToast,
   handleSetUserRegisteredIdentity,
 }) => {
@@ -31,7 +33,7 @@ const FRAACameraWrapper = ({
     }
   };
 
-  const onFacesVerified = ({ result: faceResult }) => {
+  const onFacesVerified = async ({ result: faceResult }) => {
     const parsedResult = parseFloat(faceResult);
     const { count } = verifyResult;
     if (parsedResult < 0.1) {
@@ -39,14 +41,24 @@ const FRAACameraWrapper = ({
     }
     if (count > 5) {
       setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
-      setTimeout(() => {
-        navigateTo(navigation, ROUTES.MAIN);
-      }, 2000);
+      try {
+        const { data } = await axios.post(REGISTER_ATTENDANCE, {
+          email,
+          sessionId,
+        });
+        if (data) {
+          setTimeout(() => {
+            navigateTo(navigation, ROUTES.MAIN);
+          }, 1000);
+        }
+      } catch (errorRegisterAttendance) {
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error register attendance!', TOAST_POSITIONS.BOTTOM, 1500);
+      }
     }
   };
 
   const takePicture = async (camera) => {
-    const options = { quality: 0.5, base64: true, path, user: id };
+    const options = { quality: 0.5, base64: true, path, user: userId };
     setLoading(true);
     try {
       const data = await camera.takePictureAsync(options);
@@ -99,7 +111,7 @@ const FRAACameraWrapper = ({
       onFacesVerified={onFacesVerified}
       verifyResult={verifyResult}
       path={path}
-      userID={id}
+      userID={userId}
       takePicture={takePicture}
       recognizedFaces={recognizedFaces}
       fromHome={fromHome}

@@ -30,6 +30,7 @@ const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappeni
   }
 
   const {
+    id,
     validOn,
     location,
     course: { courseName },
@@ -61,7 +62,7 @@ const Home = ({ homeScreenSessions, isLoadingSessions, displaySession, isHappeni
         </View>
         {isHappening ? (
           <TouchableOpacity
-            onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false })}
+            onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
             style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
             <Image source={CheckInIcon} style={styles.checkInIcon} />
             <Text style={styles.checkInText}>Check In</Text>

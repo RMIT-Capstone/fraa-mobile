@@ -53,7 +53,7 @@ const HomeWrapper = ({ attendanceSessions: { homeScreenSessions }, handleSetHome
     if (homeScreenSessions.length !== 0 && displaySession) {
       interval = setInterval(() => {
         loadDisplaySession();
-      }, 300);
+      }, 1000);
     }
 
     return () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,12 +9,14 @@ import { getAttendanceSessionsState, setAgendaSessions } from '../../../redux/re
 const FRAACalendar = ({ attendanceSessions: { sessions, markedDates }, handleSetAgendaSessions }) => {
   const todayDate = new Date().toISOString().split('T')[0];
   const now = new Date().toISOString().split('T')[0];
+  const [selectedDate, setSelectedDate] = useState('');
 
   useEffect(() => {
     findSessionsByDate(todayDate);
   }, []);
 
   const findSessionsByDate = (date) => {
+    setSelectedDate(date);
     // eslint-disable-next-line array-callback-return
     const dateSessions = sessions.filter((session) => {
       if (session) {
@@ -42,7 +44,7 @@ const FRAACalendar = ({ attendanceSessions: { sessions, markedDates }, handleSet
         style={styles.calendar}
         firstDay={1}
       />
-      <FRAAAgenda />
+      <FRAAAgenda selectedDate={selectedDate} />
     </CalendarProvider>
   );
 };
