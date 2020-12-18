@@ -23,7 +23,7 @@ const FRAACameraWrapper = ({
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewUri, setPreviewUri] = useState('');
-  const [verifyResult, setVerifyResult] = useState({ count: 0, message: 'Scanning...' });
+  const [verifyResult, setVerifyResult] = useState({ successes: 0, failures: 0, count: 0, message: 'Scanning...' });
   const [loading, setLoading] = useState(false);
   const path = 'User';
 
@@ -65,28 +65,43 @@ const FRAACameraWrapper = ({
   };
 
   const onFacesVerified = async ({ result: faceResult }) => {
+    const { count, successes, failures } = verifyResult;
+    setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
     const parsedResult = parseFloat(faceResult);
-    const { count } = verifyResult;
     if (parsedResult < 0.1) {
-      setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
+      setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
+    } else {
+      setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
     }
-    if (count > 5) {
-      setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
-      try {
-        const { data } = await axios.post(REGISTER_ATTENDANCE, {
-          email,
-          sessionId,
-        });
-        if (data) {
-          await refetchAttendanceSessions();
-          setTimeout(() => {
-            navigateTo(navigation, ROUTES.MAIN);
-          }, 1000);
-        }
-      } catch (errorRegisterAttendance) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Error register attendance!', TOAST_POSITIONS.BOTTOM, 1500);
-      }
+
+    if (count === 40) {
+      handleOpenToast(TOAST_TYPES.INFO, `${successes} / ${failures} / ${count}`, TOAST_POSITIONS.BOTTOM, 10000);
+      console.table({
+        successes,
+        failures,
+        count,
+      });
+
+      setVerifyResult((prevState) => ({ ...prevState, count: 0 }));
     }
+
+    // if (count > 5) {
+    //   setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
+    //   try {
+    //     const { data } = await axios.post(REGISTER_ATTENDANCE, {
+    //       email,
+    //       sessionId,
+    //     });
+    //     if (data) {
+    //       await refetchAttendanceSessions();
+    //       setTimeout(() => {
+    //         navigateTo(navigation, ROUTES.MAIN);
+    //       }, 1000);
+    //     }
+    //   } catch (errorRegisterAttendance) {
+    //     handleOpenToast(TOAST_TYPES.ERROR, 'Error register attendance!', TOAST_POSITIONS.BOTTOM, 1500);
+    //   }
+    // }
   };
 
   const takePicture = async (camera) => {
