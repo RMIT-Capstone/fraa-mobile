@@ -17,3 +17,5 @@ export const REGISTER_ATTENDANCE =
   'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/register_to_attendance_session';
 export const DEMO_EMAIL = 'trungduong0103@gmail.com';
 export const CURRENT_SEMESTER = '2020C';
+
+export const MODEL_URL = 'https://tam-terraform-state.s3.ap-southeast-1.amazonaws.com/FRAA/mymodel112.tflite';
