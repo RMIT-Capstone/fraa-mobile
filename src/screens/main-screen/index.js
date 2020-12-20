@@ -3,8 +3,8 @@ import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import ROUTES from '../../navigation/routes';
-import { CHECK_IDENTITY_API, GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../constants/ApiEndpoints';
-import { setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
+import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../constants/ApiEndpoints';
+import { getAttendanceSessionsState, setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import { getAsyncStringData } from '../../helpers/async-storage';
 import { navigateTo } from '../../helpers/navigation';
@@ -14,6 +14,7 @@ import MainScreen from './MainScreen';
 const MainScreenWrapper = ({
   navigation,
   user,
+  attendanceSessions: { sessions },
   handleSetAllSessions,
   handleSetRegisteredIdentity,
   handleOpenToast,
@@ -33,57 +34,39 @@ const MainScreenWrapper = ({
 
   useEffect(() => {
     setLoading(true);
-
-    const fetchAttendanceSessions = async () => {
-      const { subscribedCourses } = user;
-      try {
-        const today = new Date();
-        const request = {
-          courses: subscribedCourses,
-          startMonth: today.getMonth(),
-          monthRange: 3,
-        };
-        const { data, error: fetchAttendanceSessionsError } = await axios.post(
-          GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE,
-          request,
-        );
-        if (fetchAttendanceSessionsError) {
+    (async () => {
+      if (sessions.length === 0) {
+        const { subscribedCourses } = user;
+        try {
+          const today = new Date();
+          const request = {
+            courses: subscribedCourses,
+            startMonth: today.getMonth(),
+            monthRange: 3,
+          };
+          const { data, error: fetchAttendanceSessionsError } = await axios.post(
+            GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE,
+            request,
+          );
+          if (fetchAttendanceSessionsError) {
+            handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
+          } else {
+            const {
+              success: { sessions: axiosSessions, markedDates },
+            } = data;
+            const dateSessions = axiosSessions.filter((session) => {
+              const { validOn } = session;
+              const eventDate = validOn.split('T')[0];
+              return eventDate === new Date().toISOString().split('T')[0];
+            });
+            handleSetAllSessions(axiosSessions, axiosSessions, dateSessions, markedDates);
+          }
+        } catch (errorFetchAttendanceSessions) {
           handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
-        } else {
-          const {
-            success: { sessions: axiosSessions, markedDates },
-          } = data;
-          const dateSessions = axiosSessions.filter((session) => {
-            const { validOn } = session;
-            const eventDate = validOn.split('T')[0];
-            return eventDate === new Date().toISOString().split('T')[0];
-          });
-          handleSetAllSessions(axiosSessions, axiosSessions, dateSessions, markedDates);
         }
-      } catch (errorFetchAttendanceSessions) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
       }
-    };
-
-    const fetchUserIdentity = async () => {
-      const { data, error: fetchUserIdentityError } = await axios.get(CHECK_IDENTITY_API);
-      if (fetchUserIdentityError) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
-      } else {
-        const { msg } = data;
-        handleSetRegisteredIdentity(msg);
-      }
-    };
-
-    Promise.all([fetchAttendanceSessions(), fetchUserIdentity()])
-      .then(() => {
-        setLoading(false);
-      })
-      .catch((errorLoadUser) => {
-        setLoading(false);
-        setError(JSON.stringify(errorLoadUser));
-        handleOpenToast(TOAST_TYPES.ERROR, 'Load user error!', TOAST_POSITIONS.BOTTOM, 2000);
-      });
+    })();
+    setLoading(false);
   }, []);
 
   return <MainScreen currentTab={currentTab} setCurrentTab={setCurrentTab} loading={loading} error={error} />;
@@ -97,7 +80,10 @@ MainScreenWrapper.propTypes = {
   handleOpenToast: func.isRequired,
 };
 
-const mapStateToProps = (state) => ({ user: getUserState(state) });
+const mapStateToProps = (state) => ({
+  user: getUserState(state),
+  attendanceSessions: getAttendanceSessionsState(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetAllSessions: (sessions, homeScreenSessions, agendaSessions, markedDates) =>
