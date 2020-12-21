@@ -4,8 +4,8 @@ import { createSelector } from 'reselect';
 // INITIAL STATE
 const initialState = {
   sessions: [],
+  homeScreenSessions: [],
   agendaSessions: [],
-  showSessions: [],
   markedDates: {},
 };
 

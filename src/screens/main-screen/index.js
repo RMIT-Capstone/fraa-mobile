@@ -16,7 +16,6 @@ const MainScreenWrapper = ({
   user,
   attendanceSessions: { sessions },
   handleSetAllSessions,
-  handleSetRegisteredIdentity,
   handleOpenToast,
 }) => {
   const [currentTab, setCurrentTab] = useState(ROUTES.HOME);
@@ -26,11 +25,11 @@ const MainScreenWrapper = ({
   useEffect(() => {
     (async () => {
       const value = await getAsyncStringData('fbToken');
-      if (!value) {
+      if (!value || user === {}) {
         navigateTo(navigation, ROUTES.LOGIN);
       }
     })();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     setLoading(true);
@@ -49,19 +48,29 @@ const MainScreenWrapper = ({
             request,
           );
           if (fetchAttendanceSessionsError) {
+            setError(JSON.stringify(fetchAttendanceSessionsError));
             handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
           } else {
             const {
               success: { sessions: axiosSessions, markedDates },
             } = data;
-            const dateSessions = axiosSessions.filter((session) => {
+
+            const agendaSessions = axiosSessions.filter((session) => {
               const { validOn } = session;
               const eventDate = validOn.split('T')[0];
               return eventDate === new Date().toISOString().split('T')[0];
             });
-            handleSetAllSessions(axiosSessions, axiosSessions, dateSessions, markedDates);
+
+            const homeScreenSessions = axiosSessions.filter((session) => {
+              const { expireOn } = session;
+              const rightNow = new Date();
+              return new Date(expireOn) > rightNow;
+            });
+
+            handleSetAllSessions(axiosSessions, homeScreenSessions, agendaSessions, markedDates);
           }
         } catch (errorFetchAttendanceSessions) {
+          setError(JSON.stringify(errorFetchAttendanceSessions));
           handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
         }
       }
@@ -75,8 +84,8 @@ const MainScreenWrapper = ({
 MainScreenWrapper.propTypes = {
   navigation: object.isRequired,
   user: object.isRequired,
+  attendanceSessions: object.isRequired,
   handleSetAllSessions: func.isRequired,
-  handleSetRegisteredIdentity: func.isRequired,
   handleOpenToast: func.isRequired,
 };
 

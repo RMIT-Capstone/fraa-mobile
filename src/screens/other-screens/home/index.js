@@ -15,6 +15,15 @@ const HomeWrapper = ({ user: { email }, attendanceSessions: { homeScreenSessions
 
   const loadDisplaySession = () => {
     const rightNow = new Date();
+
+    const filteredSessions = homeScreenSessions.filter((session) => {
+      const { expireOn } = session;
+      return new Date(expireOn) > rightNow;
+    });
+    if (filteredSessions.length !== homeScreenSessions.length) {
+      handleSetHomeSessions(filteredSessions);
+    }
+
     const { validOn, expireOn } = displaySession;
     setIsHappening(rightNow > new Date(validOn) && rightNow < new Date(expireOn));
 
@@ -23,35 +32,19 @@ const HomeWrapper = ({ user: { email }, attendanceSessions: { homeScreenSessions
     setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
   };
 
-  const removeOldSessions = () => {
-    setIsLoadingSessions(true);
-    const rightNow = new Date();
-    homeScreenSessions.forEach((session) => {
-      const { expireOn } = session;
-      if (rightNow > new Date(expireOn)) {
-        const array = homeScreenSessions.slice(1);
-        handleSetHomeSessions(array);
-        setDisplaySession(array[0]);
-      }
-    });
-    setIsLoadingSessions(false);
-  };
-
   useEffect(() => {
-    removeOldSessions();
+    setIsLoadingSessions(true);
     if (homeScreenSessions.length !== 0) {
       setDisplaySession(homeScreenSessions[0]);
       loadDisplaySession();
     } else {
       setDisplaySession({});
     }
-
     setIsLoadingSessions(false);
   }, []);
 
   useEffect(() => {
     let interval = null;
-    removeOldSessions();
 
     if (homeScreenSessions.length !== 0 && displaySession) {
       interval = setInterval(() => {

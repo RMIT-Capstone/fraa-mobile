@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StatusBar, StyleSheet } from 'react-native';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
@@ -7,24 +7,25 @@ import FRAAAgenda from './components/agenda';
 import { getAttendanceSessionsState, setAgendaSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 
 const FRAACalendar = ({ attendanceSessions: { sessions, markedDates }, handleSetAgendaSessions }) => {
-  const todayDate = new Date().toISOString().split('T')[0];
   const now = new Date().toISOString().split('T')[0];
   const [selectedDate, setSelectedDate] = useState('');
 
   useEffect(() => {
-    findSessionsByDate(todayDate);
+    setSelectedDate(new Date().toISOString().split('T')[0]);
   }, []);
 
   const findSessionsByDate = (date) => {
     setSelectedDate(date);
-    // eslint-disable-next-line array-callback-return
+
     const dateSessions = sessions.filter((session) => {
       if (session) {
         const { validOn } = session;
         const eventDate = validOn.split('T')[0];
         return eventDate === date;
       }
+      return false;
     });
+
     handleSetAgendaSessions(dateSessions);
   };
 
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 10,
   },
 });
 

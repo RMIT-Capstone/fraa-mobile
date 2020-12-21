@@ -35,12 +35,20 @@ const FRAAAgendaWrapper = ({
           const {
             success: { sessions, markedDates },
           } = data;
+
           const dateSessions = sessions.filter((session) => {
             const { validOn } = session;
             const eventDate = validOn.split('T')[0];
             return eventDate === selectedDate;
           });
-          handleSetAllAttendanceSessions(sessions, sessions, dateSessions, markedDates);
+
+          const homeScreenSessions = sessions.filter((session) => {
+            const { expireOn } = session;
+            const rightNow = new Date();
+            return new Date(expireOn) > rightNow;
+          });
+
+          handleSetAllAttendanceSessions(sessions, homeScreenSessions, dateSessions, markedDates);
         }
         setRefreshing(false);
       })();

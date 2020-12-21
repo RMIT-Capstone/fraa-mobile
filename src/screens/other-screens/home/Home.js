@@ -29,7 +29,7 @@ const Home = ({
     );
   }
 
-  if (homeScreenSessions.length === 0 || !displaySession) {
+  if (homeScreenSessions.length === 0 || displaySession === {}) {
     return (
       <View style={[styles.container, styles.centered]}>
         <Text>No events today. Take a break, get some rest.</Text>
