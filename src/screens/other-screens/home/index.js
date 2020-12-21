@@ -49,7 +49,7 @@ const HomeWrapper = ({ user: { email }, attendanceSessions: { homeScreenSessions
     if (homeScreenSessions.length !== 0 && displaySession) {
       interval = setInterval(() => {
         loadDisplaySession();
-      }, 100);
+      }, 300);
     }
 
     return () => {
