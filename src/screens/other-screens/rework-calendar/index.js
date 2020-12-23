@@ -2,23 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import {
-  getAttendanceSessionsState,
-  setHomeScreenSessions,
-  setSessions,
-} from '../../../redux/reducers/AttendanceSessionsReducer';
+import { getAttendanceSessionsState, setAllSessions } from '../../../redux/reducers/AttendanceSessionsReducer';
 import Calendar from './Calendar';
 import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
 import { getUserState } from '../../../redux/reducers/UserReducer';
 
-const CalendarWrapper = ({ attendanceSessions: { sessions }, user, handleSetSessions, handleSetHomeSessions, handleOpenToast }) => {
+const CalendarWrapper = ({
+  attendanceSessions: { sessions },
+  user: { subscribedCourses },
+  handleSetAllSessions,
+  handleOpenToast,
+}) => {
+  const todayDate = new Date().getDate();
   const OPTIONS = ['Yesterday', 'Today', 'Tomorrow'];
-  const [activeDay, setActiveDay] = useState({ day: OPTIONS[1], index: 1 });
-  const [agendaDate, setAgendaDate] = useState(new Date().getDate());
+  const [activeDay, setActiveDay] = useState({ day: OPTIONS[1], date: todayDate, index: 1 });
   const [agendaSessions, setAgendaSessions] = useState([]);
   const [refetching, setRefetching] = useState(false);
-  const { index } = activeDay;
+  const { index, date } = activeDay;
 
   useEffect(() => {
     const today = new Date();
@@ -26,29 +27,37 @@ const CalendarWrapper = ({ attendanceSessions: { sessions }, user, handleSetSess
       const dateSessions = sessions.filter((session) => {
         const { validOn } = session;
         const dateValidOn = validOn.split('T')[0];
-        const filterDate = new Date(today.getFullYear(), today.getMonth(), agendaDate + 1).toISOString().split('T')[0];
+        const filterDate = new Date(today.getFullYear(), today.getMonth(), date + 1).toISOString().split('T')[0];
         return filterDate === dateValidOn;
       });
       setAgendaSessions(dateSessions);
     }
-  }, [agendaDate]);
+  }, [date]);
+
+  const handleDatePress = (dateIndex) => {
+    setActiveDay((prevState) => ({ ...prevState, day: OPTIONS[dateIndex], index: dateIndex }));
+    if (dateIndex === 0) {
+      setActiveDay((prevState) => ({ ...prevState, date: todayDate - 1 }));
+    } else if (dateIndex === 1) {
+      setActiveDay((prevState) => ({ ...prevState, date: todayDate }));
+    } else {
+      setActiveDay((prevState) => ({ ...prevState, date: todayDate + 1 }));
+    }
+  };
 
   const handleSwipeRight = () => {
     if (index > 0 && index <= 2) {
-      setActiveDay((prevState) => ({ ...prevState, day: OPTIONS[index - 1], index: index - 1 }));
-      setAgendaDate(agendaDate - 1);
+      setActiveDay({ day: OPTIONS[index - 1], date: date - 1, index: index - 1 });
     }
   };
 
   const handleSwipeLeft = () => {
     if (index >= 0 && index < 2) {
-      setActiveDay((prevState) => ({ ...prevState, day: OPTIONS[index + 1], index: index + 1 }));
-      setAgendaDate(agendaDate + 1);
+      setActiveDay({ day: OPTIONS[index + 1], date: date + 1, index: index + 1 });
     }
   };
 
   const refetchAttendanceSessions = async () => {
-    const { subscribedCourses } = user;
     setRefetching(true);
     try {
       const today = new Date();
@@ -66,27 +75,34 @@ const CalendarWrapper = ({ attendanceSessions: { sessions }, user, handleSetSess
             success: { sessions: axiosSessions },
           } = data;
 
-          const homeScreenSessions = sessions.filter((session) => {
+          const homeScreenSessions = axiosSessions.filter((session) => {
             const { expireOn } = session;
             const rightNow = new Date();
             return new Date(expireOn) > rightNow;
           });
 
-          handleSetSessions(axiosSessions);
-          handleSetHomeSessions(homeScreenSessions);
+          const filteredSessions = axiosSessions.filter((session) => {
+            const { validOn } = session;
+            const dateValidOn = validOn.split('T')[0];
+            const filterDate = new Date(today.getFullYear(), today.getMonth(), date + 1).toISOString().split('T')[0];
+            return filterDate === dateValidOn;
+          });
+
+          setAgendaSessions(filteredSessions);
+          handleSetAllSessions(axiosSessions, homeScreenSessions);
         }
-        setRefetching(false);
       })();
     } catch (errorRefetchAttendanceSessions) {
-      setRefetching(false);
       handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
     }
+    setRefetching(false);
   };
 
   return (
     <Calendar
       agendaSessions={agendaSessions}
       activeDay={activeDay}
+      handleDatePress={handleDatePress}
       handleSwipeLeft={handleSwipeLeft}
       handleSwipeRight={handleSwipeRight}
       refetching={refetching}
@@ -99,8 +115,7 @@ const CalendarWrapper = ({ attendanceSessions: { sessions }, user, handleSetSess
 CalendarWrapper.propTypes = {
   attendanceSessions: object.isRequired,
   user: object.isRequired,
-  handleSetSessions: func.isRequired,
-  handleSetHomeSessions: func.isRequired,
+  handleSetAllSessions: func.isRequired,
   handleOpenToast: func.isRequired,
 };
 
@@ -110,8 +125,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetSessions: (sessions) => dispatch(setSessions(sessions)),
-  handleSetHomeSessions: (homeSessions) => dispatch(setHomeScreenSessions(homeSessions)),
+  handleSetAllSessions: (sessions, homeSessions) => dispatch(setAllSessions(sessions, homeSessions)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 

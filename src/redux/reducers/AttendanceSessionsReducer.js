@@ -5,22 +5,16 @@ import { createSelector } from 'reselect';
 const initialState = {
   sessions: [],
   homeScreenSessions: [],
-  agendaSessions: [],
-  markedDates: {},
 };
 
 // ACTION CREATORS
-export const { setAllSessions, setSessions, setHomeScreenSessions, setAgendaSessions, setMarkedDates } = createActions({
-  SET_ALL_SESSIONS: (sessions, homeScreenSessions, agendaSessions, markedDates) => ({
+export const { setAllSessions, setSessions, setHomeScreenSessions } = createActions({
+  SET_ALL_SESSIONS: (sessions, homeScreenSessions) => ({
     sessions,
     homeScreenSessions,
-    agendaSessions,
-    markedDates,
   }),
   SET_SESSIONS: (sessions) => ({ sessions }),
   SET_HOME_SCREEN_SESSIONS: (homeScreenSessions) => ({ homeScreenSessions }),
-  SET_AGENDA_SESSIONS: (agendaSessions) => ({ agendaSessions }),
-  SET_MARKED_DATES: (markedDates) => ({ markedDates }),
 });
 
 // ACTION HANDLERS
@@ -40,14 +34,6 @@ export default handleActions(
     SET_HOME_SCREEN_SESSIONS: (state, { payload: { homeScreenSessions } }) => ({
       ...state,
       homeScreenSessions,
-    }),
-    SET_AGENDA_SESSIONS: (state, { payload: { agendaSessions } }) => ({
-      ...state,
-      agendaSessions,
-    }),
-    SET_MARKED_DATES: (state, { payload: { markedDates } }) => ({
-      ...state,
-      markedDates,
     }),
   },
   initialState,
