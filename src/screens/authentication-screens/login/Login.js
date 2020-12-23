@@ -20,7 +20,7 @@ import ROUTES from '../../../navigation/routes';
 const LOGO = require('../../../assets/logo/FRAA_LOGO.png');
 const GenericLoading = require('../../../assets/lottie-assets/GenericLoading');
 
-const Login = ({ navigation, credentials, setCredentials, error, loading, onSignIn }) => {
+const Login = ({ navigation, credentials, setCredentials, error, loading, loggedIn, onSignIn }) => {
   const { email, password, isLecturer } = credentials;
   const { email: emailError, otherError } = error;
   const [logoHidden, setLogoHidden] = useState(false);
@@ -82,7 +82,7 @@ const Login = ({ navigation, credentials, setCredentials, error, loading, onSign
               {loading ? (
                 <LottieView source={GenericLoading} autoPlay loop />
               ) : (
-                <Text style={styles.signInText}>Sign In</Text>
+                <Text style={styles.signInText}>{loggedIn ? 'Signed In!' : 'Sign In'}</Text>
               )}
             </TouchableOpacity>
             <TouchableWithoutFeedback
@@ -106,6 +106,7 @@ Login.propTypes = {
   setCredentials: func.isRequired,
   error: object.isRequired,
   loading: bool.isRequired,
+  loggedIn: bool.isRequired,
   onSignIn: func.isRequired,
 };
 

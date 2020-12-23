@@ -7,7 +7,7 @@ import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../constants/ApiEndpo
 import { getAttendanceSessionsState, setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import { getAsyncStringData } from '../../helpers/async-storage';
-import { navigateTo } from '../../helpers/navigation';
+import { resetRoute} from '../../helpers/navigation';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
 import MainScreen from './MainScreen';
 
@@ -26,7 +26,8 @@ const MainScreenWrapper = ({
     (async () => {
       const value = await getAsyncStringData('fbToken');
       if (!value || user === {}) {
-        navigateTo(navigation, ROUTES.LOGIN);
+        handleOpenToast(TOAST_TYPES.INFO, 'Logged out', TOAST_POSITIONS.BOTTOM, 1000);
+        resetRoute(navigation, ROUTES.LOGIN);
       }
     })();
   }, [user]);

@@ -3,9 +3,10 @@ import { func, string, bool } from 'prop-types';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './MainScreenStyle';
 
-import FRAACalendar from '../other-screens/calendar/FRAACalendar';
+// import FRAACalendar from '../other-screens/calendar/FRAACalendar';
 import Profile from '../other-screens/profile';
 import Home from '../other-screens/home';
+import Calendar from '../other-screens/rework-calendar';
 
 import ROUTES from '../../navigation/routes';
 import Loading from './components/loading/Loading';
@@ -24,7 +25,7 @@ const MainScreen = ({ currentTab, setCurrentTab, loading, error }) => {
       case ROUTES.HOME:
         return <Home />;
       case ROUTES.CALENDAR:
-        return <FRAACalendar />;
+        return <Calendar />;
       case ROUTES.PROFILE:
         return <Profile />;
       default:

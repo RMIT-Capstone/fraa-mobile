@@ -5,8 +5,6 @@ import { Modal, View, Text, StyleSheet, Dimensions } from 'react-native';
 import theme from '../../theme';
 import { closeToast, getToastState, TOAST_POSITIONS, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
 
-const windowWidth = Dimensions.get('window').width;
-
 const Toast = ({ toast, handleCloseToast }) => {
   const { open, type, content, position, duration } = toast;
 
@@ -55,22 +53,24 @@ const Toast = ({ toast, handleCloseToast }) => {
   );
 };
 
+const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     zIndex: 2,
     height: 50,
-    width: windowWidth - 110,
+    width: windowWidth * 0.4,
+    left: windowWidth * 0.3,
     position: 'absolute',
     padding: 10,
-    marginLeft: 55,
-    borderRadius: 16,
+    borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowRadius: 2,
     elevation: 5,
     justifyContent: 'center',
     alignItems: 'center',

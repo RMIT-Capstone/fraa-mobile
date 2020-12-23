@@ -58,10 +58,6 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
     } else {
       await removeAsyncStorageData('fbToken');
       handleResetUser();
-      handleOpenToast(TOAST_TYPES.INFO, 'Logged out', TOAST_POSITIONS.BOTTOM, 1500);
-      setTimeout(() => {
-        resetRoute(navigation, ROUTES.LOGIN);
-      }, 1000);
     }
   };
 

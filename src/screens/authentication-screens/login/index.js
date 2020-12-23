@@ -16,6 +16,7 @@ const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleOpe
   const [credentials, setCredentials] = useState({ email: '', password: '', isLecturer: false });
   const [error, setError] = useState({ email: '', otherError: '' });
   const [loading, setLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -92,10 +93,10 @@ const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleOpe
             },
           } = data;
           await Promise.all([setUserInRedux(user, token), fetchUserStats(email, subscribedCourses)]);
-          handleOpenToast(TOAST_TYPES.SUCCESS, 'Signed in!', TOAST_POSITIONS.BOTTOM, 2000);
+          setLoggedIn(true);
           setTimeout(() => {
             resetRoute(navigation, ROUTES.MAIN);
-          }, 1500);
+          }, 1000);
         }
         setLoading(false);
       } catch (errorOnSignIn) {
@@ -114,6 +115,7 @@ const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleOpe
       setCredentials={setCredentials}
       error={error}
       loading={loading}
+      loggedIn={loggedIn}
       onSignIn={onSignIn}
     />
   );

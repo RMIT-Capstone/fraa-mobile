@@ -415,7 +415,7 @@ PODS:
     - React-Core
   - RNReanimated (1.13.2):
     - React-Core
-  - RNScreens (2.15.0):
+  - RNScreens (2.16.1):
     - React-Core
   - TensorFlowLiteC (2.3.0):
     - TensorFlowLiteC/Core (= 2.3.0)
@@ -662,7 +662,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
-  RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
+  RNScreens: 45c457af3d2ee9e08fc01e70da87e653d46b1198
   TensorFlowLiteC: 51f50caf5777f740a70e2c1a5dbdc149e7aeb50b
   TensorFlowLiteObjC: 5b358503636cffcbbafd8b0ac9badb577fd72800
   TensorFlowLiteSwift: fb152cc1eec36b25b03a23c07f5d58113170af58
