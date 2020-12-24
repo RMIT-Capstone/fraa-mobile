@@ -28,6 +28,7 @@ const CalendarWrapper = ({
         const { validOn } = session;
         const dateValidOn = validOn.split('T')[0];
         const filterDate = new Date(today.getFullYear(), today.getMonth(), date + 1).toISOString().split('T')[0];
+
         return filterDate === dateValidOn;
       });
       setAgendaSessions(dateSessions);

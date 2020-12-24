@@ -14,6 +14,8 @@ import {
 import GestureRecognizer from 'react-native-swipe-gestures';
 import theme from '../../../theme';
 
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+
 const Calendar = ({
   agendaSessions,
   refetching,
@@ -25,11 +27,7 @@ const Calendar = ({
   OPTIONS,
 }) => {
   const { day } = activeDay;
-
-  const config = {
-    velocityThreshold: 0.3,
-    directionalOffsetThreshold: 80,
-  };
+  console.log(activeDay, agendaSessions);
 
   const EmptyAgenda = () => (
     <View style={styles.agendaContainer}>
@@ -38,33 +36,32 @@ const Calendar = ({
   );
 
   return (
-    <ScrollView refreshControl={<RefreshControl refreshing={refetching} onRefresh={refetchAttendanceSessions} />}>
-      <View style={styles.container}>
-        <View style={[styles.datesContainer, styles.centeredRow]}>
-          {OPTIONS.map((option, index) => (
-            <TouchableOpacity
-              key={option}
-              style={[styles.dateBtn, day === option ? styles.activeDateBtn : styles.inactiveBtn, styles.centered]}
-              onPress={() => handleDatePress(index)}>
-              <Text style={[styles.text, day === option ? styles.activeText : styles.inactiveText]}>{option}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-        <View styles={styles.agendaContainer}>
-          <GestureRecognizer
-            onSwipeLeft={() => handleSwipeLeft()}
-            onSwipeRight={() => handleSwipeRight()}
-            style={styles.agendaContainer}
-            config={config}>
-            <View>{agendaSessions.length === 0 ? <EmptyAgenda /> : <Text>Yo yo agenda</Text>}</View>
-          </GestureRecognizer>
-        </View>
+    <View style={styles.container}>
+      <View style={[styles.datesContainer, styles.centeredRow]}>
+        {OPTIONS.map((option, index) => (
+          <TouchableOpacity
+            key={option}
+            style={[styles.dateBtn, day === option ? styles.activeDateBtn : styles.inactiveBtn, styles.centered]}
+            onPress={() => handleDatePress(index)}>
+            <Text style={[styles.text, day === option ? styles.activeText : styles.inactiveText]}>{option}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
-    </ScrollView>
+
+      <ScrollView
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refetching} onRefresh={refetchAttendanceSessions} />}>
+        <GestureRecognizer onSwipeLeft={() => handleSwipeLeft()} onSwipeRight={() => handleSwipeRight()}>
+          <View style={styles.agendaContainer}>
+            <Text style={styles.eventsText}>EVENTS</Text>
+            {agendaSessions.length === 0 ? <EmptyAgenda /> : <Text>EVENTS</Text>}
+          </View>
+        </GestureRecognizer>
+      </ScrollView>
+    </View>
   );
 };
-
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   centered: {
@@ -78,10 +75,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
   },
   datesContainer: {
-    height: 0.1 * windowHeight,
+    height: windowHeight * 0.1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
   },
   dateBtn: {
     borderRadius: 41,
@@ -112,9 +109,18 @@ const styles = StyleSheet.create({
     color: theme.palette.secondary.arctic,
   },
   agendaContainer: {
-    height: 0.9 * windowHeight,
     width: windowWidth,
+    height: windowHeight,
+    alignItems: 'center',
+    marginTop: 20,
   },
+  eventsText: {
+    fontSize: 17,
+    fontWeight: '400',
+    lineHeight: 26.2,
+    color: '#AFAFAF',
+  },
+  eventWrapper: {},
 });
 
 Calendar.propTypes = {
