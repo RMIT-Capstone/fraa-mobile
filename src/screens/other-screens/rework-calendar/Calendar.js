@@ -37,16 +37,42 @@ const Calendar = ({
   const Events = () => {
     const displayDay = new Date();
     displayDay.setDate(date);
-    return (
-      <View style={[styles.sessionsWrapper, styles.centeredRow]}>
-        <View>
-          <Text>{JSON.stringify(activeDay)}</Text>
+    const dayOfWeek = displayDay.toLocaleDateString('EN', { weekday: 'short' }).toUpperCase();
+
+    const transformSessionTime = (time) => {
+      const timeObj = new Date(time);
+      return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    };
+
+    return agendaSessions.map((session, index) => {
+      const {
+        course: { courseName },
+        id,
+        validOn,
+        location,
+      } = session;
+      return (
+        <View key={id} style={styles.sessionsWrapper}>
+          {index === 0 ? (
+            <View style={[styles.sessionDateWrapper, styles.centered]}>
+              <Text style={styles.sessionDate}>{date}</Text>
+              <Text style={styles.sessionDay}>{dayOfWeek}</Text>
+            </View>
+          ) : (
+            <View style={[styles.sessionDateWrapper, styles.centered]} />
+          )}
+          <View style={styles.sessionInfoWrapper}>
+            <View style={[styles.sessionInfo, styles.inactiveBtn, styles.centered]}>
+              <Text style={styles.courseName}>{courseName}</Text>
+              <View style={styles.sessionTimeWrapper}>
+                <Text style={styles.sessionTimeAndLocation}>{transformSessionTime(validOn)}</Text>
+                <Text style={styles.sessionTimeAndLocation}>{location}</Text>
+              </View>
+            </View>
+          </View>
         </View>
-        <View>
-          <Text>Yo 2</Text>
-        </View>
-      </View>
-    );
+      );
+    });
   };
 
   return (
@@ -135,9 +161,55 @@ const styles = StyleSheet.create({
     color: '#AFAFAF',
   },
   sessionsWrapper: {
-    padding: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 10,
+    paddingBottom: 10,
     width: '100%',
-    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  sessionDateWrapper: {
+    flex: 1,
+  },
+  sessionDate: {
+    color: theme.palette.primary.red,
+    fontWeight: '400',
+    fontSize: 31,
+  },
+  sessionDay: {
+    color: theme.palette.primary.blue,
+    fontWeight: '500',
+    fontSize: 18,
+    textAlign: 'center',
+    letterSpacing: 0.5,
+  },
+  sessionInfoWrapper: {
+    flex: 4,
+  },
+  sessionInfo: {
+    borderRadius: 20,
+    width: '100%',
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: '#fff',
+  },
+  courseName: {
+    color: theme.palette.secondary.orange,
+    fontSize: 17,
+    fontWeight: '500',
+  },
+  sessionTimeWrapper: {
+    marginTop: 20,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  sessionTimeAndLocation: {
+    color: '#888888',
   },
 });
 
