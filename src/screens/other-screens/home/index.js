@@ -6,6 +6,7 @@ import axios from 'axios';
 import {
   getAttendanceSessionsState,
   setAllSessions,
+  setDisplaySession,
   setHomeScreenSessions,
 } from '../../../redux/reducers/AttendanceSessionsReducer';
 import Home from './Home';
@@ -15,19 +16,20 @@ import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers
 
 const HomeWrapper = ({
   user: { email, subscribedCourses },
-  attendanceSessions: { sessions, homeScreenSessions },
+  attendanceSessions: { sessions, homeScreenSessions, displaySession },
   handleSetAllSessions,
   handleSetHomeSessions,
+  handleSetDisplaySession,
   handleOpenToast,
 }) => {
   const navigation = useNavigation();
   const [isLoadingSessions, setIsLoadingSessions] = useState(true);
-  const [displaySession, setDisplaySession] = useState({});
   const [isHappening, setIsHappening] = useState(false);
   const [timeDifference, setTimeDifference] = useState({ hours: '', minutes: '' });
 
   useEffect(() => {
     setIsLoadingSessions(true);
+
     (async () => {
       if (sessions.length === 0) {
         try {
@@ -53,8 +55,11 @@ const HomeWrapper = ({
               const rightNow = new Date();
               return new Date(expireOn) > rightNow;
             });
-
-            handleSetAllSessions(axiosSessions, filterSessions);
+            if (filterSessions.length !== 0) {
+              handleSetAllSessions(axiosSessions, filterSessions, filterSessions[0]);
+            } else {
+              handleSetAllSessions(axiosSessions, filterSessions, {});
+            }
           }
         } catch (errorFetchAttendanceSessions) {
           handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
@@ -73,7 +78,13 @@ const HomeWrapper = ({
     });
 
     if (filteredSessions.length !== homeScreenSessions.length) {
-      handleSetHomeSessions(filteredSessions);
+      if (filteredSessions.length !== 0) {
+        handleSetHomeSessions(filteredSessions);
+        handleSetDisplaySession(filteredSessions[0]);
+      } else {
+        handleSetHomeSessions([]);
+        handleSetDisplaySession({});
+      }
     }
 
     const { validOn, expireOn } = displaySession;
@@ -87,10 +98,7 @@ const HomeWrapper = ({
   useEffect(() => {
     setIsLoadingSessions(true);
     if (homeScreenSessions.length !== 0) {
-      setDisplaySession(homeScreenSessions[0]);
       loadDisplaySession();
-    } else {
-      setDisplaySession({});
     }
     setIsLoadingSessions(false);
   }, []);
@@ -98,7 +106,7 @@ const HomeWrapper = ({
   useEffect(() => {
     let interval = null;
 
-    if (homeScreenSessions.length !== 0 && displaySession) {
+    if (homeScreenSessions.length !== 0 && displaySession !== {}) {
       interval = setInterval(() => {
         loadDisplaySession();
       }, 300);
@@ -127,6 +135,7 @@ HomeWrapper.propTypes = {
   attendanceSessions: object.isRequired,
   handleSetAllSessions: func.isRequired,
   handleSetHomeSessions: func.isRequired,
+  handleSetDisplaySession: func.isRequired,
   handleOpenToast: func.isRequired,
 };
 
@@ -136,8 +145,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAllSessions: (sessions, homeSessions) => dispatch(setAllSessions(sessions, homeSessions)),
+  handleSetAllSessions: (sessions, homeSessions, displaySession) =>
+    dispatch(setAllSessions(sessions, homeSessions, displaySession)),
   handleSetHomeSessions: (homeSessions) => dispatch(setHomeScreenSessions(homeSessions)),
+  handleSetDisplaySession: (displaySession) => dispatch(setDisplaySession(displaySession)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 

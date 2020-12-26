@@ -89,8 +89,13 @@ const CalendarWrapper = ({
             return filterDate === dateValidOn;
           });
 
+          if (homeScreenSessions.length !== 0) {
+            handleSetAllSessions(axiosSessions, homeScreenSessions, homeScreenSessions[0]);
+          } else {
+            handleSetAllSessions(axiosSessions, homeScreenSessions, {});
+          }
+
           setAgendaSessions(filteredSessions);
-          handleSetAllSessions(axiosSessions, homeScreenSessions);
         }
       })();
     } catch (errorRefetchAttendanceSessions) {
@@ -126,7 +131,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAllSessions: (sessions, homeSessions) => dispatch(setAllSessions(sessions, homeSessions)),
+  handleSetAllSessions: (sessions, homeSessions, displaySession) =>
+    dispatch(setAllSessions(sessions, homeSessions, displaySession)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 

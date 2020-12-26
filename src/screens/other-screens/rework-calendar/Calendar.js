@@ -26,14 +26,28 @@ const Calendar = ({
   handleSwipeRight,
   OPTIONS,
 }) => {
-  const { day } = activeDay;
-  console.log(activeDay, agendaSessions);
+  const { day, date } = activeDay;
 
   const EmptyAgenda = () => (
     <View style={styles.agendaContainer}>
       <Text>No class today! Yay</Text>
     </View>
   );
+
+  const Events = () => {
+    const displayDay = new Date();
+    displayDay.setDate(date);
+    return (
+      <View style={[styles.sessionsWrapper, styles.centeredRow]}>
+        <View>
+          <Text>{JSON.stringify(activeDay)}</Text>
+        </View>
+        <View>
+          <Text>Yo 2</Text>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -55,7 +69,7 @@ const Calendar = ({
         <GestureRecognizer onSwipeLeft={() => handleSwipeLeft()} onSwipeRight={() => handleSwipeRight()}>
           <View style={styles.agendaContainer}>
             <Text style={styles.eventsText}>EVENTS</Text>
-            {agendaSessions.length === 0 ? <EmptyAgenda /> : <Text>EVENTS</Text>}
+            {agendaSessions.length === 0 ? <EmptyAgenda /> : <Events />}
           </View>
         </GestureRecognizer>
       </ScrollView>
@@ -120,7 +134,11 @@ const styles = StyleSheet.create({
     lineHeight: 26.2,
     color: '#AFAFAF',
   },
-  eventWrapper: {},
+  sessionsWrapper: {
+    padding: 20,
+    width: '100%',
+    borderWidth: 1,
+  },
 });
 
 Calendar.propTypes = {

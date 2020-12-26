@@ -16,6 +16,13 @@ const Home = ({
   timeDifference,
   navigation,
 }) => {
+  const noEvents = () => {
+    if (Array.isArray(homeScreenSessions) && homeScreenSessions.length === 0) {
+      return true;
+    }
+    return typeof displaySession === 'object' && displaySession === {};
+  };
+
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -29,7 +36,7 @@ const Home = ({
     );
   }
 
-  if (homeScreenSessions.length === 0 || displaySession === {}) {
+  if (noEvents()) {
     return (
       <View style={[styles.container, styles.centered]}>
         <Text>No events today. Take a break, get some rest.</Text>
