@@ -65,25 +65,28 @@ const FRAACameraWrapper = ({
   };
 
   const onFacesVerified = async ({ result: faceResult }) => {
+    console.log(faceResult)
     const { count, successes, failures } = verifyResult;
     setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
-    const parsedResult = parseFloat(faceResult);
-    if (parsedResult < 0.1) {
+
+    if (faceResult < 0.09) {
       setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
     } else {
       setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
     }
 
-    if (count === 40) {
-      handleOpenToast(TOAST_TYPES.INFO, `${successes} / ${failures} / ${count}`, TOAST_POSITIONS.BOTTOM, 10000);
-      console.table({
-        successes,
-        failures,
-        count,
-      });
+    console.log(verifyResult);
 
-      setVerifyResult((prevState) => ({ ...prevState, count: 0 }));
-    }
+    // if (count === 40) {
+    //   handleOpenToast(TOAST_TYPES.INFO, `${successes} / ${failures} / ${count}`, TOAST_POSITIONS.BOTTOM, 10000);
+    //   console.table({
+    //     successes,
+    //     failures,
+    //     count,
+    //   });
+    //
+    //   setVerifyResult((prevState) => ({ ...prevState, count: 0 }));
+    // }
 
     // if (count > 5) {
     //   setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));

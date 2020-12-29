@@ -3,16 +3,19 @@ import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import RNLocation from 'react-native-location';
 import {
   getAttendanceSessionsState,
   setAllSessions,
   setDisplaySession,
   setHomeScreenSessions,
 } from '../../../redux/reducers/AttendanceSessionsReducer';
-import Home from './Home';
 import { getUserState } from '../../../redux/reducers/UserReducer';
 import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
+import { checkRegisteredImage } from '../../../helpers/model';
+import Home from './Home';
+import { getDistanceFromLatLngInMeters } from '../../../helpers/gps';
 
 const HomeWrapper = ({
   user: { email, subscribedCourses },
@@ -26,8 +29,77 @@ const HomeWrapper = ({
   const [isLoadingSessions, setIsLoadingSessions] = useState(true);
   const [isHappening, setIsHappening] = useState(false);
   const [timeDifference, setTimeDifference] = useState({ hours: '', minutes: '' });
+  const [registeredLocally, setRegisteredLocally] = useState(false);
+  const [tooFar, setTooFar] = useState(false);
 
   useEffect(() => {
+    (async () => {
+      let unsubscribe;
+      const permission = await RNLocation.checkPermission({
+        ios: 'whenInUse', // or 'always'
+        android: {
+          detail: 'coarse', // or 'fine'
+        },
+      });
+      if (!permission) {
+        await RNLocation.requestPermission({
+          ios: 'whenInUse', // or 'always'
+          android: {
+            detail: 'coarse', // or 'fine'
+            rationale: {
+              title: 'We need to access your location',
+              message: 'We use your location to show where you are on the map',
+              buttonPositive: 'OK',
+              buttonNegative: 'Cancel',
+            },
+          },
+        });
+      } else {
+        await RNLocation.configure({
+          desiredAccuracy: {
+            ios: 'best',
+            android: 'high',
+          },
+          // Android only
+          androidProvider: 'auto',
+          interval: 5000, // Milliseconds
+          fastestInterval: 10000, // Milliseconds
+          maxWaitTime: 5000, // Milliseconds
+          // iOS Only
+          activityType: 'other',
+          allowsBackgroundLocationUpdates: false,
+          headingFilter: 1, // Degrees
+          headingOrientation: 'portrait',
+          pausesLocationUpdatesAutomatically: false,
+          showsBackgroundLocationIndicator: false,
+        });
+        unsubscribe = RNLocation.subscribeToLocationUpdates((locations) => {
+          const { altitude, latitude, longitude } = locations[0];
+          console.log(altitude, latitude, longitude);
+          const distance = getDistanceFromLatLngInMeters(latitude, longitude, 10.829283569390633, 106.79481657455367);
+          if (distance > 10) {
+            setTooFar(true);
+          } else {
+            setTooFar(false);
+          }
+          console.log(distance);
+        });
+      }
+
+      console.log(tooFar);
+
+      return () => {
+        unsubscribe();
+      };
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const exists = await checkRegisteredImage();
+      setRegisteredLocally(exists);
+    })();
+
     setIsLoadingSessions(true);
 
     (async () => {
@@ -126,6 +198,7 @@ const HomeWrapper = ({
       isHappening={isHappening}
       homeScreenSessions={homeScreenSessions}
       displaySession={displaySession}
+      registeredLocally={registeredLocally}
     />
   );
 };

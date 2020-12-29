@@ -19,6 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* fraaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* fraaTests.m */; };
 		3B6BB56C7217F783382377CE /* libPods-fraa-fraaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B112466DDC507F92A6FF5C /* libPods-fraa-fraaTests.a */; };
 		8723610224E1458A0091CA38 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8723610124E1458A0091CA38 /* GoogleService-Info.plist */; };
+		874D8071259B2B22006F5713 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 874D8070259B2B22006F5713 /* CoreLocation.framework */; };
 		87FD76AA2524361C00BB6E1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87FD76A92524361C00BB6E1D /* LaunchScreen.storyboard */; };
 		D0C3CD3D9B5FA01F0E82D8AB /* libPods-fraa-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A337C8D9E43A608000DCF969 /* libPods-fraa-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		5B9BED78BE7909E76567E211 /* Pods-fraa-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-fraa-tvOSTests/Pods-fraa-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5FB3BFFB2CBCAAD8D9E51539 /* Pods-fraa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa.debug.xcconfig"; path = "Target Support Files/Pods-fraa/Pods-fraa.debug.xcconfig"; sourceTree = "<group>"; };
 		8723610124E1458A0091CA38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		874D8070259B2B22006F5713 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		87FD76A92524361C00BB6E1D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E49D404D13FBF6C7FFB3B64 /* Pods-fraa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa.release.xcconfig"; path = "Target Support Files/Pods-fraa/Pods-fraa.release.xcconfig"; sourceTree = "<group>"; };
 		A337C8D9E43A608000DCF969 /* libPods-fraa-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fraa-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				874D8071259B2B22006F5713 /* CoreLocation.framework in Frameworks */,
 				0981BA998ECD2A3CAC101259 /* libPods-fraa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +145,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				874D8070259B2B22006F5713 /* CoreLocation.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				546BA030E3A06E4D69F4182C /* libPods-fraa.a */,

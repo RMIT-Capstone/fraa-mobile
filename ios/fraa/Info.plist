@@ -44,9 +44,9 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>FRAA would like to use your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This is the plist item for NSLocationAlwaysUsageDescription</string>
+	<string>FRAA Would like to use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>FRAA Would like to use your location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>FRAA would like to access your microphone</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

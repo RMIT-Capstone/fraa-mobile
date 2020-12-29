@@ -6,7 +6,7 @@ import styles from './MainScreenStyle';
 // import FRAACalendar from '../other-screens/calendar/FRAACalendar';
 import Profile from '../other-screens/profile';
 import Home from '../other-screens/home';
-import Calendar from '../other-screens/rework-calendar';
+import Calendar from '../other-screens/calendar';
 
 import ROUTES from '../../navigation/routes';
 

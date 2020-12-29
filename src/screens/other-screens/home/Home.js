@@ -15,6 +15,7 @@ const Home = ({
   isHappening,
   timeDifference,
   navigation,
+  registeredLocally,
 }) => {
   const noEvents = () => {
     if (Array.isArray(homeScreenSessions) && homeScreenSessions.length === 0) {
@@ -55,11 +56,16 @@ const Home = ({
   const checkedIn = () => attendees.includes(email);
 
   const renderCheckInButton = () => {
+    if (!registeredLocally) {
+      return (
+        <TouchableOpacity style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+          <Text style={styles.disabledText}>You need to register your identity in Profile</Text>
+        </TouchableOpacity>
+      );
+    }
     if (checkedIn()) {
       return (
-        <TouchableOpacity
-          onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
-          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+        <TouchableOpacity style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
           <Text style={styles.disabledText}>Checked In!</Text>
         </TouchableOpacity>
       );
@@ -123,16 +129,13 @@ const Home = ({
 
 Home.propTypes = {
   email: string.isRequired,
-  navigation: object.isRequired,
   homeScreenSessions: arrayOf(object).isRequired,
   isLoadingSessions: bool.isRequired,
-  displaySession: object,
+  displaySession: object.isRequired,
   isHappening: bool.isRequired,
   timeDifference: object.isRequired,
-};
-
-Home.defaultProps = {
-  displaySession: {},
+  navigation: object.isRequired,
+  registeredLocally: bool.isRequired,
 };
 
 export default Home;

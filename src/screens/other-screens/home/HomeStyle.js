@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   eventContainer: {
-    height: 200,
-    width: 360,
     borderRadius: 30,
     marginBottom: 17,
     padding: 23,
@@ -93,8 +91,8 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   checkInBtnContainer: {
-    width: 228,
-    height: 60,
+    width: 240,
+    padding: 20,
     borderRadius: 50,
   },
   activeBtn: {
@@ -108,6 +106,8 @@ const styles = StyleSheet.create({
     color: '#888888',
     fontWeight: '400',
     fontSize: 13,
+    textAlign: 'center',
+    lineHeight: 20,
   },
   checkInIcon: {
     width: 20,

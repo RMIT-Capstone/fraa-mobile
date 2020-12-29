@@ -9,6 +9,7 @@ import Profile from './Profile';
 import ROUTES from '../../../navigation/routes';
 import { ATTENDANCE_STATS_NO_GROUPING, CURRENT_SEMESTER, GET_USER_API } from '../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
+import { removeRegisteredImage } from '../../../helpers/model';
 
 const ProfileWrapper = ({ user, handleSetUser, handleSetRegisteredIdentity, handleSetUserStats, handleOpenToast }) => {
   const navigation = useNavigation();
@@ -58,8 +59,9 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetRegisteredIdentity, hand
     navigateTo(navigation, ROUTES.CAMERA, { fromHome: true });
   };
 
-  const reset = () => {
-    handleSetRegisteredIdentity(false);
+  const reset = async () => {
+    await removeRegisteredImage();
+    handleOpenToast(TOAST_TYPES.SUCCESS, 'Image removed!', TOAST_POSITIONS.BOTTOM, 1500);
   };
 
   const refetchUserProfile = () => {
