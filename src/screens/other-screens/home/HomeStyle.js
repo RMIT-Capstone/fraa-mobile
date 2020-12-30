@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   disabledBtn: {
     backgroundColor: '#FBFBFB',
-    padding: 10,
+    padding: 15,
   },
   disabledText: {
     color: '#888888',

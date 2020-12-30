@@ -49,7 +49,7 @@ const Calendar = ({
         course: { courseName },
         id,
         validOn,
-        location,
+        room,
       } = session;
       return (
         <View key={id} style={styles.sessionsWrapper}>
@@ -66,7 +66,7 @@ const Calendar = ({
               <Text style={styles.courseName}>{courseName}</Text>
               <View style={styles.sessionTimeWrapper}>
                 <Text style={styles.sessionTimeAndLocation}>{transformSessionTime(validOn)}</Text>
-                <Text style={styles.sessionTimeAndLocation}>{location}</Text>
+                <Text style={styles.sessionTimeAndLocation}>{room}</Text>
               </View>
             </View>
           </View>

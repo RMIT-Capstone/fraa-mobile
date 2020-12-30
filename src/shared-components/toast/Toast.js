@@ -58,9 +58,8 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     zIndex: 2,
-    height: 50,
-    width: windowWidth * 0.4,
-    left: windowWidth * 0.3,
+    width: windowWidth * 0.6,
+    left: windowWidth * 0.2,
     position: 'absolute',
     padding: 10,
     borderRadius: 20,
@@ -77,6 +76,7 @@ const styles = StyleSheet.create({
   },
   toastText: {
     color: '#ffffff',
+    textAlign: 'center',
   },
 });
 

@@ -1,29 +1,29 @@
 /* eslint-disable no-console */
 import RNFetchBlob from 'rn-fetch-blob';
-import { MODEL_URL } from '../../constants/ApiEndpoints';
+// import { MODEL_URL } from '../../constants/ApiEndpoints';
 
-async function downloadFile(DOWNLOAD_URL) {
-  console.log('Start downloading ......');
-  const { dirs } = RNFetchBlob.fs;
-  await RNFetchBlob.config({
-    path: `${dirs.DocumentDir}/mymodel112.tflite`,
-  })
-    .fetch('GET', DOWNLOAD_URL)
-    .then((res) => {
-      console.log('The file saved to ', res.path());
-    });
-}
-
-export function getModel() {
-  const { dirs } = RNFetchBlob.fs;
-  const targetPath = `${dirs.DocumentDir}/mymodel112.tflite`;
-  RNFetchBlob.fs.exists(targetPath).then((exist) => {
-    console.log(`The model is ${exist ? '' : 'not'} existed`);
-    if (!exist) {
-      downloadFile(MODEL_URL).then(() => console.log('Finished download'));
-    }
-  });
-}
+// async function downloadFile(DOWNLOAD_URL) {
+//   console.log('Start downloading ......');
+//   const { dirs } = RNFetchBlob.fs;
+//   await RNFetchBlob.config({
+//     path: `${dirs.DocumentDir}/mymodel112.tflite`,
+//   })
+//     .fetch('GET', DOWNLOAD_URL)
+//     .then((res) => {
+//       console.log('The file saved to ', res.path());
+//     });
+// }
+//
+// export function getModel() {
+//   const { dirs } = RNFetchBlob.fs;
+//   const targetPath = `${dirs.DocumentDir}/mymodel112.tflite`;
+//   RNFetchBlob.fs.exists(targetPath).then((exist) => {
+//     console.log(`The model is ${exist ? '' : 'not'} existed`);
+//     if (!exist) {
+//       downloadFile(MODEL_URL).then(() => console.log('Finished download'));
+//     }
+//   });
+// }
 
 export const checkRegisteredImage = async () => {
   const { dirs } = RNFetchBlob.fs;

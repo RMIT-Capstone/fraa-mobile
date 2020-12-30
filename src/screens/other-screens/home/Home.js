@@ -1,6 +1,6 @@
 import React from 'react';
 import { arrayOf, object, bool, string } from 'prop-types';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
 import styles from './HomeStyle';
 import { navigateTo } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
@@ -16,6 +16,8 @@ const Home = ({
   timeDifference,
   navigation,
   registeredLocally,
+  locationPermission,
+  tooFar,
 }) => {
   const noEvents = () => {
     if (Array.isArray(homeScreenSessions) && homeScreenSessions.length === 0) {
@@ -48,7 +50,7 @@ const Home = ({
   const {
     id,
     validOn,
-    location,
+    room,
     course: { courseName },
     attendees,
   } = displaySession;
@@ -56,18 +58,26 @@ const Home = ({
   const checkedIn = () => attendees.includes(email);
 
   const renderCheckInButton = () => {
-    if (!registeredLocally) {
+    if (!locationPermission) {
+      return <Text style={styles.disabledText}>Please allow location services</Text>;
+    }
+    if (tooFar) {
       return (
-        <TouchableOpacity style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
-          <Text style={styles.disabledText}>You need to register your identity in Profile</Text>
-        </TouchableOpacity>
+        <TouchableWithoutFeedback
+          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+          <Text style={styles.disabledText}>Please come to the classroom to check-in</Text>
+        </TouchableWithoutFeedback>
       );
+    }
+    if (!registeredLocally) {
+      return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
     }
     if (checkedIn()) {
       return (
-        <TouchableOpacity style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+        <TouchableWithoutFeedback
+          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
           <Text style={styles.disabledText}>Checked In!</Text>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
       );
     }
     if (isHappening) {
@@ -108,7 +118,7 @@ const Home = ({
           <View style={[styles.firstEventRow]}>
             <Text style={styles.time}>{transformSessionTime(validOn)}</Text>
             <Text style={styles.courseName}>{courseName}</Text>
-            <Text style={styles.location}>{location}</Text>
+            <Text style={styles.location}>{room}</Text>
           </View>
           <View style={[styles.secondEventRow]}>
             <Text style={styles.day}>{dateOfValidOn === today.getDate() ? 'Today' : dayOfValidOn}</Text>
@@ -136,6 +146,8 @@ Home.propTypes = {
   timeDifference: object.isRequired,
   navigation: object.isRequired,
   registeredLocally: bool.isRequired,
+  tooFar: bool.isRequired,
+  locationPermission: bool.isRequired,
 };
 
 export default Home;

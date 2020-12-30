@@ -29,32 +29,14 @@ const HomeWrapper = ({
   const [isLoadingSessions, setIsLoadingSessions] = useState(true);
   const [isHappening, setIsHappening] = useState(false);
   const [timeDifference, setTimeDifference] = useState({ hours: '', minutes: '' });
+  const [locationPermission, setLocationPermission] = useState(false);
   const [registeredLocally, setRegisteredLocally] = useState(false);
   const [tooFar, setTooFar] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      let unsubscribe;
-      const permission = await RNLocation.checkPermission({
-        ios: 'whenInUse', // or 'always'
-        android: {
-          detail: 'coarse', // or 'fine'
-        },
-      });
-      if (!permission) {
-        await RNLocation.requestPermission({
-          ios: 'whenInUse', // or 'always'
-          android: {
-            detail: 'coarse', // or 'fine'
-            rationale: {
-              title: 'We need to access your location',
-              message: 'We use your location to show where you are on the map',
-              buttonPositive: 'OK',
-              buttonNegative: 'Cancel',
-            },
-          },
-        });
-      } else {
+    let unsubscribe;
+    if (locationPermission) {
+      (async () => {
         await RNLocation.configure({
           desiredAccuracy: {
             ios: 'best',
@@ -73,34 +55,69 @@ const HomeWrapper = ({
           pausesLocationUpdatesAutomatically: false,
           showsBackgroundLocationIndicator: false,
         });
-        unsubscribe = RNLocation.subscribeToLocationUpdates((locations) => {
-          const { altitude, latitude, longitude } = locations[0];
-          console.log(altitude, latitude, longitude);
-          const distance = getDistanceFromLatLngInMeters(latitude, longitude, 10.829283569390633, 106.79481657455367);
-          if (distance > 10) {
-            setTooFar(true);
-          } else {
-            setTooFar(false);
-          }
-          console.log(distance);
-        });
-      }
+        if (displaySession !== {}) {
+          unsubscribe = RNLocation.subscribeToLocationUpdates((locations) => {
+            const { altitude, latitude, longitude } = locations[0];
+            if (Math.abs(displaySession.altitude - altitude) > 2) {
+              setTooFar(true);
+            } else {
+              const distance = getDistanceFromLatLngInMeters(
+                displaySession.latitude,
+                displaySession.longitude,
+                latitude,
+                longitude,
+              );
+              if (distance > 10) {
+                setTooFar(true);
+              } else {
+                setTooFar(false);
+              }
+            }
+          });
+        }
+      })();
+    }
 
-      console.log(tooFar);
-
-      return () => {
+    return () => {
+      if (unsubscribe) {
         unsubscribe();
-      };
-    })();
-  }, []);
+      }
+    };
+  }, [locationPermission]);
+
+  const loadDisplaySession = () => {
+    const rightNow = new Date();
+
+    const filteredSessions = homeScreenSessions.filter((session) => {
+      const { expireOn } = session;
+      return new Date(expireOn) > rightNow;
+    });
+
+    if (filteredSessions.length !== homeScreenSessions.length) {
+      if (filteredSessions.length !== 0) {
+        handleSetHomeSessions(filteredSessions);
+        handleSetDisplaySession(filteredSessions[0]);
+      } else {
+        handleSetHomeSessions([]);
+        handleSetDisplaySession({});
+      }
+    }
+
+    const { validOn, expireOn } = displaySession;
+    setIsHappening(rightNow > new Date(validOn) && rightNow < new Date(expireOn));
+
+    const timeDifferenceLoad = new Date(validOn) - rightNow;
+    const truncated = Math.trunc(timeDifferenceLoad / 1000);
+    setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
+  };
 
   useEffect(() => {
+    setIsLoadingSessions(true);
+
     (async () => {
       const exists = await checkRegisteredImage();
       setRegisteredLocally(exists);
     })();
-
-    setIsLoadingSessions(true);
 
     (async () => {
       if (sessions.length === 0) {
@@ -138,44 +155,40 @@ const HomeWrapper = ({
         }
       }
     })();
-    setIsLoadingSessions(false);
-  }, []);
 
-  const loadDisplaySession = () => {
-    const rightNow = new Date();
-
-    const filteredSessions = homeScreenSessions.filter((session) => {
-      const { expireOn } = session;
-      return new Date(expireOn) > rightNow;
-    });
-
-    if (filteredSessions.length !== homeScreenSessions.length) {
-      if (filteredSessions.length !== 0) {
-        handleSetHomeSessions(filteredSessions);
-        handleSetDisplaySession(filteredSessions[0]);
-      } else {
-        handleSetHomeSessions([]);
-        handleSetDisplaySession({});
-      }
-    }
-
-    const { validOn, expireOn } = displaySession;
-    setIsHappening(rightNow > new Date(validOn) && rightNow < new Date(expireOn));
-
-    const timeDifferenceLoad = new Date(validOn) - rightNow;
-    const truncated = Math.trunc(timeDifferenceLoad / 1000);
-    setTimeDifference({ hours: Math.floor(truncated / 3600), minutes: Math.floor((truncated % 3600) / 60) + 1 });
-  };
-
-  useEffect(() => {
-    setIsLoadingSessions(true);
     if (homeScreenSessions.length !== 0) {
       loadDisplaySession();
     }
+
     setIsLoadingSessions(false);
   }, []);
 
   useEffect(() => {
+    (async () => {
+      const permission = await RNLocation.checkPermission({
+        ios: 'whenInUse',
+        android: {
+          detail: 'fine',
+        },
+      });
+      setLocationPermission(permission);
+      if (!permission) {
+        const requestPermission = await RNLocation.requestPermission({
+          ios: 'whenInUse',
+          android: {
+            detail: 'coarse',
+            rationale: {
+              title: 'Please turn on your location',
+              message: 'We need to use your location to allow check-in',
+              buttonPositive: 'OK',
+              buttonNegative: 'Cancel',
+            },
+          },
+        });
+        setLocationPermission(requestPermission);
+      }
+    })();
+
     let interval = null;
 
     if (homeScreenSessions.length !== 0 && displaySession !== {}) {
@@ -199,6 +212,8 @@ const HomeWrapper = ({
       homeScreenSessions={homeScreenSessions}
       displaySession={displaySession}
       registeredLocally={registeredLocally}
+      locationPermission={locationPermission}
+      tooFar={tooFar}
     />
   );
 };
