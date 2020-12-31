@@ -55,15 +55,17 @@ const HomeWrapper = ({
           pausesLocationUpdatesAutomatically: false,
           showsBackgroundLocationIndicator: false,
         });
-        if (displaySession !== {}) {
+
+        if (displaySession && displaySession.location) {
           unsubscribe = RNLocation.subscribeToLocationUpdates((locations) => {
             const { altitude, latitude, longitude } = locations[0];
-            if (Math.abs(displaySession.altitude - altitude) > 2) {
+
+            if (Math.abs(displaySession.location.altitude - altitude) > 2) {
               setTooFar(true);
             } else {
               const distance = getDistanceFromLatLngInMeters(
-                displaySession.latitude,
-                displaySession.longitude,
+                displaySession.location.latitude,
+                displaySession.location.longitude,
                 latitude,
                 longitude,
               );

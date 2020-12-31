@@ -55,7 +55,7 @@ const Calendar = ({
         <View key={id} style={styles.sessionsWrapper}>
           {index === 0 ? (
             <View style={[styles.sessionDateWrapper, styles.centered]}>
-              <Text style={styles.sessionDate}>{date}</Text>
+              <Text style={styles.sessionDate}>{new Date(validOn).getDate()}</Text>
               <Text style={styles.sessionDay}>{dayOfWeek}</Text>
             </View>
           ) : (
@@ -99,6 +99,10 @@ const Calendar = ({
           </View>
         </GestureRecognizer>
       </ScrollView>
+
+      <TouchableOpacity style={styles.fixedBtn}>
+        <Text style={styles.fixedBtnText}>View All</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -210,6 +214,30 @@ const styles = StyleSheet.create({
   },
   sessionTimeAndLocation: {
     color: '#888888',
+  },
+  fixedBtn: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 90,
+    padding: 10,
+    borderRadius: 32,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  fixedBtnText: {
+    color: theme.palette.secondary.azure,
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0.5,
   },
 });
 
