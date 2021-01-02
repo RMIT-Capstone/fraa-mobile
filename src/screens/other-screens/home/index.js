@@ -40,7 +40,7 @@ const HomeWrapper = ({
         await RNLocation.configure({
           desiredAccuracy: {
             ios: 'best',
-            android: 'high',
+            android: 'highAccuracy',
           },
           // Android only
           androidProvider: 'auto',
