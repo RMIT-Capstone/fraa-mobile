@@ -74,10 +74,9 @@ const Home = ({
     }
     if (checkedIn()) {
       return (
-        <TouchableWithoutFeedback
-          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+        <TouchableOpacity style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
           <Text style={styles.disabledText}>Checked In!</Text>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       );
     }
     if (isHappening) {
