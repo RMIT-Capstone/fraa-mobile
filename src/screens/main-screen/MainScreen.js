@@ -1,15 +1,14 @@
 import React from 'react';
-import { func, string, bool } from 'prop-types';
+import { func, string } from 'prop-types';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './MainScreenStyle';
 
-import FRAACalendar from '../other-screens/calendar/FRAACalendar';
+// import FRAACalendar from '../other-screens/calendar/FRAACalendar';
 import Profile from '../other-screens/profile';
 import Home from '../other-screens/home';
+import Calendar from '../other-screens/calendar';
 
 import ROUTES from '../../navigation/routes';
-import Loading from './components/loading/Loading';
-import Error from './components/error/Error';
 
 const ActiveHomeIcon = require('../../assets/tab-icons/home/ActiveHomeIcon.png');
 const InactiveHomeIcon = require('../../assets/tab-icons/home/InactiveHomeIcon.png');
@@ -18,13 +17,13 @@ const InactiveProfileIcon = require('../../assets/tab-icons/profile/InactiveProf
 const ActiveCalendarIcon = require('../../assets/tab-icons/calendar/ActiveCalendarIcon.png');
 const InactiveCalendarIcon = require('../../assets/tab-icons/calendar/InactiveCalendarIcon.png');
 
-const MainScreen = ({ currentTab, setCurrentTab, loading, error }) => {
+const MainScreen = ({ currentTab, setCurrentTab }) => {
   const TabContent = () => {
     switch (currentTab) {
       case ROUTES.HOME:
         return <Home />;
       case ROUTES.CALENDAR:
-        return <FRAACalendar />;
+        return <Calendar />;
       case ROUTES.PROFILE:
         return <Profile />;
       default:
@@ -35,14 +34,6 @@ const MainScreen = ({ currentTab, setCurrentTab, loading, error }) => {
         );
     }
   };
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <Error error={error} />;
-  }
 
   return (
     <View style={[styles.container, styles.centeredColumn]}>
@@ -73,12 +64,6 @@ const MainScreen = ({ currentTab, setCurrentTab, loading, error }) => {
 MainScreen.propTypes = {
   currentTab: string.isRequired,
   setCurrentTab: func.isRequired,
-  loading: bool.isRequired,
-  error: string,
-};
-
-MainScreen.defaultProps = {
-  error: '',
 };
 
 export default MainScreen;

@@ -24,6 +24,7 @@ const VerifyOTP = ({ OTP, setOTP, onVerifyOTP, goBack, error, loading, fromProfi
         <TextInput
           onChangeText={(text) => setOTP(text)}
           value={OTP}
+          keyboardType="number-pad"
           placeholder="Enter OTP"
           style={styles.input}
           placeholderTextColor="#88888888"

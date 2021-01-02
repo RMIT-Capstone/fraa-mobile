@@ -4,6 +4,7 @@ import Login from '../screens/authentication-screens/login';
 import ForgotPassword from '../screens/authentication-screens/forgot-password/components/ForgotPassword';
 import Tutorials from '../screens/other-screens/tutorials/Tutorials';
 import MainScreen from '../screens/main-screen';
+import FRAACamera from '../shared-components/camera';
 import ROUTES from './routes';
 
 const MainStack = createStackNavigator();
@@ -21,6 +22,7 @@ const MainStackScreens = () => (
     <MainStack.Screen name={ROUTES.TUTORIALS} component={Tutorials} />
     <MainStack.Screen name={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
     <MainStack.Screen name={ROUTES.MAIN} component={MainScreen} />
+    <MainStack.Screen name={ROUTES.CAMERA} component={FRAACamera} />
   </MainStack.Navigator>
 );
 

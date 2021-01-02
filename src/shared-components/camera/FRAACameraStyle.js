@@ -5,6 +5,8 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
     width: '100%',
+  },
+  centered: {
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -12,11 +14,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 200,
     height: 40,
-    top: 60,
     borderRadius: 55,
+  },
+  topCameraMessageContainer: {
+    top: 60,
     backgroundColor: '#AFAFAF',
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  bottomCameraMessageContainer: {
+    bottom: 60,
+    backgroundColor: theme.palette.primary.blue,
   },
   cameraMessage: {
     color: theme.palette.secondary.white,

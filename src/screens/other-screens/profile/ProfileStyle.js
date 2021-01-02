@@ -1,5 +1,7 @@
-import { Platform, StatusBar, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StatusBar, StyleSheet } from 'react-native';
 import theme from '../../../theme';
+
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   emptyCoursesText: {
@@ -8,7 +10,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.palette.secondary.white,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 10,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
   },
   centered: {
     justifyContent: 'center',
@@ -17,6 +19,8 @@ const styles = StyleSheet.create({
   centeredRow: {
     alignContent: 'center',
     flexDirection: 'row',
+    marginTop: 5,
+    marginBottom: 5,
   },
   header: {
     position: 'relative',
@@ -24,6 +28,10 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 0.5,
     borderBottomColor: '#44444444',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: '500',
   },
   fixedIconWrapper: {
     position: 'absolute',
@@ -34,25 +42,43 @@ const styles = StyleSheet.create({
     height: 25,
     resizeMode: 'contain',
   },
-  headerText: {
-    fontSize: 20,
+  scrollViewContainer: {
+    flex: 11,
+    marginTop: 15,
+  },
+  mockProfile: {
+    backgroundColor: '#c4c4c4',
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  userFullName: {
+    fontWeight: '600',
+    color: '#444444',
+    marginBottom: 5,
+    fontSize: 19,
+  },
+  userEmail: {
+    fontWeight: '300',
+    color: '#888888',
+    marginBottom: 5,
+  },
+  notVerified: {
     fontWeight: '500',
+    color: theme.palette.primary.red,
   },
-  headerContainer: {
-    flex: 5,
-  },
-  bodyContainer: {
-    flex: 6,
-  },
-  bodyChildContainer: {
-    flex: 2,
+  verified: {
+    fontWeight: '500',
+    color: theme.palette.secondary.green,
   },
   carouselContainer: {
     padding: 10,
+    height: windowHeight / 6,
   },
   carouselItemStyle: {
     width: 250,
-    height: '90%',
     borderRadius: 16,
     marginRight: 10,
     shadowColor: '#000',
@@ -90,37 +116,6 @@ const styles = StyleSheet.create({
     left: 15,
     fontSize: 16,
     fontWeight: '600',
-  },
-  profilePictureContainer: {
-    flex: 2,
-  },
-  mockProfile: {
-    backgroundColor: '#c4c4c4',
-    height: 70,
-    width: 70,
-    borderRadius: 35,
-  },
-  profileInfoContainer: {
-    flex: 2,
-  },
-  userFullName: {
-    fontWeight: '600',
-    color: '#444444',
-    marginBottom: 5,
-    fontSize: 19,
-  },
-  userEmail: {
-    fontWeight: '300',
-    color: '#888888',
-    marginBottom: 5,
-  },
-  notVerified: {
-    fontWeight: '500',
-    color: theme.palette.primary.red,
-  },
-  verified: {
-    fontWeight: '500',
-    color: theme.palette.secondary.green,
   },
   profileStatisticsContainer: {
     flex: 2,

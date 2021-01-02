@@ -4,34 +4,30 @@ import { createSelector } from 'reselect';
 // INITIAL STATE
 const initialState = {
   sessions: [],
-  agendaSessions: [],
-  showSessions: [],
-  markedDates: {},
+  homeScreenSessions: [],
+  displaySession: {},
 };
 
 // ACTION CREATORS
-export const { setAllSessions, setSessions, setHomeScreenSessions, setAgendaSessions, setMarkedDates } = createActions({
-  SET_ALL_SESSIONS: (sessions, homeScreenSessions, agendaSessions, markedDates) => ({
+export const { setAllSessions, setSessions, setHomeScreenSessions, setDisplaySession } = createActions({
+  SET_ALL_SESSIONS: (sessions, homeScreenSessions, displaySession) => ({
     sessions,
     homeScreenSessions,
-    agendaSessions,
-    markedDates,
+    displaySession,
   }),
   SET_SESSIONS: (sessions) => ({ sessions }),
   SET_HOME_SCREEN_SESSIONS: (homeScreenSessions) => ({ homeScreenSessions }),
-  SET_AGENDA_SESSIONS: (agendaSessions) => ({ agendaSessions }),
-  SET_MARKED_DATES: (markedDates) => ({ markedDates }),
+  SET_DISPLAY_SESSION: (session) => ({ session }),
 });
 
 // ACTION HANDLERS
 export default handleActions(
   {
-    SET_ALL_SESSIONS: (state, { payload: { sessions, homeScreenSessions, agendaSessions, markedDates } }) => ({
+    SET_ALL_SESSIONS: (state, { payload: { sessions, homeScreenSessions, displaySession } }) => ({
       ...state,
       sessions,
       homeScreenSessions,
-      agendaSessions,
-      markedDates,
+      displaySession,
     }),
     SET_SESSIONS: (state, { payload: { sessions } }) => ({
       ...state,
@@ -41,13 +37,9 @@ export default handleActions(
       ...state,
       homeScreenSessions,
     }),
-    SET_AGENDA_SESSIONS: (state, { payload: { agendaSessions } }) => ({
+    SET_DISPLAY_SESSION: (state, { payload: { displaySession } }) => ({
       ...state,
-      agendaSessions,
-    }),
-    SET_MARKED_DATES: (state, { payload: { markedDates } }) => ({
-      ...state,
-      markedDates,
+      displaySession,
     }),
   },
   initialState,
