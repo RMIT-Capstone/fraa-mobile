@@ -59,7 +59,6 @@ const HomeWrapper = ({
         if (displaySession && displaySession.location) {
           unsubscribe = RNLocation.subscribeToLocationUpdates((locations) => {
             const { altitude, latitude, longitude } = locations[0];
-
             if (Math.abs(displaySession.location.altitude - altitude) > 2) {
               setTooFar(true);
             } else {
@@ -69,7 +68,8 @@ const HomeWrapper = ({
                 latitude,
                 longitude,
               );
-              if (distance > 10) {
+
+              if (distance > 15) {
                 setTooFar(true);
               } else {
                 setTooFar(false);
@@ -128,15 +128,15 @@ const HomeWrapper = ({
           const request = {
             courses: subscribedCourses,
             startMonth: today.getMonth(),
+            startYear: today.getFullYear() - 1,
+            endYear: today.getFullYear(),
             monthRange: 3,
           };
-          const { data, error: fetchAttendanceSessionsError } = await axios.post(
-            GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE,
-            request,
-          );
-          if (fetchAttendanceSessionsError) {
-            handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
-          } else {
+          const {
+            data,
+            data: { error: fetchAttendanceSessionsError },
+          } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
+          if (data && data.success) {
             const {
               success: { sessions: axiosSessions },
             } = data;
@@ -151,6 +151,9 @@ const HomeWrapper = ({
             } else {
               handleSetAllSessions(axiosSessions, filterSessions, {});
             }
+          }
+          if (fetchAttendanceSessionsError) {
+            handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);
           }
         } catch (errorFetchAttendanceSessions) {
           handleOpenToast(TOAST_TYPES.ERROR, 'Fetch attendance session error!', TOAST_POSITIONS.BOTTOM, 2000);

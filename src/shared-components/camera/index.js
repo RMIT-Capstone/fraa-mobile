@@ -18,7 +18,7 @@ const FRAACameraWrapper = ({
   user: { id: userId, email, subscribedCourses },
   handleOpenToast,
   handleSetUserRegisteredIdentity,
-  handleSetAllAttendanceSessions,
+  handleSetAllSessions,
 }) => {
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
@@ -41,22 +41,32 @@ const FRAACameraWrapper = ({
       const request = {
         courses: subscribedCourses,
         startMonth: today.getMonth(),
+        startYear: today.getFullYear() - 1,
+        endYear: today.getFullYear(),
         monthRange: 3,
       };
       (async () => {
-        const { data, error } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
-        if (error) {
-          handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
-        } else {
+        const {
+          data,
+          data: { error: fetchAttendanceSessionsError },
+        } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
+        if (data && data.success) {
           const {
-            success: { sessions, markedDates },
+            success: { sessions },
           } = data;
           const dateSessions = sessions.filter((session) => {
             const { validOn } = session;
             const eventDate = validOn.split('T')[0];
             return eventDate === new Date().toISOString().split('T')[0];
           });
-          handleSetAllAttendanceSessions(sessions, sessions, dateSessions, markedDates);
+          if (dateSessions.length !== 0) {
+            handleSetAllSessions(sessions, dateSessions, dateSessions[0]);
+          } else {
+            handleSetAllSessions(sessions, dateSessions, {});
+          }
+        }
+        if (fetchAttendanceSessionsError) {
+          handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
         }
       })();
     } catch (errorRefetchAttendanceSessions) {
@@ -65,7 +75,6 @@ const FRAACameraWrapper = ({
   };
 
   const onFacesVerified = async ({ result: faceResult }) => {
-    console.log(faceResult)
     const { count, successes, failures } = verifyResult;
     setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
 
@@ -75,36 +84,23 @@ const FRAACameraWrapper = ({
       setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
     }
 
-    console.log(verifyResult);
-
-    // if (count === 40) {
-    //   handleOpenToast(TOAST_TYPES.INFO, `${successes} / ${failures} / ${count}`, TOAST_POSITIONS.BOTTOM, 10000);
-    //   console.table({
-    //     successes,
-    //     failures,
-    //     count,
-    //   });
-    //
-    //   setVerifyResult((prevState) => ({ ...prevState, count: 0 }));
-    // }
-
-    // if (count > 5) {
-    //   setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
-    //   try {
-    //     const { data } = await axios.post(REGISTER_ATTENDANCE, {
-    //       email,
-    //       sessionId,
-    //     });
-    //     if (data) {
-    //       await refetchAttendanceSessions();
-    //       setTimeout(() => {
-    //         navigateTo(navigation, ROUTES.MAIN);
-    //       }, 1000);
-    //     }
-    //   } catch (errorRegisterAttendance) {
-    //     handleOpenToast(TOAST_TYPES.ERROR, 'Error register attendance!', TOAST_POSITIONS.BOTTOM, 1500);
-    //   }
-    // }
+    if (successes > 10) {
+      setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
+      try {
+        const { data } = await axios.post(REGISTER_ATTENDANCE, {
+          email,
+          sessionId,
+        });
+        if (data) {
+          await refetchAttendanceSessions();
+          setTimeout(() => {
+            navigateTo(navigation, ROUTES.MAIN);
+          }, 1000);
+        }
+      } catch (errorRegisterAttendance) {
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error register attendance!', TOAST_POSITIONS.BOTTOM, 1500);
+      }
+    }
   };
 
   const takePicture = async (camera) => {
@@ -174,7 +170,7 @@ FRAACameraWrapper.propTypes = {
   user: object.isRequired,
   handleOpenToast: func.isRequired,
   handleSetUserRegisteredIdentity: func.isRequired,
-  handleSetAllAttendanceSessions: func.isRequired,
+  handleSetAllSessions: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -182,8 +178,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSetAllAttendanceSessions: (session, homeSessions, agendaSessions, markedDates) =>
-    dispatch(setAllSessions(session, homeSessions, agendaSessions, markedDates)),
+  handleSetAllSessions: (sessions, homeSessions, displaySession) =>
+    dispatch(setAllSessions(sessions, homeSessions, displaySession)),
   handleSetUserRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });

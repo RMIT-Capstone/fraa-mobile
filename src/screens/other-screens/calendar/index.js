@@ -65,13 +65,13 @@ const CalendarWrapper = ({
       const request = {
         courses: subscribedCourses,
         startMonth: today.getMonth(),
+        startYear: today.getFullYear() - 1,
+        endYear: today.getFullYear(),
         monthRange: 3,
       };
       (async () => {
         const { data, error } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
-        if (error) {
-          handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
-        } else {
+        if (data && data.success) {
           const {
             success: { sessions: axiosSessions },
           } = data;
@@ -96,6 +96,9 @@ const CalendarWrapper = ({
           }
 
           setAgendaSessions(filteredSessions);
+        }
+        if (error) {
+          handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
         }
       })();
     } catch (errorRefetchAttendanceSessions) {

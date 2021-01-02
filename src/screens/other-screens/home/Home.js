@@ -141,13 +141,17 @@ Home.propTypes = {
   email: string.isRequired,
   homeScreenSessions: arrayOf(object).isRequired,
   isLoadingSessions: bool.isRequired,
-  displaySession: object.isRequired,
+  displaySession: object,
   isHappening: bool.isRequired,
   timeDifference: object.isRequired,
   navigation: object.isRequired,
   registeredLocally: bool.isRequired,
   tooFar: bool.isRequired,
   locationPermission: bool.isRequired,
+};
+
+Home.defaultProps = {
+  displaySession: {},
 };
 
 export default Home;
