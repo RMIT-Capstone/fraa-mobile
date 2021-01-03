@@ -2,9 +2,9 @@ import React from 'react';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import { View, Text, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import styles from './CalendarStyle';
 import { useNavigation } from '@react-navigation/native';
-import {navigateTo} from '../../../helpers/navigation';
+import styles from './CalendarStyle';
+import { navigateTo } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
 
 const Calendar = ({

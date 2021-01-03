@@ -83,7 +83,6 @@ const FRAACameraWrapper = ({
     } else {
       setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
     }
-
     if (successes > 10) {
       setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
       try {
@@ -122,32 +121,6 @@ const FRAACameraWrapper = ({
       handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };
-
-  // const registerOrVerifyIdentity = async () => {
-  //   setLoading(true);
-  //   const base64Data = new FormData();
-  //   base64Data.append('image', previewImage.base64);
-  //   const url = fromHome ? `${VERIFY_IDENTITY_API}/${DEMO_EMAIL}` : `${REGISTER_IDENTITY_API}/${DEMO_EMAIL}`;
-  //   const config = {
-  //     method: 'POST',
-  //     url,
-  //     data: base64Data,
-  //   };
-  //   try {
-  //     const { data } = await axios(config);
-  //     if (data) {
-  //       setLoading(false);
-  //       if (fromHome) {
-  //         navigateTo(navigation, ROUTES.MAIN);
-  //         handleSetUserRegisteredIdentity(true);
-  //       } else {
-  //         navigateTo(navigation, ROUTES.MAIN);
-  //       }
-  //     }
-  //   } catch (errorRegisterOrVerifyIdentity) {
-  //     handleOpenToast(TOAST_TYPES.ERROR, 'Error register/verify identity!', TOAST_POSITIONS.BOTTOM, 2000);
-  //   }
-  // };
 
   return (
     <FRAACamera

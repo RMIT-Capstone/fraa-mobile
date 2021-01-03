@@ -58,6 +58,13 @@ const Home = ({
   const checkedIn = () => attendees.includes(email);
 
   const renderCheckInButton = () => {
+    if (checkedIn()) {
+      return (
+        <TouchableOpacity style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+          <Text style={styles.disabledText}>Checked In!</Text>
+        </TouchableOpacity>
+      );
+    }
     if (!locationPermission) {
       return <Text style={styles.disabledText}>Please allow location services</Text>;
     }
@@ -71,13 +78,6 @@ const Home = ({
     }
     if (!registeredLocally) {
       return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
-    }
-    if (checkedIn()) {
-      return (
-        <TouchableOpacity style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
-          <Text style={styles.disabledText}>Checked In!</Text>
-        </TouchableOpacity>
-      );
     }
     if (isHappening) {
       return (
