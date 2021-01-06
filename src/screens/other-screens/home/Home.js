@@ -66,7 +66,7 @@ const Home = ({
       );
     }
     if (!locationPermission) {
-      return <Text style={styles.disabledText}>Please allow location services</Text>;
+      return <Text style={styles.disabledText}>Please allow location services and restart FRAA</Text>;
     }
     if (tooFar) {
       return (

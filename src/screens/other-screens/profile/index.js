@@ -3,7 +3,7 @@ import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import { getUserState, setUser, setRegisteredIdentity, setUserStats } from '../../../redux/reducers/UserReducer';
+import { getUserState, setUser, setUserStats } from '../../../redux/reducers/UserReducer';
 import { navigateTo } from '../../../helpers/navigation';
 import Profile from './Profile';
 import ROUTES from '../../../navigation/routes';
@@ -11,7 +11,7 @@ import { ATTENDANCE_STATS_NO_GROUPING, CURRENT_SEMESTER, GET_USER_API } from '..
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
 import { removeRegisteredImage } from '../../../helpers/model';
 
-const ProfileWrapper = ({ user, handleSetUser, handleSetRegisteredIdentity, handleSetUserStats, handleOpenToast }) => {
+const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleOpenToast }) => {
   const navigation = useNavigation();
   const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
   const [showSettings, setShowSettings] = useState(false);
@@ -88,7 +88,6 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetRegisteredIdentity, hand
 ProfileWrapper.propTypes = {
   user: object.isRequired,
   handleSetUser: func.isRequired,
-  handleSetRegisteredIdentity: func.isRequired,
   handleSetUserStats: func.isRequired,
   handleOpenToast: func.isRequired,
 };
@@ -99,7 +98,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetUser: (user) => dispatch(setUser(user)),
-  handleSetRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
   handleSetUserStats: (stats) => dispatch(setUserStats(stats)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });

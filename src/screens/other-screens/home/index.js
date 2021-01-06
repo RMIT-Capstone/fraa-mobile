@@ -165,9 +165,9 @@ const HomeWrapper = ({
             } = data;
 
             const filterSessions = axiosSessions.filter((session) => {
-              const { expireOn } = session;
+              const { validOn } = session;
               const rightNow = new Date();
-              return new Date(expireOn) > rightNow;
+              return new Date(validOn) > rightNow;
             });
             if (filterSessions.length !== 0) {
               handleSetAllSessions(axiosSessions, filterSessions, filterSessions[0]);
