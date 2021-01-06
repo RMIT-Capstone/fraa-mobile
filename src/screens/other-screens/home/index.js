@@ -85,7 +85,7 @@ const HomeWrapper = ({
         },
       });
       if (!permission) {
-        const requestPermission = await RNLocation.requestPermission({
+        await RNLocation.requestPermission({
           ios: 'whenInUse',
           android: {
             detail: 'coarse',
@@ -96,13 +96,14 @@ const HomeWrapper = ({
               buttonNegative: 'Cancel',
             },
           },
+        }).then(async (granted) => {
+          if (granted) {
+            setLocationPermission(true);
+            await getLocation();
+          } else {
+            setLocationPermission(false);
+          }
         });
-        if (requestPermission === 1) {
-          setLocationPermission(true);
-          await getLocation();
-        } else {
-          setLocationPermission(false);
-        }
       } else {
         setLocationPermission(true);
         await getLocation();
