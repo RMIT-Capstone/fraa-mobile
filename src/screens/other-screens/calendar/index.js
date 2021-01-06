@@ -19,7 +19,7 @@ const CalendarWrapper = ({
   const [activeDay, setActiveDay] = useState({ day: OPTIONS[1], date: todayDate, index: 1 });
   const [agendaSessions, setAgendaSessions] = useState([]);
   const [refetching, setRefetching] = useState(false);
-  const { index, date } = activeDay;
+  const { date } = activeDay;
 
   useEffect(() => {
     const today = new Date();
@@ -43,18 +43,6 @@ const CalendarWrapper = ({
       setActiveDay((prevState) => ({ ...prevState, date: todayDate }));
     } else {
       setActiveDay((prevState) => ({ ...prevState, date: todayDate + 1 }));
-    }
-  };
-
-  const handleSwipeRight = () => {
-    if (index > 0 && index <= 2) {
-      setActiveDay({ day: OPTIONS[index - 1], date: date - 1, index: index - 1 });
-    }
-  };
-
-  const handleSwipeLeft = () => {
-    if (index >= 0 && index < 2) {
-      setActiveDay({ day: OPTIONS[index + 1], date: date + 1, index: index + 1 });
     }
   };
 
@@ -112,8 +100,6 @@ const CalendarWrapper = ({
       agendaSessions={agendaSessions}
       activeDay={activeDay}
       handleDatePress={handleDatePress}
-      handleSwipeLeft={handleSwipeLeft}
-      handleSwipeRight={handleSwipeRight}
       refetching={refetching}
       refetchAttendanceSessions={refetchAttendanceSessions}
       OPTIONS={OPTIONS}

@@ -33,59 +33,83 @@ const HomeWrapper = ({
   const [registeredLocally, setRegisteredLocally] = useState(false);
   const [tooFar, setTooFar] = useState(false);
 
-  useEffect(() => {
-    let unsubscribe;
-    if (locationPermission) {
-      (async () => {
-        await RNLocation.configure({
-          desiredAccuracy: {
-            ios: 'best',
-            android: 'highAccuracy',
-          },
-          // Android only
-          androidProvider: 'auto',
-          interval: 5000, // Milliseconds
-          fastestInterval: 10000, // Milliseconds
-          maxWaitTime: 5000, // Milliseconds
-          // iOS Only
-          activityType: 'other',
-          allowsBackgroundLocationUpdates: false,
-          headingFilter: 1, // Degrees
-          headingOrientation: 'portrait',
-          pausesLocationUpdatesAutomatically: false,
-          showsBackgroundLocationIndicator: false,
-        });
+  const getLocation = async () => {
+    await RNLocation.configure({
+      desiredAccuracy: {
+        ios: 'best',
+        android: 'highAccuracy',
+      },
+      // Android only
+      androidProvider: 'auto',
+      interval: 5000, // Milliseconds
+      fastestInterval: 10000, // Milliseconds
+      maxWaitTime: 5000, // Milliseconds
+      // iOS Only
+      activityType: 'other',
+      allowsBackgroundLocationUpdates: false,
+      headingFilter: 1, // Degrees
+      headingOrientation: 'portrait',
+      pausesLocationUpdatesAutomatically: false,
+      showsBackgroundLocationIndicator: false,
+    });
 
-        if (displaySession && displaySession.location) {
-          unsubscribe = RNLocation.subscribeToLocationUpdates((locations) => {
-            const { altitude, latitude, longitude } = locations[0];
-            if (Math.abs(displaySession.location.altitude - altitude) > 2) {
-              setTooFar(true);
-            } else {
-              const distance = getDistanceFromLatLngInMeters(
-                displaySession.location.latitude,
-                displaySession.location.longitude,
-                latitude,
-                longitude,
-              );
+    if (displaySession && displaySession.location) {
+      RNLocation.getLatestLocation({ timeout: 60000 }).then((location) => {
+        const { altitude, latitude, longitude } = location;
+        if (Math.abs(displaySession.location.altitude - altitude) > 2) {
+          setTooFar(true);
+        } else {
+          const distance = getDistanceFromLatLngInMeters(
+            displaySession.location.latitude,
+            displaySession.location.longitude,
+            latitude,
+            longitude,
+          );
 
-              if (distance > 15) {
-                setTooFar(true);
-              } else {
-                setTooFar(false);
-              }
-            }
-          });
+          if (distance > 15) {
+            setTooFar(true);
+          } else {
+            setTooFar(false);
+          }
         }
-      })();
+      });
     }
+  };
 
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
+  useEffect(() => {
+    (async () => {
+      const permission = await RNLocation.checkPermission({
+        ios: 'whenInUse',
+        android: {
+          detail: 'fine',
+        },
+      });
+      if (!permission) {
+        await RNLocation.requestPermission({
+          ios: 'whenInUse',
+          android: {
+            detail: 'coarse',
+            rationale: {
+              title: 'Please turn on your location',
+              message: 'We need to use your location to allow check-in',
+              buttonPositive: 'OK',
+              buttonNegative: 'Cancel',
+            },
+          },
+        }).then(async (granted) => {
+          if (granted) {
+            setLocationPermission(true);
+            await getLocation();
+          } else {
+            setLocationPermission(false);
+          }
+        });
+      } else {
+        setLocationPermission(true);
+        await getLocation();
       }
-    };
-  }, [locationPermission]);
+    })();
+  }, []);
 
   const loadDisplaySession = () => {
     const rightNow = new Date();
@@ -149,7 +173,7 @@ const HomeWrapper = ({
             if (filterSessions.length !== 0) {
               handleSetAllSessions(axiosSessions, filterSessions, filterSessions[0]);
             } else {
-              handleSetAllSessions(axiosSessions, filterSessions, {});
+              handleSetAllSessions(axiosSessions, [], {});
             }
           }
           if (fetchAttendanceSessionsError) {
@@ -169,31 +193,6 @@ const HomeWrapper = ({
   }, []);
 
   useEffect(() => {
-    (async () => {
-      const permission = await RNLocation.checkPermission({
-        ios: 'whenInUse',
-        android: {
-          detail: 'fine',
-        },
-      });
-      setLocationPermission(permission);
-      if (!permission) {
-        const requestPermission = await RNLocation.requestPermission({
-          ios: 'whenInUse',
-          android: {
-            detail: 'coarse',
-            rationale: {
-              title: 'Please turn on your location',
-              message: 'We need to use your location to allow check-in',
-              buttonPositive: 'OK',
-              buttonNegative: 'Cancel',
-            },
-          },
-        });
-        setLocationPermission(requestPermission);
-      }
-    })();
-
     let interval = null;
 
     if (homeScreenSessions.length !== 0 && displaySession !== {}) {

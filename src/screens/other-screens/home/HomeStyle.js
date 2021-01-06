@@ -18,8 +18,10 @@ const styles = StyleSheet.create({
     flex: 4,
   },
   timeIndicatorContainer: {
-    width: 137,
-    height: 33,
+    paddingTop: 7,
+    paddingBottom: 7,
+    paddingLeft: 25,
+    paddingRight: 25,
     borderRadius: 41,
     marginBottom: 17,
   },
@@ -37,7 +39,7 @@ const styles = StyleSheet.create({
   eventContainer: {
     borderRadius: 30,
     marginBottom: 17,
-    padding: 23,
+    padding: 20,
     backgroundColor: theme.palette.secondary.white,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -90,9 +92,19 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginBottom: 3,
   },
+  checkedInBtn: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
+    backgroundColor: '#fff',
+    borderRadius: 50,
+  },
   checkInBtnContainer: {
-    width: 240,
-    padding: 20,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 55,
+    paddingRight: 55,
     borderRadius: 50,
   },
   activeBtn: {
@@ -135,9 +147,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 50,
-    width: 360,
-    height: 88,
-    padding: 25,
+    padding: 27,
   },
   infoText: {
     color: '#444444',

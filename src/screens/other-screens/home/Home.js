@@ -58,26 +58,11 @@ const Home = ({
   const checkedIn = () => attendees.includes(email);
 
   const renderCheckInButton = () => {
-    if (!locationPermission) {
-      return <Text style={styles.disabledText}>Please allow location services</Text>;
-    }
-    if (tooFar) {
-      return (
-        <TouchableWithoutFeedback
-          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
-          <Text style={styles.disabledText}>Please come to the classroom to check-in</Text>
-        </TouchableWithoutFeedback>
-      );
-    }
-    if (!registeredLocally) {
-      return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
-    }
     if (checkedIn()) {
       return (
-        <TouchableWithoutFeedback
-          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+        <TouchableOpacity disabled style={[styles.checkedInBtn, styles.disabledBtn, styles.raised, styles.centered]}>
           <Text style={styles.disabledText}>Checked In!</Text>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       );
     }
     if (isHappening) {
@@ -91,14 +76,33 @@ const Home = ({
       );
     }
 
-    return (
-      <View style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
-        <Text style={styles.disabledText}>
-          {timeDifference.hours} hours and {timeDifference.minutes} minutes
-        </Text>
-        <Text style={styles.disabledText}>before session</Text>
-      </View>
-    );
+    if (!isHappening) {
+      return (
+        <View style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+          <Text style={styles.disabledText}>
+            {timeDifference.hours} hours and {timeDifference.minutes} minutes
+          </Text>
+          <Text style={styles.disabledText}>before session</Text>
+        </View>
+      );
+    }
+
+    if (!locationPermission) {
+      return <Text style={styles.disabledText}>Please allow location services and restart FRAA</Text>;
+    }
+    if (tooFar) {
+      return (
+        <TouchableWithoutFeedback
+          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+          <Text style={styles.disabledText}>Please come to the classroom to check-in</Text>
+        </TouchableWithoutFeedback>
+      );
+    }
+    if (!registeredLocally) {
+      return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
+    }
+
+    return null;
   };
 
   const today = new Date();
