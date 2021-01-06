@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 
 // react-navigation
 import 'react-native-gesture-handler';
@@ -11,6 +12,9 @@ import { persistor, store } from './src/redux/store';
 
 import MainStackScreens from './src/navigation';
 import Toast from './src/shared-components/toast/Toast';
+
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();
 
 const App = () => (
   <Provider store={store}>

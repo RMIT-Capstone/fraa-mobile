@@ -78,11 +78,12 @@ const FRAACameraWrapper = ({
     const { count, successes, failures } = verifyResult;
     setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
 
-    if (faceResult < 0.09) {
+    if (faceResult < 0.2) {
       setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
     } else {
       setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
     }
+
     if (successes > 10) {
       setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
       try {

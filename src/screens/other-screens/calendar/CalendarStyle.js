@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   datesContainer: {
     height: windowHeight * 0.1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
+    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
   },
   dateBtn: {
     borderRadius: 41,
