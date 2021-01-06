@@ -6,7 +6,17 @@ import SettingsPopUp from './components/settings-popup/SettingsPopup';
 
 const ProfileMoreIcon = require('../../../assets/ProfileMoreIcon.png');
 
-const Profile = ({ user, refreshing, colors, onVerify, reset, refetchUser, showSettings, setShowSettings }) => {
+const Profile = ({
+  user,
+  refreshing,
+  colors,
+  onVerify,
+  reset,
+  refetchUser,
+  showSettings,
+  setShowSettings,
+  registeredLocally,
+}) => {
   const {
     email,
     displayName,
@@ -49,9 +59,9 @@ const Profile = ({ user, refreshing, colors, onVerify, reset, refetchUser, showS
               </Text>
               <View style={styles.centeredRow}>
                 <Text onPress={onVerify} style={registeredIdentity ? styles.verified : styles.notVerified}>
-                  {registeredIdentity ? 'Verified' : 'Press here to register identity to FRAA'}
+                  {registeredLocally ? 'Verified' : 'Press here to register identity to FRAA'}
                 </Text>
-                {registeredIdentity && <Text onPress={reset}> Press here to reset</Text>}
+                {registeredLocally && <Text onPress={reset}> Press here to reset</Text>}
               </View>
             </View>
             <View style={styles.centeredRow}>
@@ -116,6 +126,7 @@ Profile.propTypes = {
   refetchUser: func.isRequired,
   showSettings: bool.isRequired,
   setShowSettings: func.isRequired,
+  registeredLocally: bool.isRequired,
 };
 
 export default Profile;

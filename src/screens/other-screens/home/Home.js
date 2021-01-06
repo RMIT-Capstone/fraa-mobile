@@ -65,6 +65,28 @@ const Home = ({
         </TouchableOpacity>
       );
     }
+    if (isHappening) {
+      return (
+        <TouchableOpacity
+          onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
+          style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
+          <Image source={CheckInIcon} style={styles.checkInIcon} />
+          <Text style={styles.checkInText}>Check In</Text>
+        </TouchableOpacity>
+      );
+    }
+
+    if (!isHappening) {
+      return (
+        <View style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+          <Text style={styles.disabledText}>
+            {timeDifference.hours} hours and {timeDifference.minutes} minutes
+          </Text>
+          <Text style={styles.disabledText}>before session</Text>
+        </View>
+      );
+    }
+
     if (!locationPermission) {
       return <Text style={styles.disabledText}>Please allow location services and restart FRAA</Text>;
     }
@@ -79,25 +101,6 @@ const Home = ({
     if (!registeredLocally) {
       return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
     }
-    if (isHappening) {
-      return (
-        <TouchableOpacity
-          onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
-          style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
-          <Image source={CheckInIcon} style={styles.checkInIcon} />
-          <Text style={styles.checkInText}>Check In</Text>
-        </TouchableOpacity>
-      );
-    }
-
-    return (
-      <View style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
-        <Text style={styles.disabledText}>
-          {timeDifference.hours} hours and {timeDifference.minutes} minutes
-        </Text>
-        <Text style={styles.disabledText}>before session</Text>
-      </View>
-    );
   };
 
   const today = new Date();

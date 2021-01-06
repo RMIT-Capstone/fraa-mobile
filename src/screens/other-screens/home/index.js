@@ -166,14 +166,14 @@ const HomeWrapper = ({
             } = data;
 
             const filterSessions = axiosSessions.filter((session) => {
-              const { validOn } = session;
+              const { expireOn } = session;
               const rightNow = new Date();
-              return new Date(validOn) > rightNow;
+              return new Date(expireOn) > rightNow;
             });
             if (filterSessions.length !== 0) {
               handleSetAllSessions(axiosSessions, filterSessions, filterSessions[0]);
             } else {
-              handleSetAllSessions(axiosSessions, filterSessions, {});
+              handleSetAllSessions(axiosSessions, [], {});
             }
           }
           if (fetchAttendanceSessionsError) {
@@ -193,31 +193,6 @@ const HomeWrapper = ({
   }, []);
 
   useEffect(() => {
-    // (async () => {
-    //   const permission = await RNLocation.checkPermission({
-    //     ios: 'whenInUse',
-    //     android: {
-    //       detail: 'fine',
-    //     },
-    //   });
-    //   setLocationPermission(permission);
-    //   if (!permission) {
-    //     const requestPermission = await RNLocation.requestPermission({
-    //       ios: 'whenInUse',
-    //       android: {
-    //         detail: 'coarse',
-    //         rationale: {
-    //           title: 'Please turn on your location',
-    //           message: 'We need to use your location to allow check-in',
-    //           buttonPositive: 'OK',
-    //           buttonNegative: 'Cancel',
-    //         },
-    //       },
-    //     });
-    //     setLocationPermission(requestPermission);
-    //   }
-    // })();
-
     let interval = null;
 
     if (homeScreenSessions.length !== 0 && displaySession !== {}) {

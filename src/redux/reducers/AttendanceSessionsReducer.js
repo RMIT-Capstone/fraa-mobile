@@ -17,7 +17,7 @@ export const { setAllSessions, setSessions, setHomeScreenSessions, setDisplaySes
   }),
   SET_SESSIONS: (sessions) => ({ sessions }),
   SET_HOME_SCREEN_SESSIONS: (homeScreenSessions) => ({ homeScreenSessions }),
-  SET_DISPLAY_SESSION: (session) => ({ session }),
+  SET_DISPLAY_SESSION: (displaySession) => ({ displaySession }),
 });
 
 // ACTION HANDLERS

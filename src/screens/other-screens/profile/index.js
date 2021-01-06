@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -9,13 +9,21 @@ import Profile from './Profile';
 import ROUTES from '../../../navigation/routes';
 import { ATTENDANCE_STATS_NO_GROUPING, CURRENT_SEMESTER, GET_USER_API } from '../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
-import { removeRegisteredImage } from '../../../helpers/model';
+import { checkRegisteredImage, removeRegisteredImage } from '../../../helpers/model';
 
 const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleOpenToast }) => {
   const navigation = useNavigation();
   const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
   const [showSettings, setShowSettings] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [registeredLocally, setRegisteredLocally] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const exists = await checkRegisteredImage();
+      setRegisteredLocally(exists);
+    })();
+  }, []);
 
   const fetchUserStats = async () => {
     try {
@@ -81,6 +89,7 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleOpenToa
       refetchUser={refetchUserProfile}
       showSettings={showSettings}
       setShowSettings={setShowSettings}
+      registeredLocally={registeredLocally}
     />
   );
 };
