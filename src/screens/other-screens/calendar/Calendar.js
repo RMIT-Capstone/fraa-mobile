@@ -1,22 +1,12 @@
 import React from 'react';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import { View, Text, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
-import GestureRecognizer from 'react-native-swipe-gestures';
 import { useNavigation } from '@react-navigation/native';
 import styles from './CalendarStyle';
 import { navigateTo } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
 
-const Calendar = ({
-  agendaSessions,
-  refetching,
-  refetchAttendanceSessions,
-  activeDay,
-  handleDatePress,
-  handleSwipeLeft,
-  handleSwipeRight,
-  OPTIONS,
-}) => {
+const Calendar = ({ agendaSessions, refetching, refetchAttendanceSessions, activeDay, handleDatePress, OPTIONS }) => {
   const { day, date } = activeDay;
   const navigation = useNavigation();
 
@@ -54,12 +44,11 @@ const Calendar = ({
             <View style={[styles.sessionDateWrapper, styles.centered]} />
           )}
           <View style={styles.sessionInfoWrapper}>
-            <View style={[styles.sessionInfo, styles.inactiveBtn, styles.centered]}>
+            <View style={[styles.sessionInfo, styles.inactiveBtn]}>
               <Text style={styles.courseName}>{courseName}</Text>
-              <View style={styles.sessionTimeWrapper}>
-                <Text style={styles.sessionTimeAndLocation}>{transformSessionTime(validOn)}</Text>
-                <Text style={styles.sessionTimeAndLocation}>{room}</Text>
-              </View>
+
+              <Text style={styles.sessionTime}>{transformSessionTime(validOn)}</Text>
+              <Text style={styles.sessionLocation}>{room}</Text>
             </View>
           </View>
         </View>
@@ -84,12 +73,10 @@ const Calendar = ({
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refetching} onRefresh={refetchAttendanceSessions} />}>
-        <GestureRecognizer onSwipeLeft={() => handleSwipeLeft()} onSwipeRight={() => handleSwipeRight()}>
-          <View style={styles.agendaContainer}>
-            <Text style={styles.eventsText}>EVENTS</Text>
-            {agendaSessions.length === 0 ? <EmptyAgenda /> : <Events />}
-          </View>
-        </GestureRecognizer>
+        <View style={styles.agendaContainer}>
+          <Text style={styles.eventsText}>EVENTS</Text>
+          {agendaSessions.length === 0 ? <EmptyAgenda /> : <Events />}
+        </View>
       </ScrollView>
 
       <TouchableOpacity style={styles.fixedBtn} onPress={() => navigateTo(navigation, ROUTES.VIEW_ALL_AGENDA)}>
@@ -105,8 +92,6 @@ Calendar.propTypes = {
   refetchAttendanceSessions: func.isRequired,
   activeDay: object.isRequired,
   handleDatePress: func.isRequired,
-  handleSwipeLeft: func.isRequired,
-  handleSwipeRight: func.isRequired,
   OPTIONS: arrayOf(string).isRequired,
 };
 

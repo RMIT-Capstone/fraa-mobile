@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     color: '#AFAFAF',
   },
   sessionsWrapper: {
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 10,
+    paddingRight: 15,
     paddingTop: 10,
     paddingBottom: 10,
     width: '100%',
@@ -90,25 +90,30 @@ const styles = StyleSheet.create({
   sessionInfo: {
     borderRadius: 20,
     width: '100%',
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 10,
-    paddingRight: 10,
+    padding: 10,
     backgroundColor: '#fff',
+    position: 'relative',
   },
   courseName: {
     color: theme.palette.secondary.orange,
     fontSize: 17,
     fontWeight: '500',
+    marginBottom: 55,
+    textAlign: 'center',
   },
-  sessionTimeWrapper: {
-    marginTop: 20,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  sessionTimeAndLocation: {
+  sessionTime: {
+    fontSize: 17,
     color: '#888888',
+    position: 'absolute',
+    bottom: 10,
+    left: 15,
+  },
+  sessionLocation: {
+    fontSize: 17,
+    color: '#888888',
+    position: 'absolute',
+    bottom: 10,
+    right: 15,
   },
   fixedBtn: {
     position: 'absolute',
@@ -131,7 +136,7 @@ const styles = StyleSheet.create({
     color: theme.palette.secondary.azure,
     textAlign: 'center',
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '700',
     letterSpacing: 0.5,
   },
 });

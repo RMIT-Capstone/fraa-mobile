@@ -16,7 +16,7 @@ const AllAgendas = ({ attendanceSessions: { sessions } }) => {
       <ScrollView>
         <View style={styles.centered}>
           <Text style={styles.allEventsText}>ALL EVENTS</Text>
-          {sessions.map((session) => {
+          {sessions.map((session, index) => {
             const {
               id,
               room,
@@ -25,19 +25,21 @@ const AllAgendas = ({ attendanceSessions: { sessions } }) => {
             } = session;
             return (
               <View key={id} style={styles.centeredRow}>
-                <View style={styles.sessionTimeInfoWrapper}>
-                  <Text style={styles.sessionDate}>{new Date(validOn).getDate()}</Text>
-                  <Text style={styles.sessionDay}>
-                    {new Date(validOn).toLocaleDateString('EN', { weekday: 'short' }).toUpperCase()}
-                  </Text>
-                </View>
+                {index !== 0 && sessions[index].validOn.split('T')[0] === sessions[index - 1].validOn.split('T')[0] ? (
+                  <View style={styles.sessionTimeInfoWrapper} />
+                ) : (
+                  <View style={styles.sessionTimeInfoWrapper}>
+                    <Text style={styles.sessionDate}>{new Date(validOn).getDate()}</Text>
+                    <Text style={styles.sessionDay}>
+                      {new Date(validOn).toLocaleDateString('EN', { weekday: 'short' }).toUpperCase()}
+                    </Text>
+                  </View>
+                )}
                 <View key={id} style={styles.sessionInfoWrapper}>
                   <View style={[styles.sessionInfo, styles.inactiveBtn, styles.centered]}>
                     <Text style={styles.courseName}>{courseName}</Text>
-                    <View style={styles.sessionTimeWrapper}>
-                      <Text style={styles.sessionTimeAndLocation}>{transformSessionTime(validOn)}</Text>
-                      <Text style={styles.sessionTimeAndLocation}>{room}</Text>
-                    </View>
+                    <Text style={styles.sessionTime}>{transformSessionTime(validOn)}</Text>
+                    <Text style={styles.sessionLocation}>{room}</Text>
                   </View>
                 </View>
               </View>
@@ -75,15 +77,6 @@ const styles = StyleSheet.create({
   sessionInfoWrapper: {
     flex: 4,
   },
-  sessionInfo: {
-    borderRadius: 20,
-    width: '100%',
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: '#fff',
-  },
   sessionDate: {
     color: theme.palette.primary.red,
     fontWeight: '400',
@@ -107,19 +100,33 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
+  sessionInfo: {
+    borderRadius: 20,
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#fff',
+    position: 'relative',
+  },
   courseName: {
     color: theme.palette.secondary.orange,
     fontSize: 17,
     fontWeight: '500',
+    marginBottom: 55,
+    textAlign: 'center',
   },
-  sessionTimeWrapper: {
-    marginTop: 20,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  sessionTimeAndLocation: {
+  sessionTime: {
+    fontSize: 17,
     color: '#888888',
+    position: 'absolute',
+    bottom: 10,
+    left: 15,
+  },
+  sessionLocation: {
+    fontSize: 17,
+    color: '#888888',
+    position: 'absolute',
+    bottom: 10,
+    right: 15,
   },
 });
 
