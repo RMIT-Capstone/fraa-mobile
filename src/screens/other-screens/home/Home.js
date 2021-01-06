@@ -60,7 +60,7 @@ const Home = ({
   const renderCheckInButton = () => {
     if (checkedIn()) {
       return (
-        <TouchableOpacity style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+        <TouchableOpacity disabled style={[styles.checkedInBtn, styles.disabledBtn, styles.raised, styles.centered]}>
           <Text style={styles.disabledText}>Checked In!</Text>
         </TouchableOpacity>
       );
@@ -101,6 +101,8 @@ const Home = ({
     if (!registeredLocally) {
       return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
     }
+
+    return null;
   };
 
   const today = new Date();
