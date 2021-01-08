@@ -57,38 +57,37 @@ const CalendarWrapper = ({
         endYear: today.getFullYear(),
         monthRange: 3,
       };
-      (async () => {
-        const { data, error } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
-        if (data && data.success) {
-          const {
-            success: { sessions: axiosSessions },
-          } = data;
 
-          const homeScreenSessions = axiosSessions.filter((session) => {
-            const { expireOn } = session;
-            const rightNow = new Date();
-            return new Date(expireOn) > rightNow;
-          });
+      const { data, error } = await axios.post(GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, request);
+      if (data && data.success) {
+        const {
+          success: { sessions: axiosSessions },
+        } = data;
 
-          const filteredSessions = axiosSessions.filter((session) => {
-            const { validOn } = session;
-            const dateValidOn = validOn.split('T')[0];
-            const filterDate = new Date(today.getFullYear(), today.getMonth(), date + 1).toISOString().split('T')[0];
-            return filterDate === dateValidOn;
-          });
+        const homeScreenSessions = axiosSessions.filter((session) => {
+          const { expireOn } = session;
+          const rightNow = new Date();
+          return new Date(expireOn) > rightNow;
+        });
 
-          if (homeScreenSessions.length !== 0) {
-            handleSetAllSessions(axiosSessions, homeScreenSessions, homeScreenSessions[0]);
-          } else {
-            handleSetAllSessions(axiosSessions, homeScreenSessions, {});
-          }
+        const filteredSessions = axiosSessions.filter((session) => {
+          const { validOn } = session;
+          const dateValidOn = validOn.split('T')[0];
+          const filterDate = new Date(today.getFullYear(), today.getMonth(), date + 1).toISOString().split('T')[0];
+          return filterDate === dateValidOn;
+        });
 
-          setAgendaSessions(filteredSessions);
+        if (homeScreenSessions.length !== 0) {
+          handleSetAllSessions(axiosSessions, homeScreenSessions, homeScreenSessions[0]);
+        } else {
+          handleSetAllSessions(axiosSessions, homeScreenSessions, {});
         }
-        if (error) {
-          handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
-        }
-      })();
+
+        setAgendaSessions(filteredSessions);
+      }
+      if (error) {
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
+      }
     } catch (errorRefetchAttendanceSessions) {
       handleOpenToast(TOAST_TYPES.ERROR, 'Error refetch attendance sessions!', TOAST_POSITIONS.BOTTOM, 2000);
     }

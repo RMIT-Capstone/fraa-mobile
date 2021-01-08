@@ -5,9 +5,11 @@ import styles from './ProfileStyle';
 import SettingsPopUp from './components/settings-popup/SettingsPopup';
 
 const ProfileMoreIcon = require('../../../assets/ProfileMoreIcon.png');
+const Logo = require('../../../assets/logo/RN_LOGO.png');
 
 const Profile = ({
   user,
+  coursesInfo,
   refreshing,
   colors,
   onVerify,
@@ -17,16 +19,7 @@ const Profile = ({
   setShowSettings,
   registeredLocally,
 }) => {
-  const {
-    email,
-    displayName,
-    school,
-    registeredIdentity,
-    subscribedCourses,
-    missedSessions,
-    totalSessions,
-    totalAttendedSessions,
-  } = user;
+  const { email, displayName, school, subscribedCourses, missedSessions, totalSessions, totalAttendedSessions } = user;
 
   const EmptyCourses = () => (
     <View style={styles.centered}>
@@ -50,7 +43,7 @@ const Profile = ({
         <ScrollView refreshControl={renderRefreshControl()}>
           <View>
             <View style={[styles.centered]}>
-              <View style={styles.mockProfile} />
+              <Image source={Logo} style={styles.mockProfile} />
             </View>
             <View style={styles.centered}>
               <Text style={styles.userFullName}>{displayName}</Text>
@@ -58,10 +51,9 @@ const Profile = ({
                 {email} - {school}
               </Text>
               <View style={styles.centeredRow}>
-                <Text onPress={onVerify} style={registeredIdentity ? styles.verified : styles.notVerified}>
+                <Text onPress={onVerify} style={registeredLocally ? styles.verified : styles.notVerified}>
                   {registeredLocally ? 'Verified' : 'Press here to register identity to FRAA'}
                 </Text>
-                {registeredLocally && <Text onPress={reset}> Press here to reset</Text>}
               </View>
             </View>
             <View style={styles.centeredRow}>
@@ -86,15 +78,18 @@ const Profile = ({
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.carouselContainer}>
-                    {subscribedCourses.map((item, key) => (
-                      <View key={item} style={[styles.carouselItemStyle, colors[key]]}>
-                        <View style={styles.courseContainer}>
-                          <Text style={styles.courseName}>{item}</Text>
-                          <Text style={styles.courseCode}>{item}</Text>
-                          <Text style={styles.coursePercentage}>{item}</Text>
+                    {coursesInfo.map((course, key) => {
+                      const { name, code, id } = course;
+                      return (
+                        <View key={id} style={[styles.carouselItemStyle, colors[key]]}>
+                          <View style={styles.courseContainer}>
+                            <Text style={styles.courseName}>{name.join(' ').toUpperCase()}</Text>
+                            <Text style={styles.courseCode}>{code}</Text>
+                            <Text style={styles.coursePercentage}>90%</Text>
+                          </View>
                         </View>
-                      </View>
-                    ))}
+                      );
+                    })}
                   </ScrollView>
                 </>
               )}
@@ -112,6 +107,11 @@ const Profile = ({
           </View>
           <SettingsPopUp showSettings={showSettings} setShowSettings={setShowSettings} email={user.email} />
         </ScrollView>
+        {registeredLocally && (
+          <Text style={styles.reset} onPress={reset}>
+            Reset
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -119,6 +119,7 @@ const Profile = ({
 
 Profile.propTypes = {
   user: object.isRequired,
+  coursesInfo: arrayOf(object).isRequired,
   refreshing: bool.isRequired,
   colors: arrayOf(object).isRequired,
   onVerify: func.isRequired,
