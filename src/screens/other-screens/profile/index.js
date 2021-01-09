@@ -92,6 +92,7 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
 
   const reset = async () => {
     await removeRegisteredImage();
+    setRegisteredLocally(false);
     handleOpenToast(TOAST_TYPES.SUCCESS, 'Image removed!', TOAST_POSITIONS.BOTTOM, 1500);
   };
 
