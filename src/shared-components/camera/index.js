@@ -77,6 +77,13 @@ const FRAACameraWrapper = ({
   const onFacesVerified = async ({ result: faceResult }) => {
     const { count, successes, failures } = verifyResult;
     setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
+    // eslint-disable-next-line no-console
+    console.table({
+      successes,
+      failures,
+      count,
+      score: faceResult,
+    });
 
     if (faceResult < 0.2) {
       setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
@@ -102,7 +109,7 @@ const FRAACameraWrapper = ({
       }
     }
     if (failures > 10) {
-      handleOpenToast(TOAST_TYPES.INFO, 'Failed to check-in, try to check-in again', TOAST_POSITIONS.BOTTOM, 1500);
+      setVerifyResult((prevState) => ({ ...prevState, message: 'Failed to check-in, try again' }));
       setTimeout(() => {
         navigateTo(navigation, ROUTES.MAIN);
       }, 1000);
