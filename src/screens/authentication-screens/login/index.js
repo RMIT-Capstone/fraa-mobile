@@ -6,13 +6,18 @@ import { useFocusEffect } from '@react-navigation/native';
 import { storeAsyncStringData } from '../../../helpers/async-storage';
 import { resetRoute } from '../../../helpers/navigation';
 import { isEmail, stringIsEmpty } from '../../../helpers/utils';
-import { setUser, setUserStats } from '../../../redux/reducers/UserReducer';
+import { setUser, setUserStats, setUserCourses } from '../../../redux/reducers/UserReducer';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
-import { ATTENDANCE_STATS_NO_GROUPING, CURRENT_SEMESTER, SIGN_IN_API } from '../../../constants/ApiEndpoints';
+import {
+  ATTENDANCE_STATS_NO_GROUPING,
+  CURRENT_SEMESTER,
+  GET_COURSES_BY_CODES,
+  SIGN_IN_API,
+} from '../../../constants/ApiEndpoints';
 import ROUTES from '../../../navigation/routes';
 import Login from './Login';
 
-const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleOpenToast }) => {
+const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleSetUserCourses, handleOpenToast }) => {
   const [credentials, setCredentials] = useState({ email: '', password: '', isLecturer: false });
   const [error, setError] = useState({ email: '', otherError: '' });
   const [loading, setLoading] = useState(false);
@@ -68,6 +73,26 @@ const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleOpe
     }
   };
 
+  const getSubscribedCourses = async (subscribedCourses) => {
+    try {
+      const {
+        data,
+        data: { error: errorGetCourses },
+      } = await axios.post(GET_COURSES_BY_CODES, { courses: subscribedCourses });
+      if (data && data.success) {
+        const {
+          success: { courses },
+        } = data;
+        handleSetUserCourses(courses);
+      }
+      if (errorGetCourses) {
+        handleOpenToast(TOAST_TYPES.ERROR, 'Error get courses!', TOAST_POSITIONS.BOTTOM, 1500);
+      }
+    } catch (errorGetSubscribedCourses) {
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error get courses!', TOAST_POSITIONS.BOTTOM, 1500);
+    }
+  };
+
   const onSignIn = async () => {
     const { valid, inputErrors } = validateInputs();
     if (valid) {
@@ -92,7 +117,11 @@ const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleOpe
               user: { email, subscribedCourses },
             },
           } = data;
-          await Promise.all([setUserInRedux(user, token), fetchUserStats(email, subscribedCourses)]);
+          await Promise.all([
+            setUserInRedux(user, token),
+            fetchUserStats(email, subscribedCourses),
+            getSubscribedCourses(subscribedCourses),
+          ]);
           setLoggedIn(true);
           setTimeout(() => {
             resetRoute(navigation, ROUTES.MAIN);
@@ -125,12 +154,14 @@ LoginWrapper.propTypes = {
   navigation: object.isRequired,
   handleSetUser: func.isRequired,
   handleSetUserStats: func.isRequired,
+  handleSetUserCourses: func.isRequired,
   handleOpenToast: func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   handleSetUser: (user) => dispatch(setUser(user)),
   handleSetUserStats: (stats) => dispatch(setUserStats(stats)),
+  handleSetUserCourses: (courses) => dispatch(setUserCourses(courses)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 

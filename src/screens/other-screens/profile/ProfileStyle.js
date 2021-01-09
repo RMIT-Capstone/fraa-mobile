@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   mockProfile: {
-    backgroundColor: '#c4c4c4',
-    height: 100,
-    width: 100,
-    borderRadius: 50,
-    marginTop: 10,
+    resizeMode: 'contain',
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    borderWidth: 1,
     marginBottom: 10,
   },
   userFullName: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     color: theme.palette.primary.red,
   },
   verified: {
-    fontWeight: '500',
+    fontWeight: '700',
     color: theme.palette.secondary.green,
   },
   carouselContainer: {
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   courseName: {
     color: theme.palette.secondary.white,
     fontWeight: '600',
+    marginBottom: 5,
   },
   courseCode: {
     color: theme.palette.secondary.white,
@@ -113,9 +114,10 @@ const styles = StyleSheet.create({
   },
   fixedText: {
     top: 0,
-    left: 15,
-    fontSize: 16,
+    left: 10,
+    fontSize: 17,
     fontWeight: '600',
+    padding: 5,
   },
   profileStatisticsContainer: {
     flex: 2,
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   rightBorder: {
-    borderRightWidth: 1,
+    borderRightWidth: 0.2,
     borderColor: '#C4C4C4',
   },
   profileStatisticsNumber: {
@@ -148,11 +150,24 @@ const styles = StyleSheet.create({
     width: 120,
     borderRadius: 60,
     borderColor: theme.palette.secondary.green,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   greenText: {
     fontWeight: '600',
     color: theme.palette.secondary.green,
-    fontSize: 17,
+    fontSize: 24,
+  },
+  reset: {
+    position: 'absolute',
+    top: 0,
+    right: 15,
   },
 });
 export default styles;
