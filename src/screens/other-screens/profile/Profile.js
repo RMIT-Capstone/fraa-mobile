@@ -19,7 +19,7 @@ const Profile = ({
   setShowSettings,
   registeredLocally,
 }) => {
-  const { email, displayName, school, subscribedCourses, missedSessions, totalSessions, totalAttendedSessions } = user;
+  const { email, displayName, school, subscribedCourses, missedSessions, totalAttendedSessions } = user;
 
   const EmptyCourses = () => (
     <View style={styles.centered}>
@@ -98,7 +98,7 @@ const Profile = ({
               <Text style={styles.fixedText}>Statistics</Text>
               <View style={[styles.profileStatisticsContainer, styles.centeredRow]}>
                 <View style={[styles.circle, styles.centered]}>
-                  <Text style={styles.greenText}>{`${totalAttendedSessions} / ${totalSessions}`}</Text>
+                  <Text style={styles.greenText}>90%</Text>
                   <Text>attended</Text>
                 </View>
                 <Text style={styles.greenText}>Well Done!</Text>

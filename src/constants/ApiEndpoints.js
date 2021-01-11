@@ -5,8 +5,8 @@ export const CHECK_IDENTITY_API = 'http://159.89.205.12/check-register/trungduon
 export const GENERATE_OTP_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/generate_otp';
 export const VERIFY_OTP_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/verify_otp';
 export const CHANGE_PASSWORD_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/change_password';
-export const REGISTER_IDENTITY_API = 'http://159.89.205.12/register';
-export const VERIFY_IDENTITY_API = 'http://159.89.205.12/verify';
+export const REGISTER_IDENTITY_API = 'http://68.183.239.207/register';
+export const VERIFY_IDENTITY_API = 'http://68.183.239.207/verify';
 export const ATTENDANCE_STATS_NO_GROUPING =
   'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/count_missed_total_attendance_sessions_by_courses';
 export const ATTENDANCE_STATS_WITH_GROUPING =
