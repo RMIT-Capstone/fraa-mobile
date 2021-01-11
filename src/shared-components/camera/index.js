@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
 import axios from 'axios';
@@ -24,8 +24,17 @@ const FRAACameraWrapper = ({
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewUri, setPreviewUri] = useState('');
   const [verifyResult, setVerifyResult] = useState({ successes: 0, failures: 0, count: 0, message: 'Scanning...' });
+  const [cameraMessage, setCameraMessage] = useState('Place your face in the camera');
   const [loading, setLoading] = useState(false);
   const path = 'User';
+
+  useEffect(() => {
+    if (recognizedFaces.length > 1) {
+      setCameraMessage('There are too many faces!');
+    } else {
+      setCameraMessage('Place your face in the camera');
+    }
+  }, [recognizedFaces]);
 
   const onFacesDetected = ({ faces }) => {
     if (faces) {
@@ -90,7 +99,6 @@ const FRAACameraWrapper = ({
     } else {
       setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
     }
-
     if (successes > 5) {
       setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
       try {
@@ -143,6 +151,8 @@ const FRAACameraWrapper = ({
       onFacesDetected={onFacesDetected}
       onFacesVerified={onFacesVerified}
       verifyResult={verifyResult}
+      cameraMessage={cameraMessage}
+      setCameraMessage={setCameraMessage}
       path={path}
       userID={userId}
       takePicture={takePicture}

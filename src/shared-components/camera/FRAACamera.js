@@ -15,6 +15,7 @@ const FRAACamera = ({
   onFacesDetected,
   onFacesVerified,
   verifyResult,
+  cameraMessage,
   path,
   userID,
   takePicture,
@@ -45,7 +46,7 @@ const FRAACamera = ({
 
   const TopCameraMessage = () => (
     <View style={[styles.cameraMessageContainer, styles.topCameraMessageContainer, styles.centered]}>
-      <Text style={styles.cameraMessage}>Place your face in the frame</Text>
+      <Text style={styles.cameraMessage}>{cameraMessage}</Text>
     </View>
   );
 
@@ -57,23 +58,13 @@ const FRAACamera = ({
 
   const SnapButton = ({ camera }) => (
     <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture}>
-      {loading ? (
-        <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />
-      ) : (
-        <Text style={styles.snapText}>Snap</Text>
-      )}
+      {loading ? <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} /> : null}
     </TouchableOpacity>
   );
 
   SnapButton.propTypes = {
     camera: object.isRequired,
   };
-
-  const TooManyFaces = () => (
-    <View style={styles.tooManyFacesView}>
-      <Text style={styles.tooManyFacesText}>There are too many faces!</Text>
-    </View>
-  );
 
   if (previewUri) {
     return <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]} />;
@@ -111,12 +102,7 @@ const FRAACamera = ({
             <>
               <TopCameraMessage />
               <BottomCameraMessage />
-              {recognizedFaces.length !== 0 && (
-                <>
-                  <FaceBounds />
-                  {recognizedFaces.length > 1 && <TooManyFaces />}
-                </>
-              )}
+              {recognizedFaces.length !== 0 && <FaceBounds />}
             </>
           );
         }}
@@ -152,7 +138,6 @@ const FRAACamera = ({
               <>
                 <FaceBounds />
                 {recognizedFaces.length === 1 && <SnapButton camera={camera} />}
-                {recognizedFaces.length > 1 && <TooManyFaces />}
               </>
             )}
           </>
@@ -170,6 +155,7 @@ FRAACamera.propTypes = {
   onFacesDetected: func.isRequired,
   onFacesVerified: func.isRequired,
   verifyResult: object.isRequired,
+  cameraMessage: string.isRequired,
   path: string.isRequired,
   userID: string.isRequired,
   takePicture: func.isRequired,

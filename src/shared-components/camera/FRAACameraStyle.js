@@ -12,8 +12,10 @@ const styles = StyleSheet.create({
   },
   cameraMessageContainer: {
     position: 'absolute',
-    width: 200,
-    height: 40,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 20,
+    paddingLeft: 20,
     borderRadius: 55,
   },
   topCameraMessageContainer: {
@@ -44,11 +46,14 @@ const styles = StyleSheet.create({
   },
   capture: {
     position: 'absolute',
-    bottom: 20,
-    backgroundColor: theme.palette.primary.red,
+    borderWidth: 5,
+    borderColor: theme.palette.primary.blue,
+    bottom: 30,
+    backgroundColor: '#fff',
     padding: 15,
-    borderRadius: 16,
-    height: 50,
+    borderRadius: 35,
+    height: 70,
+    width: 70,
     marginRight: 10,
   },
   snapText: {

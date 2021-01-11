@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
   eventContainer: {
     borderRadius: 30,
     marginBottom: 17,
-    padding: 20,
+    padding: 22,
+    height: 200,
     backgroundColor: theme.palette.secondary.white,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -55,13 +56,13 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 17,
     color: '#444444',
-    marginBottom: 40,
+    marginBottom: 30,
   },
   courseName: {
     color: theme.palette.primary.blue,
     fontWeight: '500',
     fontSize: 20,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   location: {
     color: '#444444',
@@ -93,18 +94,30 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   checkedInBtn: {
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 30,
-    paddingRight: 30,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.secondary.green,
+    flexDirection: 'row',
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 25,
+    paddingRight: 25,
     borderRadius: 50,
   },
+  checkedInText: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: '400',
+    marginRight: 10,
+  },
+  checkMark: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
   checkInBtnContainer: {
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 55,
-    paddingRight: 55,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 50,
+    paddingRight: 50,
     borderRadius: 50,
   },
   activeBtn: {
@@ -153,6 +166,9 @@ const styles = StyleSheet.create({
     color: '#444444',
     fontWeight: '400',
     fontSize: 15,
+  },
+  infoTextStats: {
+    color: theme.palette.secondary.orange,
   },
 });
 

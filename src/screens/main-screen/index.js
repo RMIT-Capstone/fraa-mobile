@@ -14,7 +14,7 @@ const MainScreenWrapper = ({ navigation, user, handleOpenToast }) => {
   useEffect(() => {
     (async () => {
       const value = await getAsyncStringData('fbToken');
-      if (!value || user === {}) {
+      if (!value || user === {} || !user) {
         handleOpenToast(TOAST_TYPES.INFO, 'Logged out', TOAST_POSITIONS.BOTTOM, 1000);
         resetRoute(navigation, ROUTES.LOGIN);
       }

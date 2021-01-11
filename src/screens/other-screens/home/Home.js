@@ -6,6 +6,7 @@ import { navigateTo } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
 
 const CheckInIcon = require('../../../assets/CheckInIcon.png');
+const CheckMarkIcon = require('../../../assets/CheckMarkWhite.png');
 
 const Home = ({
   email,
@@ -60,8 +61,9 @@ const Home = ({
   const renderCheckInButton = () => {
     if (checkedIn()) {
       return (
-        <TouchableOpacity disabled style={[styles.checkedInBtn, styles.disabledBtn, styles.raised, styles.centered]}>
-          <Text style={styles.disabledText}>Checked In!</Text>
+        <TouchableOpacity disabled style={[styles.checkedInBtn, styles.raised]}>
+          <Text style={styles.checkedInText}>You&apos;re in</Text>
+          <Image source={CheckMarkIcon} style={styles.checkMark} />
         </TouchableOpacity>
       );
     }
@@ -134,7 +136,9 @@ const Home = ({
       </View>
       <View style={[styles.bottomChildContainer, styles.centered]}>
         <View style={[styles.infoContainer, styles.raised, styles.centered]}>
-          <Text style={styles.infoText}>You have missed 3 sessions for this course</Text>
+          <Text style={styles.infoText}>
+            You have missed <Text style={styles.infoTextStats}>3</Text> sessions for this course
+          </Text>
         </View>
       </View>
     </View>
