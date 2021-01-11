@@ -83,7 +83,7 @@ const FRAACameraWrapper = ({
     }
   };
 
-  const onFacesVerified = async ({ result: faceResult }) => {
+  const onFacesVerified = async ({ result }) => {
     const { count, successes, failures } = verifyResult;
     setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
     // eslint-disable-next-line no-console
@@ -91,10 +91,9 @@ const FRAACameraWrapper = ({
       successes,
       failures,
       count,
-      score: faceResult,
     });
 
-    if (faceResult < 0.2) {
+    if (result < 0.2) {
       setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
     } else {
       setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));

@@ -67,6 +67,9 @@ const Home = ({
         </TouchableOpacity>
       );
     }
+    if (!registeredLocally) {
+      return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
+    }
     if (isHappening) {
       return (
         <TouchableOpacity
@@ -77,7 +80,6 @@ const Home = ({
         </TouchableOpacity>
       );
     }
-
     if (!isHappening) {
       return (
         <View style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
@@ -88,7 +90,6 @@ const Home = ({
         </View>
       );
     }
-
     if (!locationPermission) {
       return <Text style={styles.disabledText}>Please allow location services and restart FRAA</Text>;
     }
@@ -100,10 +101,6 @@ const Home = ({
         </TouchableWithoutFeedback>
       );
     }
-    if (!registeredLocally) {
-      return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
-    }
-
     return null;
   };
 
