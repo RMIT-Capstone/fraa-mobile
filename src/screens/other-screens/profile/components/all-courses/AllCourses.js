@@ -10,10 +10,10 @@ const AllCourses = ({
   const Course = ({ course, index }) => {
     const colors = [{ backgroundColor: '#7ae1aa' }, { backgroundColor: '#fc9147' }, { backgroundColor: '#fac800' }];
 
-    const { name, lecturer, code, school } = course;
+    const { id, name, lecturer, code, school } = course;
     const courseName = name.map((item) => item.toUpperCase()).join('\n');
     return (
-      <View style={[styles.courseContainer, colors[index]]}>
+      <View key={id} style={[styles.courseContainer, colors[index]]}>
         <Text style={[styles.courseText, styles.courseName]}>{courseName}</Text>
         <Text style={[styles.courseText, styles.courseLecturer]}>{lecturer}</Text>
         <Text style={[styles.courseText, styles.courseCode]}>
