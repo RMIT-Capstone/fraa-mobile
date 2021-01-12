@@ -51,7 +51,7 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
     }
   };
 
-  const a = async () => {
+  const getUserInfo = async () => {
     const { data, error } = await axios.post(GET_USER_API, { email });
     if (data && data.success) {
       const {
@@ -64,7 +64,7 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
     }
   };
 
-  const b = async () => {
+  const getUserStats = async () => {
     const request = {
       email,
       courses: subscribedCourses,
@@ -82,7 +82,7 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
 
   const refetchUser = async () => {
     setRefreshing(true);
-    await Promise.all([getSubscribedCourses(), a(), b()]);
+    await Promise.all([getSubscribedCourses(), getUserInfo(), getUserStats()]);
     setRefreshing(false);
   };
 

@@ -54,7 +54,9 @@ const Profile = ({
                 {email} - {school}
               </Text>
               <View style={styles.centeredRow}>
-                <Text onPress={onVerify} style={registeredLocally ? styles.verified : styles.notVerified}>
+                <Text
+                  onPress={registeredLocally ? null : onVerify}
+                  style={registeredLocally ? styles.verified : styles.notVerified}>
                   {registeredLocally ? 'Verified' : 'Press here to register identity to FRAA'}
                 </Text>
               </View>
