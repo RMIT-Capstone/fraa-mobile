@@ -5,7 +5,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   emptyCoursesText: {
-    marginTop: 35,
+    padding: 20,
   },
   container: {
     flex: 1,

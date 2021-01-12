@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     color: theme.palette.secondary.azure,
     textAlign: 'center',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '500',
     letterSpacing: 0.5,
   },
 });

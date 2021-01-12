@@ -70,14 +70,15 @@ const Home = ({
     if (!registeredLocally) {
       return <Text style={styles.disabledText}>You need to register your identity in Profile</Text>;
     }
-    if (isHappening) {
+    if (!locationPermission) {
+      return <Text style={styles.disabledText}>Please allow location services and restart FRAA</Text>;
+    }
+    if (tooFar) {
       return (
-        <TouchableOpacity
-          onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
-          style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
-          <Image source={CheckInIcon} style={styles.checkInIcon} />
-          <Text style={styles.checkInText}>Check In</Text>
-        </TouchableOpacity>
+        <TouchableWithoutFeedback
+          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
+          <Text style={styles.disabledText}>Please come to the classroom to check-in</Text>
+        </TouchableWithoutFeedback>
       );
     }
     if (!isHappening) {
@@ -90,15 +91,14 @@ const Home = ({
         </View>
       );
     }
-    if (!locationPermission) {
-      return <Text style={styles.disabledText}>Please allow location services and restart FRAA</Text>;
-    }
-    if (tooFar) {
+    if (isHappening) {
       return (
-        <TouchableWithoutFeedback
-          style={[styles.checkInBtnContainer, styles.disabledBtn, styles.raised, styles.centered]}>
-          <Text style={styles.disabledText}>Please come to the classroom to check-in</Text>
-        </TouchableWithoutFeedback>
+        <TouchableOpacity
+          onPress={() => navigateTo(navigation, ROUTES.CAMERA, { fromHome: false, id })}
+          style={[styles.checkInBtnContainer, styles.activeBtn, styles.raised, styles.centeredRow]}>
+          <Image source={CheckInIcon} style={styles.checkInIcon} />
+          <Text style={styles.checkInText}>Check In</Text>
+        </TouchableOpacity>
       );
     }
     return null;

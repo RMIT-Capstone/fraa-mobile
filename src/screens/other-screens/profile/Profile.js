@@ -3,11 +3,14 @@ import { arrayOf, object, func, bool } from 'prop-types';
 import { View, Text, TouchableOpacity, Image, ScrollView, RefreshControl } from 'react-native';
 import styles from './ProfileStyle';
 import SettingsPopUp from './components/settings-popup/SettingsPopup';
+import { navigateTo } from '../../../helpers/navigation';
+import ROUTES from '../../../navigation/routes';
 
 const ProfileMoreIcon = require('../../../assets/ProfileMoreIcon.png');
 const Logo = require('../../../assets/logo/RN_LOGO.png');
 
 const Profile = ({
+  navigation,
   user,
   coursesInfo,
   refreshing,
@@ -69,7 +72,11 @@ const Profile = ({
           </View>
           <View>
             <View>
-              <Text style={styles.fixedText}>Courses</Text>
+              <Text
+                onPress={() => navigateTo(navigation, ROUTES.VIEW_ALL_COURSES, { courses: coursesInfo })}
+                style={styles.fixedText}>
+                Courses
+              </Text>
               {!subscribedCourses || subscribedCourses.length === 0 ? (
                 <EmptyCourses />
               ) : (
@@ -105,7 +112,6 @@ const Profile = ({
               </View>
             </View>
           </View>
-          <SettingsPopUp showSettings={showSettings} setShowSettings={setShowSettings} email={user.email} />
         </ScrollView>
         {registeredLocally && (
           <Text style={styles.reset} onPress={reset}>
@@ -113,11 +119,13 @@ const Profile = ({
           </Text>
         )}
       </View>
+      <SettingsPopUp showSettings={showSettings} setShowSettings={setShowSettings} email={user.email} />
     </View>
   );
 };
 
 Profile.propTypes = {
+  navigation: object.isRequired,
   user: object.isRequired,
   coursesInfo: arrayOf(object).isRequired,
   refreshing: bool.isRequired,

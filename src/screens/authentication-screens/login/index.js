@@ -117,11 +117,8 @@ const LoginWrapper = ({ navigation, handleSetUser, handleSetUserStats, handleSet
               user: { email, subscribedCourses },
             },
           } = data;
-          await Promise.all([
-            setUserInRedux(user, token),
-            fetchUserStats(email, subscribedCourses),
-            getSubscribedCourses(subscribedCourses),
-          ]);
+          await Promise.all([setUserInRedux(user, token), fetchUserStats(email, subscribedCourses)]);
+          await getSubscribedCourses(subscribedCourses);
           setLoggedIn(true);
           setTimeout(() => {
             resetRoute(navigation, ROUTES.MAIN);

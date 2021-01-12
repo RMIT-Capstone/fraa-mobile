@@ -98,6 +98,7 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
 
   return (
     <Profile
+      navigation={navigation}
       user={user}
       coursesInfo={coursesInfo}
       refreshing={refreshing}

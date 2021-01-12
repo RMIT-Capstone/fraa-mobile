@@ -65,7 +65,6 @@ const HomeWrapper = ({
             latitude,
             longitude,
           );
-
           if (distance > 15) {
             setTooFar(true);
           } else {

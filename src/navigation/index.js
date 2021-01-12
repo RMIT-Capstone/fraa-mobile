@@ -7,6 +7,7 @@ import MainScreen from '../screens/main-screen';
 import FRAACamera from '../shared-components/camera';
 import AllAgendas from '../screens/other-screens/calendar/components/AllAgendas';
 import ROUTES from './routes';
+import AllCourses from '../screens/other-screens/profile/components/all-courses/AllCourses';
 
 const MainStack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const MainStackScreens = () => (
     <MainStack.Screen name={ROUTES.MAIN} component={MainScreen} />
     <MainStack.Screen name={ROUTES.CAMERA} component={FRAACamera} />
     <MainStack.Screen name={ROUTES.VIEW_ALL_AGENDA} component={AllAgendas} />
+    <MainStack.Screen name={ROUTES.VIEW_ALL_COURSES} component={AllCourses} />
   </MainStack.Navigator>
 );
 

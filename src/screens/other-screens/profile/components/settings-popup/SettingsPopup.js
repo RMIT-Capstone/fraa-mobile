@@ -6,7 +6,7 @@ import { Modal, Dimensions, FlatList, TouchableOpacity, View, Text, StyleSheet }
 import { useNavigation } from '@react-navigation/native';
 import theme from '../../../../../theme';
 import { resetUser } from '../../../../../redux/reducers/UserReducer';
-import { navigateTo, resetRoute } from '../../../../../helpers/navigation';
+import { navigateTo } from '../../../../../helpers/navigation';
 import ROUTES from '../../../../../navigation/routes';
 import { GENERATE_OTP_API } from '../../../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
@@ -91,14 +91,11 @@ const styles = StyleSheet.create({
   topTouchable: {
     flex: 3,
     marginTop: 'auto',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
   bottomTouchable: {
-    height: 'auto',
     width: windowWidth,
-    marginTop: 'auto',
     backgroundColor: '#fff',
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
   },
   item: {
     height: 50,
