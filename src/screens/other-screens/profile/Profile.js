@@ -16,13 +16,11 @@ const Profile = ({
   refreshing,
   colors,
   onVerify,
-  reset,
   refetchUser,
   showSettings,
   setShowSettings,
-  registeredLocally,
 }) => {
-  const { email, displayName, school, subscribedCourses, missedSessions, totalAttendedSessions } = user;
+  const { email, displayName, school, subscribedCourses, missedSessions, totalAttendedSessions, verified } = user;
 
   const EmptyCourses = () => (
     <View style={styles.centered}>
@@ -54,10 +52,8 @@ const Profile = ({
                 {email} - {school}
               </Text>
               <View style={styles.centeredRow}>
-                <Text
-                  onPress={registeredLocally ? null : onVerify}
-                  style={registeredLocally ? styles.verified : styles.notVerified}>
-                  {registeredLocally ? 'Verified' : 'Press here to register identity to FRAA'}
+                <Text onPress={verified ? null : onVerify} style={verified ? styles.verified : styles.notVerified}>
+                  {verified ? 'Verified' : 'Press here to register identity to FRAA'}
                 </Text>
               </View>
             </View>
@@ -115,11 +111,6 @@ const Profile = ({
             </View>
           </View>
         </ScrollView>
-        {registeredLocally && (
-          <Text style={styles.reset} onPress={reset}>
-            Reset
-          </Text>
-        )}
       </View>
       <SettingsPopUp showSettings={showSettings} setShowSettings={setShowSettings} email={user.email} />
     </View>
@@ -133,11 +124,9 @@ Profile.propTypes = {
   refreshing: bool.isRequired,
   colors: arrayOf(object).isRequired,
   onVerify: func.isRequired,
-  reset: func.isRequired,
   refetchUser: func.isRequired,
   showSettings: bool.isRequired,
   setShowSettings: func.isRequired,
-  registeredLocally: bool.isRequired,
 };
 
 export default Profile;

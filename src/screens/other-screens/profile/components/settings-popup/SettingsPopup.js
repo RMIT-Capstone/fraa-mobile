@@ -28,6 +28,10 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
     },
     {
       id: '2',
+      title: 'Update identity',
+    },
+    {
+      id: '3',
       title: 'Logout',
     },
   ];
@@ -48,13 +52,16 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
   };
 
   const onPress = async (option) => {
-    if (option === 'Change Password') {
+    if (option === 'About') {
+      setShowSettings(false);
+      handleOpenToast(TOAST_TYPES.INFO, 'Work in progress...', TOAST_POSITIONS.TOP, 1000);
+    } else if (option === 'Change Password') {
       setShowSettings(false);
       navigateTo(navigation, ROUTES.FORGOT_PASSWORD, { fromProfile: true, email });
       await generateOTP();
-    } else if (option === 'About') {
+    } else if (option === 'Update identity') {
       setShowSettings(false);
-      handleOpenToast(TOAST_TYPES.INFO, 'Work in progress...', TOAST_POSITIONS.TOP, 1000);
+      navigateTo(navigation, ROUTES.CAMERA, { fromHome: true });
     } else {
       await removeAsyncStorageData('fbToken');
       handleResetUser();

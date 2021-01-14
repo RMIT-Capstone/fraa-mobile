@@ -8,7 +8,12 @@ import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
 import FRAACamera from './FRAACamera';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../redux/reducers/ToastReducer';
-import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE, REGISTER_ATTENDANCE } from '../../constants/ApiEndpoints';
+import {
+  GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE,
+  REGISTER_ATTENDANCE,
+  REGISTER_IDENTITY_API,
+  VERIFY_IDENTITY_API,
+} from '../../constants/ApiEndpoints';
 import { setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 
 const FRAACameraWrapper = ({
@@ -23,6 +28,7 @@ const FRAACameraWrapper = ({
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewUri, setPreviewUri] = useState('');
+  const [base64Image, setBase64Image] = useState('');
   const [verifyResult, setVerifyResult] = useState({ successes: 0, failures: 0, count: 0, message: 'Scanning...' });
   const [cameraMessage, setCameraMessage] = useState('Place your face in the camera');
   const [loading, setLoading] = useState(false);
@@ -129,18 +135,61 @@ const FRAACameraWrapper = ({
     try {
       const data = await camera.takePictureAsync(options);
       if (data) {
-        const { uri } = data;
+        const { uri, base64 } = data;
         setLoading(false);
         setPreviewUri(uri);
-        handleSetUserRegisteredIdentity(true);
-        handleOpenToast(TOAST_TYPES.SUCCESS, 'Identity verified!', TOAST_POSITIONS.BOTTOM, 2000);
-        setTimeout(() => {
-          navigateTo(navigation, ROUTES.MAIN);
-        }, 1000);
+        setBase64Image(base64);
+        setCameraMessage('Register or cancel');
       }
     } catch (errorCapture) {
       setLoading(false);
       handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 2000);
+    }
+  };
+
+  const recapture = () => {
+    setCameraMessage('Place your face in the camera');
+    setPreviewUri('');
+    setBase64Image('');
+  };
+
+  const registerOrVerifyIdentity = async () => {
+    try {
+      setLoading(true);
+      if (base64Image) {
+        const data = new FormData();
+        const url = fromHome ? `${REGISTER_IDENTITY_API}/${userId}` : `${VERIFY_IDENTITY_API}/${userId}`;
+        data.append('image', base64Image);
+        const config = {
+          method: 'POST',
+          url,
+          data,
+        };
+        if (fromHome) {
+          console.log('register identity');
+          const response = await axios(config);
+          const {
+            data: { msg },
+          } = response;
+          if (msg) {
+            handleSetUserRegisteredIdentity(true);
+            navigateTo(navigation, ROUTES.MAIN);
+            handleOpenToast(TOAST_TYPES.SUCCESS, 'Identity verified!', TOAST_POSITIONS.BOTTOM, 1500);
+          }
+        } else {
+          console.log(config)
+          console.log('verify identity');
+          const response = await axios(config);
+          console.log(response);
+        }
+      } else {
+        handleOpenToast(TOAST_TYPES.ERROR, 'No image captured', TOAST_POSITIONS.BOTTOM, 1500);
+      }
+      setLoading(false);
+    } catch (errorRegisterIdentityToCloud) {
+      console.log(errorRegisterIdentityToCloud)
+      setLoading(false);
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error register identity!', TOAST_POSITIONS.BOTTOM, 1500);
     }
   };
 
@@ -149,13 +198,10 @@ const FRAACameraWrapper = ({
       previewUri={previewUri}
       loading={loading}
       onFacesDetected={onFacesDetected}
-      onFacesVerified={onFacesVerified}
-      verifyResult={verifyResult}
       cameraMessage={cameraMessage}
-      setCameraMessage={setCameraMessage}
-      path={path}
-      userID={userId}
       takePicture={takePicture}
+      recapture={recapture}
+      registerIdentity={registerOrVerifyIdentity}
       recognizedFaces={recognizedFaces}
       fromHome={fromHome}
     />

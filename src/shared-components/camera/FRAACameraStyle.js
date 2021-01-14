@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 55,
   },
   topCameraMessageContainer: {
-    top: 60,
+    top: 35,
     backgroundColor: '#AFAFAF',
   },
   bottomCameraMessageContainer: {
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
   },
   cameraMessage: {
     color: theme.palette.secondary.white,
-    fontWeight: '300',
+    fontWeight: '500',
+    fontSize: 15,
   },
   snapButtonRow: {
     flexDirection: 'row',
@@ -85,8 +86,26 @@ const styles = StyleSheet.create({
   },
   imageBackgroundRow: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 40,
     flexDirection: 'row',
+    width: 200,
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
+  },
+  buttons: {
+    backgroundColor: theme.palette.primary.red,
+    width: 85,
+    height: 50,
+    borderRadius: 16,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: '500',
+  },
+  lottieViewVerify: {
+    height: 70,
+    width: 70,
   },
 });
 

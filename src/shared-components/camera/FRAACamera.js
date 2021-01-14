@@ -13,14 +13,11 @@ const FRAACamera = ({
   recognizedFaces,
   fromHome,
   onFacesDetected,
-  onFacesVerified,
-  verifyResult,
   cameraMessage,
-  path,
-  userID,
   takePicture,
+  recapture,
+  registerIdentity,
 }) => {
-  const { message } = verifyResult;
   const FaceBounds = () =>
     recognizedFaces.map((face, index) => (
       <View
@@ -50,12 +47,6 @@ const FRAACamera = ({
     </View>
   );
 
-  const BottomCameraMessage = () => (
-    <View style={[styles.cameraMessageContainer, styles.bottomCameraMessageContainer, styles.centered]}>
-      <Text style={styles.cameraMessage}>{message}</Text>
-    </View>
-  );
-
   const SnapButton = ({ camera }) => {
     if (loading) {
       return <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />;
@@ -70,55 +61,22 @@ const FRAACamera = ({
   if (previewUri) {
     return (
       <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]}>
-        <View style={styles.imageBackgroundRow}>
-          <TouchableOpacity>
-            <Text>Register</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>Cancel</Text>
-          </TouchableOpacity>
-        </View>
+        <TopCameraMessage />
+        {loading ? (
+          <View style={[styles.imageBackgroundRow, styles.centered]}>
+            <LottieView source={GenericLoading} autoPlay loop style={styles.lottieViewVerify} />
+          </View>
+        ) : (
+          <View style={[styles.imageBackgroundRow, styles.spaceBetween]}>
+            <TouchableOpacity onPress={() => registerIdentity()} style={[styles.buttons, styles.centered]}>
+              <Text style={styles.buttonText}>{fromHome ? 'Register' : 'Verify'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => recapture()} style={[styles.buttons, styles.centered]}>
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ImageBackground>
-    );
-  }
-
-  if (!fromHome) {
-    return (
-      <RNCamera
-        style={[styles.camera, styles.centered]}
-        type={RNCamera.Constants.Type.front}
-        onFacesDetected={onFacesDetected}
-        onFacesVerified={onFacesVerified}
-        path={path}
-        // user="true_img.png"
-        user={userID}
-        modelURL="https://tam-terraform-state.s3-ap-southeast-1.amazonaws.com/FRAA/"
-        modelFileName="mymodel112.tflite"
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-        androidRecordAudioPermissionOptions={{
-          title: 'Permission to use audio recording',
-          message: 'We need your permission to use your audio',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}>
-        {({ status }) => {
-          if (status !== 'READY') {
-            return <PendingView />;
-          }
-          return (
-            <>
-              <TopCameraMessage />
-              <BottomCameraMessage />
-              {recognizedFaces.length !== 0 && <FaceBounds />}
-            </>
-          );
-        }}
-      </RNCamera>
     );
   }
 
@@ -165,12 +123,10 @@ FRAACamera.propTypes = {
   recognizedFaces: arrayOf(object).isRequired,
   fromHome: bool.isRequired,
   onFacesDetected: func.isRequired,
-  onFacesVerified: func.isRequired,
-  verifyResult: object.isRequired,
   cameraMessage: string.isRequired,
-  path: string.isRequired,
-  userID: string.isRequired,
   takePicture: func.isRequired,
+  recapture: func.isRequired,
+  registerIdentity: func.isRequired,
 };
 
 export default FRAACamera;
