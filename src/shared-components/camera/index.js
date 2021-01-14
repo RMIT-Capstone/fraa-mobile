@@ -12,6 +12,7 @@ import {
   GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE,
   REGISTER_ATTENDANCE,
   REGISTER_IDENTITY_API,
+  VERIFY_IDENTITY_API,
 } from '../../constants/ApiEndpoints';
 import { setAllSessions } from '../../redux/reducers/AttendanceSessionsReducer';
 
@@ -152,31 +153,41 @@ const FRAACameraWrapper = ({
     setBase64Image('');
   };
 
-  const registerIdentityToCloud = async () => {
+  const registerOrVerifyIdentity = async () => {
     try {
       setLoading(true);
       if (base64Image) {
         const data = new FormData();
+        const url = fromHome ? `${REGISTER_IDENTITY_API}/${userId}` : `${VERIFY_IDENTITY_API}/${userId}`;
         data.append('image', base64Image);
         const config = {
           method: 'POST',
-          url: `${REGISTER_IDENTITY_API}/${userId}`,
+          url,
           data,
         };
-        const response = await axios(config);
-        const {
-          data: { msg },
-        } = response;
-        if (msg) {
-          handleSetUserRegisteredIdentity(true);
-          navigateTo(navigation, ROUTES.MAIN);
-          handleOpenToast(TOAST_TYPES.SUCCESS, 'Identity verified!', TOAST_POSITIONS.BOTTOM, 1500);
+        if (fromHome) {
+          console.log('register identity');
+          const response = await axios(config);
+          const {
+            data: { msg },
+          } = response;
+          if (msg) {
+            handleSetUserRegisteredIdentity(true);
+            navigateTo(navigation, ROUTES.MAIN);
+            handleOpenToast(TOAST_TYPES.SUCCESS, 'Identity verified!', TOAST_POSITIONS.BOTTOM, 1500);
+          }
+        } else {
+          console.log(config)
+          console.log('verify identity');
+          const response = await axios(config);
+          console.log(response);
         }
       } else {
         handleOpenToast(TOAST_TYPES.ERROR, 'No image captured', TOAST_POSITIONS.BOTTOM, 1500);
       }
       setLoading(false);
     } catch (errorRegisterIdentityToCloud) {
+      console.log(errorRegisterIdentityToCloud)
       setLoading(false);
       handleOpenToast(TOAST_TYPES.ERROR, 'Error register identity!', TOAST_POSITIONS.BOTTOM, 1500);
     }
@@ -187,15 +198,10 @@ const FRAACameraWrapper = ({
       previewUri={previewUri}
       loading={loading}
       onFacesDetected={onFacesDetected}
-      onFacesVerified={onFacesVerified}
-      verifyResult={verifyResult}
       cameraMessage={cameraMessage}
-      setCameraMessage={setCameraMessage}
-      path={path}
-      userID={userId}
       takePicture={takePicture}
       recapture={recapture}
-      registerIdentity={registerIdentityToCloud}
+      registerIdentity={registerOrVerifyIdentity}
       recognizedFaces={recognizedFaces}
       fromHome={fromHome}
     />
