@@ -7,7 +7,7 @@ const initialState = {};
 // ACTION CREATORS
 export const { setUser, setRegisteredIdentity, setUserStats, setUserCourses, resetUser } = createActions({
   SET_USER: (user) => ({ user }),
-  SET_REGISTERED_IDENTITY: (registered) => ({ registered }),
+  SET_REGISTERED_IDENTITY: (verified) => ({ verified }),
   SET_USER_STATS: ({ missed, total }) => ({ missed, total }),
   SET_USER_COURSES: (courses) => ({ courses }),
   RESET_USER: undefined,
@@ -30,6 +30,7 @@ export default handleActions(
             subscribedCourses,
             firstTimePassword,
             createdAt,
+            verified,
           },
         },
       },
@@ -44,10 +45,11 @@ export default handleActions(
       subscribedCourses,
       firstTimePassword,
       createdAt,
+      verified,
     }),
-    SET_REGISTERED_IDENTITY: (state, { payload: { registered } }) => ({
+    SET_REGISTERED_IDENTITY: (state, { payload: { verified } }) => ({
       ...state,
-      registeredIdentity: registered,
+      verified,
     }),
     SET_USER_STATS: (state, { payload: { missed, total } }) => ({
       ...state,

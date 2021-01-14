@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -14,7 +14,6 @@ import {
   GET_COURSES_BY_CODES,
 } from '../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
-import { checkRegisteredImage, removeRegisteredImage } from '../../../helpers/model';
 
 const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUserCourses, handleOpenToast }) => {
   const navigation = useNavigation();
@@ -22,14 +21,6 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
   const { subscribedCourses, coursesInfo, email } = user;
   const [showSettings, setShowSettings] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [registeredLocally, setRegisteredLocally] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const exists = await checkRegisteredImage();
-      setRegisteredLocally(exists);
-    })();
-  }, []);
 
   const getSubscribedCourses = async () => {
     try {
@@ -90,12 +81,6 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
     navigateTo(navigation, ROUTES.CAMERA, { fromHome: true });
   };
 
-  const reset = async () => {
-    await removeRegisteredImage();
-    setRegisteredLocally(false);
-    handleOpenToast(TOAST_TYPES.SUCCESS, 'Image removed!', TOAST_POSITIONS.BOTTOM, 700);
-  };
-
   return (
     <Profile
       navigation={navigation}
@@ -104,11 +89,9 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
       refreshing={refreshing}
       colors={colors}
       onVerify={onVerify}
-      reset={reset}
       refetchUser={refetchUser}
       showSettings={showSettings}
       setShowSettings={setShowSettings}
-      registeredLocally={registeredLocally}
     />
   );
 };

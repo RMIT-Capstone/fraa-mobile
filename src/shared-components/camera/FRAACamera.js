@@ -19,6 +19,8 @@ const FRAACamera = ({
   path,
   userID,
   takePicture,
+  recapture,
+  registerIdentity,
 }) => {
   const { message } = verifyResult;
   const FaceBounds = () =>
@@ -70,14 +72,21 @@ const FRAACamera = ({
   if (previewUri) {
     return (
       <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]}>
-        <View style={styles.imageBackgroundRow}>
-          <TouchableOpacity>
-            <Text>Register</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>Cancel</Text>
-          </TouchableOpacity>
-        </View>
+        <TopCameraMessage />
+        {loading ? (
+          <View style={[styles.imageBackgroundRow, styles.centered]}>
+            <LottieView source={GenericLoading} autoPlay loop style={styles.lottieViewVerify} />
+          </View>
+        ) : (
+          <View style={[styles.imageBackgroundRow, styles.spaceBetween]}>
+            <TouchableOpacity onPress={() => registerIdentity()} style={[styles.buttons, styles.centered]}>
+              <Text style={styles.buttonText}>Register</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => recapture()} style={[styles.buttons, styles.centered]}>
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ImageBackground>
     );
   }
@@ -86,7 +95,7 @@ const FRAACamera = ({
     return (
       <RNCamera
         style={[styles.camera, styles.centered]}
-        type={RNCamera.Constants.Type.front}
+        type={RNCamera.Constants.Type.back}
         onFacesDetected={onFacesDetected}
         onFacesVerified={onFacesVerified}
         path={path}
@@ -171,6 +180,8 @@ FRAACamera.propTypes = {
   path: string.isRequired,
   userID: string.isRequired,
   takePicture: func.isRequired,
+  recapture: func.isRequired,
+  registerIdentity: func.isRequired,
 };
 
 export default FRAACamera;
