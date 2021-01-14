@@ -14,8 +14,8 @@ import { getUserState } from '../../../redux/reducers/UserReducer';
 import { GET_ATTENDANCE_SESSIONS_IN_MONTH_RANGE } from '../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
 import { checkRegisteredImage } from '../../../helpers/model';
-import Home from './Home';
 import { getDistanceFromLatLngInMeters } from '../../../helpers/gps';
+import Home from './Home';
 
 const HomeWrapper = ({
   user: { email, subscribedCourses },

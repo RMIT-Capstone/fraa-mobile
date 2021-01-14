@@ -2,7 +2,6 @@ import React from 'react';
 import { arrayOf, object, func, bool } from 'prop-types';
 import { View, Text, TouchableOpacity, Image, ScrollView, RefreshControl } from 'react-native';
 import styles from './ProfileStyle';
-import SettingsPopUp from './components/settings-popup/SettingsPopup';
 import { navigateTo } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
 
@@ -12,15 +11,13 @@ const Logo = require('../../../assets/logo/RN_LOGO.png');
 const Profile = ({
   navigation,
   user,
+  registeredLocally,
   coursesInfo,
   refreshing,
   colors,
-  onVerify,
-  reset,
-  refetchUser,
-  showSettings,
   setShowSettings,
-  registeredLocally,
+  onVerify,
+  refetchUser,
 }) => {
   const { email, displayName, school, subscribedCourses, missedSessions, totalAttendedSessions } = user;
 
@@ -115,13 +112,7 @@ const Profile = ({
             </View>
           </View>
         </ScrollView>
-        {registeredLocally && (
-          <Text style={styles.reset} onPress={reset}>
-            Reset
-          </Text>
-        )}
       </View>
-      <SettingsPopUp showSettings={showSettings} setShowSettings={setShowSettings} email={user.email} />
     </View>
   );
 };
@@ -129,15 +120,13 @@ const Profile = ({
 Profile.propTypes = {
   navigation: object.isRequired,
   user: object.isRequired,
+  registeredLocally: bool.isRequired,
   coursesInfo: arrayOf(object).isRequired,
   refreshing: bool.isRequired,
   colors: arrayOf(object).isRequired,
-  onVerify: func.isRequired,
-  reset: func.isRequired,
-  refetchUser: func.isRequired,
-  showSettings: bool.isRequired,
   setShowSettings: func.isRequired,
-  registeredLocally: bool.isRequired,
+  onVerify: func.isRequired,
+  refetchUser: func.isRequired,
 };
 
 export default Profile;

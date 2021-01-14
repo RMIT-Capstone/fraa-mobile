@@ -10,11 +10,19 @@ import { navigateTo } from '../../../../../helpers/navigation';
 import ROUTES from '../../../../../navigation/routes';
 import { GENERATE_OTP_API } from '../../../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../../../redux/reducers/ToastReducer';
+import { removeRegisteredImage } from '../../../../../helpers/model';
 import { removeAsyncStorageData } from '../../../../../helpers/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 
-const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, handleOpenToast }) => {
+const SettingsPopUp = ({
+  showSettings,
+  setShowSettings,
+  email,
+  registeredLocally,
+  handleResetUser,
+  handleOpenToast,
+}) => {
   const navigation = useNavigation();
 
   const OPTIONS = [
@@ -28,6 +36,10 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
     },
     {
       id: '2',
+      title: 'Remove & Update Identity',
+    },
+    {
+      id: '3',
       title: 'Logout',
     },
   ];
@@ -48,13 +60,21 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
   };
 
   const onPress = async (option) => {
-    if (option === 'Change Password') {
+    if (option === 'About') {
+      setShowSettings(false);
+      handleOpenToast(TOAST_TYPES.INFO, 'Work in progress...', TOAST_POSITIONS.TOP, 1000);
+    } else if (option === 'Change Password') {
       setShowSettings(false);
       navigateTo(navigation, ROUTES.FORGOT_PASSWORD, { fromProfile: true, email });
       await generateOTP();
-    } else if (option === 'About') {
+    } else if (option === 'Remove & Update Identity') {
       setShowSettings(false);
-      handleOpenToast(TOAST_TYPES.INFO, 'Work in progress...', TOAST_POSITIONS.TOP, 1000);
+      if (registeredLocally) {
+        await removeRegisteredImage();
+        navigateTo(navigation, ROUTES.CAMERA, { fromHome: true });
+      } else {
+        handleOpenToast(TOAST_TYPES.INFO, 'No identity registered!', TOAST_POSITIONS.BOTTOM, 1000);
+      }
     } else {
       await removeAsyncStorageData('fbToken');
       handleResetUser();
@@ -114,14 +134,11 @@ const styles = StyleSheet.create({
 
 SettingsPopUp.propTypes = {
   showSettings: bool.isRequired,
-  email: string,
+  email: string.isRequired,
+  registeredLocally: bool.isRequired,
   setShowSettings: func.isRequired,
   handleResetUser: func.isRequired,
   handleOpenToast: func.isRequired,
-};
-
-SettingsPopUp.defaultProps = {
-  email: '',
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -62,7 +62,7 @@ const Home = ({
     if (checkedIn()) {
       return (
         <TouchableOpacity disabled style={[styles.checkedInBtn, styles.raised]}>
-          <Text style={styles.checkedInText}>You&apos;re in</Text>
+          <Text style={styles.checkedInText}>You&apos;re in !</Text>
           <Image source={CheckMarkIcon} style={styles.checkMark} />
         </TouchableOpacity>
       );

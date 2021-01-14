@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { getUserState, setUser, setUserStats, setUserCourses } from '../../../redux/reducers/UserReducer';
 import { navigateTo } from '../../../helpers/navigation';
 import Profile from './Profile';
@@ -14,7 +14,8 @@ import {
   GET_COURSES_BY_CODES,
 } from '../../../constants/ApiEndpoints';
 import { openToast, TOAST_POSITIONS, TOAST_TYPES } from '../../../redux/reducers/ToastReducer';
-import { checkRegisteredImage, removeRegisteredImage } from '../../../helpers/model';
+import { checkRegisteredImage } from '../../../helpers/model';
+import SettingsPopUp from './components/settings-popup/SettingsPopup';
 
 const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUserCourses, handleOpenToast }) => {
   const navigation = useNavigation();
@@ -22,12 +23,21 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
   const { subscribedCourses, coursesInfo, email } = user;
   const [showSettings, setShowSettings] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [registeredLocally, setRegisteredLocally] = useState(false);
+  const [registeredLocally, setRegisterLocally] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const exists = await checkRegisteredImage();
+        setRegisterLocally(exists);
+      })();
+    }, []),
+  );
 
   useEffect(() => {
     (async () => {
       const exists = await checkRegisteredImage();
-      setRegisteredLocally(exists);
+      setRegisterLocally(exists);
     })();
   }, []);
 
@@ -90,26 +100,26 @@ const ProfileWrapper = ({ user, handleSetUser, handleSetUserStats, handleSetUser
     navigateTo(navigation, ROUTES.CAMERA, { fromHome: true });
   };
 
-  const reset = async () => {
-    await removeRegisteredImage();
-    setRegisteredLocally(false);
-    handleOpenToast(TOAST_TYPES.SUCCESS, 'Image removed!', TOAST_POSITIONS.BOTTOM, 700);
-  };
-
   return (
-    <Profile
-      navigation={navigation}
-      user={user}
-      coursesInfo={coursesInfo}
-      refreshing={refreshing}
-      colors={colors}
-      onVerify={onVerify}
-      reset={reset}
-      refetchUser={refetchUser}
-      showSettings={showSettings}
-      setShowSettings={setShowSettings}
-      registeredLocally={registeredLocally}
-    />
+    <>
+      <Profile
+        navigation={navigation}
+        user={user}
+        registeredLocally={registeredLocally}
+        coursesInfo={coursesInfo}
+        refreshing={refreshing}
+        colors={colors}
+        setShowSettings={setShowSettings}
+        onVerify={onVerify}
+        refetchUser={refetchUser}
+      />
+      <SettingsPopUp
+        showSettings={showSettings}
+        setShowSettings={setShowSettings}
+        email={email}
+        registeredLocally={registeredLocally}
+      />
+    </>
   );
 };
 

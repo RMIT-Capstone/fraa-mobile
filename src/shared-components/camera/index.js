@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
+import { getUserState } from '../../redux/reducers/UserReducer';
 import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
 import FRAACamera from './FRAACamera';
@@ -17,7 +17,6 @@ const FRAACameraWrapper = ({
   },
   user: { id: userId, email, subscribedCourses },
   handleOpenToast,
-  handleSetUserRegisteredIdentity,
   handleSetAllSessions,
 }) => {
   const navigation = useNavigation();
@@ -91,6 +90,7 @@ const FRAACameraWrapper = ({
       successes,
       failures,
       count,
+      result,
     });
 
     if (result < 0.2) {
@@ -132,15 +132,14 @@ const FRAACameraWrapper = ({
         const { uri } = data;
         setLoading(false);
         setPreviewUri(uri);
-        handleSetUserRegisteredIdentity(true);
-        handleOpenToast(TOAST_TYPES.SUCCESS, 'Identity verified!', TOAST_POSITIONS.BOTTOM, 2000);
+        handleOpenToast(TOAST_TYPES.SUCCESS, 'Identity verified!', TOAST_POSITIONS.BOTTOM, 1000);
         setTimeout(() => {
           navigateTo(navigation, ROUTES.MAIN);
         }, 1000);
       }
     } catch (errorCapture) {
       setLoading(false);
-      handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 2000);
+      handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 1500);
     }
   };
 
@@ -166,7 +165,6 @@ FRAACameraWrapper.propTypes = {
   route: object.isRequired,
   user: object.isRequired,
   handleOpenToast: func.isRequired,
-  handleSetUserRegisteredIdentity: func.isRequired,
   handleSetAllSessions: func.isRequired,
 };
 
@@ -177,7 +175,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleSetAllSessions: (sessions, homeSessions, displaySession) =>
     dispatch(setAllSessions(sessions, homeSessions, displaySession)),
-  handleSetUserRegisteredIdentity: (registered) => dispatch(setRegisteredIdentity(registered)),
   handleOpenToast: (type, content, position, duration) => dispatch(openToast(type, content, position, duration)),
 });
 

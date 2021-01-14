@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 55,
   },
   topCameraMessageContainer: {
-    top: 60,
+    top: 35,
     backgroundColor: '#AFAFAF',
   },
   bottomCameraMessageContainer: {
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
   },
   cameraMessage: {
     color: theme.palette.secondary.white,
-    fontWeight: '300',
+    fontWeight: '500',
+    fontSize: 15,
   },
   snapButtonRow: {
     flexDirection: 'row',
@@ -82,11 +83,6 @@ const styles = StyleSheet.create({
     bottom: 10,
     height: 70,
     width: 70,
-  },
-  imageBackgroundRow: {
-    position: 'absolute',
-    bottom: 30,
-    flexDirection: 'row',
   },
 });
 

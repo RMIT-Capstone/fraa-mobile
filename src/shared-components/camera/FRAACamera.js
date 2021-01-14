@@ -68,18 +68,7 @@ const FRAACamera = ({
   };
 
   if (previewUri) {
-    return (
-      <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]}>
-        <View style={styles.imageBackgroundRow}>
-          <TouchableOpacity>
-            <Text>Register</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>Cancel</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    );
+    return <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]} />;
   }
 
   if (!fromHome) {
