@@ -56,18 +56,30 @@ const FRAACamera = ({
     </View>
   );
 
-  const SnapButton = ({ camera }) => (
-    <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture}>
-      {loading ? <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} /> : null}
-    </TouchableOpacity>
-  );
+  const SnapButton = ({ camera }) => {
+    if (loading) {
+      return <LottieView source={GenericLoading} autoPlay loop style={styles.lottieView} />;
+    }
+    return <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture} />;
+  };
 
   SnapButton.propTypes = {
     camera: object.isRequired,
   };
 
   if (previewUri) {
-    return <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]} />;
+    return (
+      <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]}>
+        <View style={styles.imageBackgroundRow}>
+          <TouchableOpacity>
+            <Text>Register</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    );
   }
 
   if (!fromHome) {

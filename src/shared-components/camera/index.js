@@ -139,6 +139,7 @@ const FRAACameraWrapper = ({
         }, 1000);
       }
     } catch (errorCapture) {
+      setLoading(false);
       handleOpenToast(TOAST_TYPES.ERROR, 'Error capture!', TOAST_POSITIONS.BOTTOM, 2000);
     }
   };

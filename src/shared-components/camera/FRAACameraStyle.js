@@ -46,15 +46,14 @@ const styles = StyleSheet.create({
   },
   capture: {
     position: 'absolute',
+    bottom: 30,
     borderWidth: 5,
     borderColor: theme.palette.primary.blue,
-    bottom: 30,
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 35,
     height: 70,
     width: 70,
-    marginRight: 10,
   },
   snapText: {
     fontSize: 14,
@@ -79,8 +78,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   lottieView: {
-    height: 30,
-    width: 15,
+    position: 'absolute',
+    bottom: 10,
+    height: 70,
+    width: 70,
+  },
+  imageBackgroundRow: {
+    position: 'absolute',
+    bottom: 30,
+    flexDirection: 'row',
   },
 });
 
