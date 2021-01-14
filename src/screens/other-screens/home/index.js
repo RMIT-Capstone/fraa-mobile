@@ -151,7 +151,7 @@ const HomeWrapper = ({
           const request = {
             courses: subscribedCourses,
             startMonth: today.getMonth(),
-            startYear: today.getFullYear() - 1,
+            startYear: today.getFullYear(),
             endYear: today.getFullYear(),
             monthRange: 3,
           };
