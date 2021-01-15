@@ -29,7 +29,6 @@ const FRAACameraWrapper = ({
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewUri, setPreviewUri] = useState('');
   const [base64Image, setBase64Image] = useState('');
-  const [verifyResult, setVerifyResult] = useState({ successes: 0, failures: 0, count: 0, message: 'Scanning...' });
   const [cameraMessage, setCameraMessage] = useState('Place your face in the camera');
   const [loading, setLoading] = useState(false);
   const path = 'User';
@@ -89,46 +88,6 @@ const FRAACameraWrapper = ({
     }
   };
 
-  const onFacesVerified = async ({ result }) => {
-    const { count, successes, failures } = verifyResult;
-    setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
-    // eslint-disable-next-line no-console
-    console.table({
-      successes,
-      failures,
-      count,
-    });
-
-    if (result < 0.2) {
-      setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
-    } else {
-      setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
-    }
-    if (successes > 5) {
-      setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
-      try {
-        const { data } = await axios.post(REGISTER_ATTENDANCE, {
-          email,
-          sessionId,
-        });
-        if (data) {
-          await refetchAttendanceSessions();
-          setTimeout(() => {
-            navigateTo(navigation, ROUTES.MAIN);
-          }, 1000);
-        }
-      } catch (errorRegisterAttendance) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Error register attendance!', TOAST_POSITIONS.BOTTOM, 1500);
-      }
-    }
-    if (failures > 10) {
-      setVerifyResult((prevState) => ({ ...prevState, message: 'Failed to check-in, try again' }));
-      setTimeout(() => {
-        navigateTo(navigation, ROUTES.MAIN);
-      }, 1000);
-    }
-  };
-
   const takePicture = async (camera) => {
     const options = { quality: 0.5, base64: true, path, user: userId };
     setLoading(true);
@@ -157,16 +116,16 @@ const FRAACameraWrapper = ({
     try {
       setLoading(true);
       if (base64Image) {
-        const data = new FormData();
+        const imageFormData = new FormData();
         const url = fromHome ? `${REGISTER_IDENTITY_API}/${userId}` : `${VERIFY_IDENTITY_API}/${userId}`;
-        data.append('image', base64Image);
+        imageFormData.append('image', base64Image);
         const config = {
           method: 'POST',
           url,
-          data,
+          imageFormData,
         };
         if (fromHome) {
-          console.log('register identity');
+          setCameraMessage('Registering...');
           const response = await axios(config);
           const {
             data: { msg },
@@ -177,17 +136,30 @@ const FRAACameraWrapper = ({
             handleOpenToast(TOAST_TYPES.SUCCESS, 'Identity verified!', TOAST_POSITIONS.BOTTOM, 1500);
           }
         } else {
-          console.log(config)
-          console.log('verify identity');
+          setCameraMessage('Verifying...');
           const response = await axios(config);
-          console.log(response);
+          const {
+            data: { msg },
+          } = response;
+          if (msg) {
+            const { data } = await axios.post(REGISTER_ATTENDANCE, {
+              email,
+              sessionId,
+            });
+            if (data) {
+              await refetchAttendanceSessions();
+            }
+            setCameraMessage('Checked in!');
+            setTimeout(() => {
+              navigateTo(navigation, ROUTES.MAIN);
+            }, 1500);
+          }
         }
       } else {
         handleOpenToast(TOAST_TYPES.ERROR, 'No image captured', TOAST_POSITIONS.BOTTOM, 1500);
       }
       setLoading(false);
     } catch (errorRegisterIdentityToCloud) {
-      console.log(errorRegisterIdentityToCloud)
       setLoading(false);
       handleOpenToast(TOAST_TYPES.ERROR, 'Error register identity!', TOAST_POSITIONS.BOTTOM, 1500);
     }
