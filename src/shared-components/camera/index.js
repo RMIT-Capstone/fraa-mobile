@@ -148,11 +148,16 @@ const FRAACameraWrapper = ({
             });
             if (registerData) {
               await refetchAttendanceSessions();
-              setCameraMessage('Checked in !');
+              setCameraMessage('Checked in!');
               setTimeout(() => {
                 navigateTo(navigation, ROUTES.MAIN);
               }, 1500);
             }
+          } else {
+            setCameraMessage('Try again!');
+            setTimeout(() => {
+              navigateTo(navigation, ROUTES.MAIN);
+            }, 1500);
           }
         }
       } else {
