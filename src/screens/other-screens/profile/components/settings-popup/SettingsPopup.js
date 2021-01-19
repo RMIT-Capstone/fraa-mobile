@@ -59,7 +59,7 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
       setShowSettings(false);
       navigateTo(navigation, ROUTES.FORGOT_PASSWORD, { fromProfile: true, email });
       await generateOTP();
-    } else if (option === 'Update identity') {
+    } else if (option === 'Update Identity') {
       setShowSettings(false);
       navigateTo(navigation, ROUTES.CAMERA, { fromHome: true });
     } else {
