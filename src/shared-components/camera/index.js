@@ -30,8 +30,6 @@ const FRAACameraWrapper = ({
   useEffect(() => {
     if (recognizedFaces.length > 1) {
       setCameraMessage('There are too many faces!');
-    } else {
-      setCameraMessage('Place your face in the camera');
     }
   }, [recognizedFaces]);
 
@@ -83,6 +81,7 @@ const FRAACameraWrapper = ({
   };
 
   const onFacesVerified = async ({ result }) => {
+    setCameraMessage('Verifying...');
     const { count, successes, failures } = verifyResult;
     setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
     // eslint-disable-next-line no-console
@@ -99,6 +98,7 @@ const FRAACameraWrapper = ({
       setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
     }
     if (successes > 5) {
+      setCameraMessage('Checked in!');
       setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
       try {
         const { data } = await axios.post(REGISTER_ATTENDANCE, {
@@ -116,6 +116,7 @@ const FRAACameraWrapper = ({
       }
     }
     if (failures > 10) {
+      setCameraMessage('Try again!');
       setVerifyResult((prevState) => ({ ...prevState, message: 'Failed to check-in, try again' }));
       setTimeout(() => {
         navigateTo(navigation, ROUTES.MAIN);
