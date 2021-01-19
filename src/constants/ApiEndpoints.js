@@ -2,9 +2,9 @@
 export const SIGN_IN_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/sign_in';
 export const GET_USER_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/get_user_by_email';
 export const UPDATE_USER_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/update_user';
-export const REGISTER_IDENTITY_API = 'http://68.183.239.207/register';
-export const CHECK_IDENTITY_API = 'http://68.183.239.207/check-register';
-export const VERIFY_IDENTITY_API = 'http://68.183.239.207/cv_verify';
+export const REGISTER_IDENTITY_API = 'http://159.89.203.30/register';
+export const CHECK_IDENTITY_API = 'http://159.89.203.30/check-register';
+export const VERIFY_IDENTITY_API = 'http://159.89.203.30/cv_verify';
 export const GENERATE_OTP_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/generate_otp';
 export const VERIFY_OTP_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/verify_otp';
 export const CHANGE_PASSWORD_API = 'https://asia-northeast1-fraa-capstone.cloudfunctions.net/api/change_password';
