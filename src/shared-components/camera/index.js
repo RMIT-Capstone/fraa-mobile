@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
 import axios from 'axios';
@@ -124,7 +125,14 @@ const FRAACameraWrapper = ({
       if (base64) {
         const data = new FormData();
         const url = fromHome ? `${REGISTER_IDENTITY_API}/${userId}` : `${VERIFY_IDENTITY_API}/${userId}`;
-        const resizeResponse = await ImageResizer.createResizedImage(uri, width, height, 'JPEG', 5);
+        const resizeQuality = Platform === 'ios' ? 5 : 100;
+        const resizeResponse = await ImageResizer.createResizedImage(
+          uri,
+          width * 0.2,
+          height * 0.2,
+          'JPEG',
+          resizeQuality,
+        );
         const { path: resizeImagePath } = resizeResponse;
         const resizedImage = await RNFetchBlob.fs.readFile(resizeImagePath, 'base64');
 

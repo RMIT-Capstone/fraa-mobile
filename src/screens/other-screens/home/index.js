@@ -54,24 +54,24 @@ const HomeWrapper = ({
     });
 
     if (displaySession && displaySession.location) {
-      RNLocation.getLatestLocation({ timeout: 60000 }).then((location) => {
-        const { altitude, latitude, longitude } = location;
-        if (Math.abs(displaySession.location.altitude - altitude) > 2) {
-          setTooFar(true);
-        } else {
-          const distance = getDistanceFromLatLngInMeters(
-            displaySession.location.latitude,
-            displaySession.location.longitude,
-            latitude,
-            longitude,
-          );
-          if (distance > 15) {
-            setTooFar(true);
-          } else {
-            setTooFar(false);
-          }
-        }
-      });
+      // RNLocation.getLatestLocation({ timeout: 60000 }).then((location) => {
+      //   const { altitude, latitude, longitude } = location;
+      //   if (Math.abs(displaySession.location.altitude - altitude) > 2) {
+      //     setTooFar(true);
+      //   } else {
+      //     const distance = getDistanceFromLatLngInMeters(
+      //       displaySession.location.latitude,
+      //       displaySession.location.longitude,
+      //       latitude,
+      //       longitude,
+      //     );
+      //     if (distance > 15) {
+      //       setTooFar(true);
+      //     } else {
+      //       setTooFar(false);
+      //     }
+      //   }
+      // });
     }
   };
 
