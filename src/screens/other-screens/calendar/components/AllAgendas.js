@@ -47,7 +47,7 @@ const AllAgendas = ({ attendanceSessions: { sessions } }) => {
                 )}
                 <View key={id} style={styles.sessionInfoWrapper}>
                   <View style={[styles.sessionInfo, styles.inactiveBtn, styles.centered]}>
-                    <Text style={styles.courseName}>{courseName}</Text>
+                    <Text style={styles.courseName}>{courseName.toUpperCase()}</Text>
                     <Text style={styles.sessionTime}>{transformSessionTime(validOn)}</Text>
                     <Text style={styles.sessionLocation}>{room}</Text>
                   </View>
