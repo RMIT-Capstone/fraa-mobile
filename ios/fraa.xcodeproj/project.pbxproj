@@ -18,8 +18,8 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* fraaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* fraaTests.m */; };
 		3B6BB56C7217F783382377CE /* libPods-fraa-fraaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B112466DDC507F92A6FF5C /* libPods-fraa-fraaTests.a */; };
-		8723610224E1458A0091CA38 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8723610124E1458A0091CA38 /* GoogleService-Info.plist */; };
 		874D8071259B2B22006F5713 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 874D8070259B2B22006F5713 /* CoreLocation.framework */; };
+		877981CB25B6D606003FD452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877981CA25B6D606003FD452 /* GoogleService-Info.plist */; };
 		87FD76AA2524361C00BB6E1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87FD76A92524361C00BB6E1D /* LaunchScreen.storyboard */; };
 		D0C3CD3D9B5FA01F0E82D8AB /* libPods-fraa-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A337C8D9E43A608000DCF969 /* libPods-fraa-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -43,26 +43,26 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* FRAATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FRAATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* fraaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fraaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* fraaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fraaTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* FRAA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FRAA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* fraa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fraa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = fraa/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = fraa/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = fraa/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = fraa/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = fraa/main.m; sourceTree = "<group>"; };
 		2CF3A5F7AF11A5F9151B6AAC /* Pods-fraa-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOS.release.xcconfig"; path = "Target Support Files/Pods-fraa-tvOS/Pods-fraa-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* FRAA-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FRAA-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* FRAA-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FRAA-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* fraa-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fraa-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* fraa-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fraa-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31468E9CDB81899BEB87F14D /* libPods-fraa-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fraa-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		35499DF27D45EE591A9904E9 /* Pods-fraa-fraaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-fraaTests.release.xcconfig"; path = "Target Support Files/Pods-fraa-fraaTests/Pods-fraa-fraaTests.release.xcconfig"; sourceTree = "<group>"; };
 		39EABF09CFD5071B94379CC5 /* Pods-fraa-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-fraa-tvOS/Pods-fraa-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		546BA030E3A06E4D69F4182C /* libPods-fraa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fraa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9BED78BE7909E76567E211 /* Pods-fraa-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-fraa-tvOSTests/Pods-fraa-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5FB3BFFB2CBCAAD8D9E51539 /* Pods-fraa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa.debug.xcconfig"; path = "Target Support Files/Pods-fraa/Pods-fraa.debug.xcconfig"; sourceTree = "<group>"; };
-		8723610124E1458A0091CA38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		874D8070259B2B22006F5713 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		877981CA25B6D606003FD452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87FD76A92524361C00BB6E1D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E49D404D13FBF6C7FFB3B64 /* Pods-fraa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa.release.xcconfig"; path = "Target Support Files/Pods-fraa/Pods-fraa.release.xcconfig"; sourceTree = "<group>"; };
 		A337C8D9E43A608000DCF969 /* libPods-fraa-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fraa-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,8 +133,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				877981CA25B6D606003FD452 /* GoogleService-Info.plist */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				8723610124E1458A0091CA38 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				87FD76A92524361C00BB6E1D /* LaunchScreen.storyboard */,
@@ -181,10 +181,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* FRAA.app */,
-				00E356EE1AD99517003FC87E /* FRAATests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* FRAA-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* FRAA-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* fraa.app */,
+				00E356EE1AD99517003FC87E /* fraaTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* fraa-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* fraa-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -207,9 +207,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* FRAATests */ = {
+		00E356ED1AD99517003FC87E /* fraaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FRAATests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "fraaTests" */;
 			buildPhases = (
 				6EF2AFB6B420F3546DAB0502 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -222,14 +222,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = FRAATests;
+			name = fraaTests;
 			productName = fraaTests;
-			productReference = 00E356EE1AD99517003FC87E /* FRAATests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* fraaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* FRAA */ = {
+		13B07F861A680F5B00A75B9A /* fraa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FRAA" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "fraa" */;
 			buildPhases = (
 				388FA0B42E9E15052B1A7AC4 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -243,14 +243,14 @@
 			);
 			dependencies = (
 			);
-			name = FRAA;
+			name = fraa;
 			productName = fraa;
-			productReference = 13B07F961A680F5B00A75B9A /* FRAA.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* fraa.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* FRAA-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* fraa-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "FRAA-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "fraa-tvOS" */;
 			buildPhases = (
 				B559F7AF87F0FFF7204EB707 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -263,14 +263,14 @@
 			);
 			dependencies = (
 			);
-			name = "FRAA-tvOS";
+			name = "fraa-tvOS";
 			productName = "fraa-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* FRAA-tvOS.app */;
+			productReference = 2D02E47B1E0B4A5D006451C7 /* fraa-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* FRAA-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* fraa-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "FRAA-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "fraa-tvOSTests" */;
 			buildPhases = (
 				12C1515BD9A80BED6A4617E7 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -282,9 +282,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "FRAA-tvOSTests";
+			name = "fraa-tvOSTests";
 			productName = "fraa-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* FRAA-tvOSTests.xctest */;
+			productReference = 2D02E4901E0B4A5D006451C7 /* fraa-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -314,7 +314,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FRAA" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "fraa" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -327,10 +327,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* FRAA */,
-				00E356ED1AD99517003FC87E /* FRAATests */,
-				2D02E47A1E0B4A5D006451C7 /* FRAA-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* FRAA-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* fraa */,
+				00E356ED1AD99517003FC87E /* fraaTests */,
+				2D02E47A1E0B4A5D006451C7 /* fraa-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* fraa-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -349,7 +349,7 @@
 			files = (
 				87FD76AA2524361C00BB6E1D /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				8723610224E1458A0091CA38 /* GoogleService-Info.plist in Resources */,
+				877981CB25B6D606003FD452 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,12 +607,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* FRAA */;
+			target = 13B07F861A680F5B00A75B9A /* fraa */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* FRAA-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* fraa-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -637,7 +637,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FRAA.app/FRAA";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fraa.app/fraa";
 			};
 			name = Debug;
 		};
@@ -657,7 +657,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FRAA.app/FRAA";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fraa.app/fraa";
 			};
 			name = Release;
 		};
@@ -683,7 +683,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa;
-				PRODUCT_NAME = FRAA;
+				PRODUCT_NAME = fraa;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -707,7 +707,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa;
-				PRODUCT_NAME = FRAA;
+				PRODUCT_NAME = fraa;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -791,7 +791,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.fraa-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FRAA-tvOS.app/FRAA-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fraa-tvOS.app/fraa-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
@@ -818,7 +818,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.fraa-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FRAA-tvOS.app/FRAA-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fraa-tvOS.app/fraa-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -939,7 +939,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FRAATests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "fraaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -948,7 +948,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FRAA" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "fraa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -957,7 +957,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "FRAA-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "fraa-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -966,7 +966,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "FRAA-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "fraa-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -975,7 +975,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FRAA" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "fraa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
