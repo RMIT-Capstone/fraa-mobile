@@ -93,7 +93,7 @@ const FRAACameraWrapper = ({
       result,
     });
 
-    if (result < 0.2) {
+    if (result < 0.6) {
       setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
     } else {
       setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
