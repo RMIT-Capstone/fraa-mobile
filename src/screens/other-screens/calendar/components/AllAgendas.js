@@ -8,7 +8,19 @@ import theme from '../../../../theme';
 const AllAgendas = ({ attendanceSessions: { sessions } }) => {
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
+    if (Platform.OS !== 'ios') {
+      const splittedTime = timeObj.toLocaleString().split(' ');
+      const hour = parseInt(splittedTime[splittedTime.length - 2].split(':')[0], 10);
+      const convertedHour = hour % 12;
+      const minuteString = splittedTime[splittedTime.length - 2].split(':')[1];
+      return `${convertedHour}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
+    }
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  };
+
+  const dayOfWeek = (time) => {
+    const timeObj = new Date(time);
+    return timeObj.toString().split(' ')[0].toUpperCase();
   };
 
   return (
@@ -30,14 +42,12 @@ const AllAgendas = ({ attendanceSessions: { sessions } }) => {
                 ) : (
                   <View style={styles.sessionTimeInfoWrapper}>
                     <Text style={styles.sessionDate}>{new Date(validOn).getDate()}</Text>
-                    <Text style={styles.sessionDay}>
-                      {new Date(validOn).toLocaleDateString('EN', { weekday: 'short' }).toUpperCase()}
-                    </Text>
+                    <Text style={styles.sessionDay}>{dayOfWeek(validOn)}</Text>
                   </View>
                 )}
                 <View key={id} style={styles.sessionInfoWrapper}>
                   <View style={[styles.sessionInfo, styles.inactiveBtn, styles.centered]}>
-                    <Text style={styles.courseName}>{courseName}</Text>
+                    <Text style={styles.courseName}>{courseName.toUpperCase()}</Text>
                     <Text style={styles.sessionTime}>{transformSessionTime(validOn)}</Text>
                     <Text style={styles.sessionLocation}>{room}</Text>
                   </View>
@@ -109,21 +119,21 @@ const styles = StyleSheet.create({
   },
   courseName: {
     color: theme.palette.secondary.orange,
-    fontSize: 17,
+    fontSize: Platform.OS === 'ios' ? 17 : 16,
     fontWeight: '500',
     marginBottom: 55,
     textAlign: 'center',
   },
   sessionTime: {
-    fontSize: 17,
     color: '#888888',
+    fontSize: Platform.OS === 'ios' ? 17 : 16,
     position: 'absolute',
     bottom: 10,
     left: 15,
   },
   sessionLocation: {
-    fontSize: 17,
     color: '#888888',
+    fontSize: Platform.OS === 'ios' ? 17 : 16,
     position: 'absolute',
     bottom: 10,
     right: 15,

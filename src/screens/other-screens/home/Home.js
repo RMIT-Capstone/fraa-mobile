@@ -1,6 +1,6 @@
 import React from 'react';
 import { arrayOf, object, bool, string } from 'prop-types';
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Image, Platform } from 'react-native';
 import styles from './HomeStyle';
 import { navigateTo } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
@@ -29,6 +29,13 @@ const Home = ({
 
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
+    if (Platform !== 'ios') {
+      const splittedTime = timeObj.toLocaleString().split(' ');
+      const hour = parseInt(splittedTime[splittedTime.length - 2].split(':')[0], 10);
+      const convertedHour = hour % 12;
+      const minuteString = splittedTime[splittedTime.length - 2].split(':')[1];
+      return `${convertedHour}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
+    }
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   };
 
@@ -107,8 +114,11 @@ const Home = ({
   const today = new Date();
   const validOnDateObject = new Date(validOn);
   const dateOfValidOn = validOnDateObject.getDate();
-  const monthOfValidOn = validOnDateObject.toLocaleDateString(undefined, { month: 'long' });
-  const dayOfValidOn = validOnDateObject.toLocaleDateString(undefined, { weekday: 'long' });
+  // prettier-ignore
+  const monthOfValidOn = Platform.OS === 'ios'
+    ? validOnDateObject.toString().split(' ')[1]
+    : validOnDateObject.toLocaleString().split(' ')[0];
+  const dayOfValidOn = validOnDateObject.toLocaleString().split(' ')[0].toUpperCase();
 
   return (
     <View style={[styles.container, styles.centered]}>

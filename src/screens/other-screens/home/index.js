@@ -87,7 +87,7 @@ const HomeWrapper = ({
         await RNLocation.requestPermission({
           ios: 'whenInUse',
           android: {
-            detail: 'coarse',
+            detail: 'fine',
             rationale: {
               title: 'Please turn on your location',
               message: 'We need to use your location to allow check-in',

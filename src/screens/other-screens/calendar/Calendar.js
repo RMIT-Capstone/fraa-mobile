@@ -1,6 +1,6 @@
 import React from 'react';
 import { arrayOf, object, string, bool, func } from 'prop-types';
-import { View, Text, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, RefreshControl, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './CalendarStyle';
 import { navigateTo } from '../../../helpers/navigation';
@@ -19,10 +19,17 @@ const Calendar = ({ agendaSessions, refetching, refetchAttendanceSessions, activ
   const Events = () => {
     const displayDay = new Date();
     displayDay.setDate(date);
-    const dayOfWeek = displayDay.toLocaleDateString('EN', { weekday: 'short' }).toUpperCase();
+    const dayOfWeek = displayDay.toString().split(' ')[0].toUpperCase();
 
     const transformSessionTime = (time) => {
       const timeObj = new Date(time);
+      if (Platform.OS !== 'ios') {
+        const splittedTime = timeObj.toLocaleString().split(' ');
+        const hour = parseInt(splittedTime[splittedTime.length - 2].split(':')[0], 10);
+        const convertedHour = hour % 12;
+        const minuteString = splittedTime[splittedTime.length - 2].split(':')[1];
+        return `${convertedHour}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
+      }
       return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     };
 
@@ -45,7 +52,7 @@ const Calendar = ({ agendaSessions, refetching, refetchAttendanceSessions, activ
           )}
           <View style={styles.sessionInfoWrapper}>
             <View style={[styles.sessionInfo, styles.inactiveBtn]}>
-              <Text style={styles.courseName}>{courseName}</Text>
+              <Text style={styles.courseName}>{courseName.toUpperCase()}</Text>
 
               <Text style={styles.sessionTime}>{transformSessionTime(validOn)}</Text>
               <Text style={styles.sessionLocation}>{room}</Text>
