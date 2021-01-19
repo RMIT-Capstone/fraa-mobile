@@ -8,7 +8,7 @@ import styles from './FRAACameraStyle';
 const GenericLoading = require('../../assets/lottie-assets/GenericLoading');
 
 const FRAACamera = ({
-  previewUri,
+  imageData,
   loading,
   recognizedFaces,
   fromHome,
@@ -18,6 +18,8 @@ const FRAACamera = ({
   recapture,
   registerIdentity,
 }) => {
+  // console.log(base64Image);
+  const { base64 } = imageData;
   const FaceBounds = () =>
     recognizedFaces.map((face, index) => (
       <View
@@ -58,9 +60,9 @@ const FRAACamera = ({
     camera: object.isRequired,
   };
 
-  if (previewUri) {
+  if (base64) {
     return (
-      <ImageBackground source={{ uri: previewUri }} style={[styles.camera, styles.centered]}>
+      <ImageBackground source={{ uri: base64 }} style={[styles.camera, styles.centered]}>
         <TopCameraMessage />
         {loading ? (
           <View style={[styles.imageBackgroundRow, styles.centered]}>
@@ -118,7 +120,7 @@ const FRAACamera = ({
 };
 
 FRAACamera.propTypes = {
-  previewUri: string.isRequired,
+  imageData: object.isRequired,
   loading: bool.isRequired,
   recognizedFaces: arrayOf(object).isRequired,
   fromHome: bool.isRequired,

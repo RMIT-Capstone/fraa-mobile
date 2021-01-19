@@ -28,7 +28,7 @@ const SettingsPopUp = ({ showSettings, setShowSettings, email, handleResetUser, 
     },
     {
       id: '2',
-      title: 'Update identity',
+      title: 'Update Identity',
     },
     {
       id: '3',

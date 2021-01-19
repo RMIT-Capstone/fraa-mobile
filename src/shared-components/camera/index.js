@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import ImageResizer from 'react-native-image-resizer';
+import RNFetchBlob from 'rn-fetch-blob';
 import { getUserState, setRegisteredIdentity } from '../../redux/reducers/UserReducer';
 import ROUTES from '../../navigation/routes';
 import { navigateTo } from '../../helpers/navigation';
@@ -27,8 +29,13 @@ const FRAACameraWrapper = ({
 }) => {
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
-  const [previewUri, setPreviewUri] = useState('');
-  const [base64Image, setBase64Image] = useState('');
+  const [imageData, setImageData] = useState({
+    uri: '',
+    base64: '',
+    path: '',
+    width: undefined,
+    height: undefined,
+  });
   const [cameraMessage, setCameraMessage] = useState('Place your face in the camera');
   const [loading, setLoading] = useState(false);
   const path = 'User';
@@ -94,10 +101,9 @@ const FRAACameraWrapper = ({
     try {
       const data = await camera.takePictureAsync(options);
       if (data) {
-        const { uri, base64 } = data;
+        const { uri, base64, height, width } = data;
+        setImageData({ uri, base64: `data:image/jpeg;base64,${base64}`, width, height });
         setLoading(false);
-        setPreviewUri(uri);
-        setBase64Image(base64);
         setCameraMessage('Register or cancel');
       }
     } catch (errorCapture) {
@@ -108,17 +114,21 @@ const FRAACameraWrapper = ({
 
   const recapture = () => {
     setCameraMessage('Place your face in the camera');
-    setPreviewUri('');
-    setBase64Image('');
+    setImageData({ uri: '', base64: '', path: '', width: undefined, height: undefined });
   };
 
   const registerOrVerifyIdentity = async () => {
+    const { base64, uri, width, height } = imageData;
     try {
       setLoading(true);
-      if (base64Image) {
+      if (base64) {
         const data = new FormData();
         const url = fromHome ? `${REGISTER_IDENTITY_API}/${userId}` : `${VERIFY_IDENTITY_API}/${userId}`;
-        data.append('image', base64Image);
+        const resizeResponse = await ImageResizer.createResizedImage(uri, width, height, 'JPEG', 5);
+        const { path: resizeImagePath } = resizeResponse;
+        const resizedImage = await RNFetchBlob.fs.readFile(resizeImagePath, 'base64');
+
+        data.append('image', resizedImage);
         const config = {
           method: 'POST',
           url,
@@ -172,7 +182,7 @@ const FRAACameraWrapper = ({
 
   return (
     <FRAACamera
-      previewUri={previewUri}
+      imageData={imageData}
       loading={loading}
       onFacesDetected={onFacesDetected}
       cameraMessage={cameraMessage}
