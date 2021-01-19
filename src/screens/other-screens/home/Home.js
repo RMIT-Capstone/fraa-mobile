@@ -130,7 +130,7 @@ const Home = ({
         <View style={[styles.eventContainer, styles.raised]}>
           <View style={[styles.firstEventRow]}>
             <Text style={styles.time}>{transformSessionTime(validOn)}</Text>
-            <Text style={styles.courseName}>{courseName}</Text>
+            <Text style={styles.courseName}>{courseName.toUpperCase()}</Text>
             <Text style={styles.location}>{room}</Text>
           </View>
           <View style={[styles.secondEventRow]}>
