@@ -22,7 +22,7 @@ const FRAACameraWrapper = ({
   const navigation = useNavigation();
   const [recognizedFaces, setRecognizedFaces] = useState([]);
   const [previewUri, setPreviewUri] = useState('');
-  const [verifyResult, setVerifyResult] = useState({ successes: 0, failures: 0, count: 0, message: 'Scanning...' });
+  const [verifyResult, setVerifyResult] = useState({ successes: 0, failures: 0, count: 0 });
   const [cameraMessage, setCameraMessage] = useState('Place your face in the camera');
   const [loading, setLoading] = useState(false);
   const path = 'User';
@@ -30,6 +30,9 @@ const FRAACameraWrapper = ({
   useEffect(() => {
     if (recognizedFaces.length > 1) {
       setCameraMessage('There are too many faces!');
+    }
+    else {
+      setCameraMessage('Verifying...');
     }
   }, [recognizedFaces]);
 
@@ -81,46 +84,45 @@ const FRAACameraWrapper = ({
   };
 
   const onFacesVerified = async ({ result }) => {
-    setCameraMessage('Verifying...');
-    const { count, successes, failures } = verifyResult;
-    setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
-    // eslint-disable-next-line no-console
-    console.table({
-      successes,
-      failures,
-      count,
-      result,
-    });
+    if (cameraMessage !== 'There are too many faces!') {
+      const { count, successes, failures } = verifyResult;
+      setVerifyResult((prevState) => ({ ...prevState, count: count + 1 }));
+      // eslint-disable-next-line no-console
+      console.table({
+        successes,
+        failures,
+        count,
+        result,
+      });
 
-    if (result < 0.6) {
-      setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
-    } else {
-      setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
-    }
-    if (successes > 5) {
-      setCameraMessage('Checked in!');
-      setVerifyResult((prevState) => ({ ...prevState, message: 'Verified!' }));
-      try {
-        const { data } = await axios.post(REGISTER_ATTENDANCE, {
-          email,
-          sessionId,
-        });
-        if (data) {
-          await refetchAttendanceSessions();
-          setTimeout(() => {
-            navigateTo(navigation, ROUTES.MAIN);
-          }, 1000);
-        }
-      } catch (errorRegisterAttendance) {
-        handleOpenToast(TOAST_TYPES.ERROR, 'Error register attendance!', TOAST_POSITIONS.BOTTOM, 1500);
+      if (result < 0.6) {
+        setVerifyResult((prevState) => ({ ...prevState, successes: successes + 1 }));
+      } else {
+        setVerifyResult((prevState) => ({ ...prevState, failures: failures + 1 }));
       }
-    }
-    if (failures > 10) {
-      setCameraMessage('Try again!');
-      setVerifyResult((prevState) => ({ ...prevState, message: 'Failed to check-in, try again' }));
-      setTimeout(() => {
-        navigateTo(navigation, ROUTES.MAIN);
-      }, 1000);
+      if (successes > 5) {
+        setCameraMessage('Checked in!');
+        try {
+          const { data } = await axios.post(REGISTER_ATTENDANCE, {
+            email,
+            sessionId,
+          });
+          if (data) {
+            await refetchAttendanceSessions();
+            setTimeout(() => {
+              navigateTo(navigation, ROUTES.MAIN);
+            }, 1000);
+          }
+        } catch (errorRegisterAttendance) {
+          handleOpenToast(TOAST_TYPES.ERROR, 'Error register attendance!', TOAST_POSITIONS.BOTTOM, 1500);
+        }
+      }
+      if (failures > 10) {
+        setCameraMessage('Try again!');
+        setTimeout(() => {
+          navigateTo(navigation, ROUTES.MAIN);
+        }, 1000);
+      }
     }
   };
 

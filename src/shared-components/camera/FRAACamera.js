@@ -14,13 +14,11 @@ const FRAACamera = ({
   fromHome,
   onFacesDetected,
   onFacesVerified,
-  verifyResult,
   cameraMessage,
   path,
   userID,
   takePicture,
 }) => {
-  const { message } = verifyResult;
   const FaceBounds = () =>
     recognizedFaces.map((face, index) => (
       <View
@@ -47,12 +45,6 @@ const FRAACamera = ({
   const TopCameraMessage = () => (
     <View style={[styles.cameraMessageContainer, styles.topCameraMessageContainer, styles.centered]}>
       <Text style={styles.cameraMessage}>{cameraMessage}</Text>
-    </View>
-  );
-
-  const BottomCameraMessage = () => (
-    <View style={[styles.cameraMessageContainer, styles.bottomCameraMessageContainer, styles.centered]}>
-      <Text style={styles.cameraMessage}>{message}</Text>
     </View>
   );
 
@@ -102,7 +94,6 @@ const FRAACamera = ({
           return (
             <>
               <TopCameraMessage />
-              <BottomCameraMessage />
               {recognizedFaces.length !== 0 && <FaceBounds />}
             </>
           );
@@ -155,7 +146,6 @@ FRAACamera.propTypes = {
   fromHome: bool.isRequired,
   onFacesDetected: func.isRequired,
   onFacesVerified: func.isRequired,
-  verifyResult: object.isRequired,
   cameraMessage: string.isRequired,
   path: string.isRequired,
   userID: string.isRequired,
