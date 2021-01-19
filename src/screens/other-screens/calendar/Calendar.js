@@ -19,16 +19,16 @@ const Calendar = ({ agendaSessions, refetching, refetchAttendanceSessions, activ
   const Events = () => {
     const displayDay = new Date();
     displayDay.setDate(date);
-    const dayOfWeek = displayDay.toLocaleString().split(' ')[0].toUpperCase();
+    const dayOfWeek = displayDay.toString().split(' ')[0].toUpperCase();
 
     const transformSessionTime = (time) => {
       const timeObj = new Date(time);
-      if (Platform !== 'ios') {
-        const x = timeObj.toLocaleString().split(' ');
-        const hour = parseInt(x[x.length - 2].split(':')[0], 10);
-        const time1 = hour % 12;
-        const minuteString = x[x.length - 2].split(':')[1];
-        return `${time1}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
+      if (Platform.OS !== 'ios') {
+        const splittedTime = timeObj.toLocaleString().split(' ');
+        const hour = parseInt(splittedTime[splittedTime.length - 2].split(':')[0], 10);
+        const convertedHour = hour % 12;
+        const minuteString = splittedTime[splittedTime.length - 2].split(':')[1];
+        return `${convertedHour}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
       }
       return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     };

@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   eventsText: {
-    fontSize: Platform === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 15,
     fontWeight: '400',
     lineHeight: 26.2,
     color: '#AFAFAF',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   sessionDay: {
     color: theme.palette.primary.blue,
     fontWeight: '500',
-    fontSize: Platform === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 15,
     textAlign: 'center',
     letterSpacing: 0.5,
   },
@@ -96,20 +96,20 @@ const styles = StyleSheet.create({
   },
   courseName: {
     color: theme.palette.secondary.orange,
-    fontSize: Platform === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 15,
     fontWeight: '500',
     marginBottom: 55,
     textAlign: 'center',
   },
   sessionTime: {
-    fontSize: Platform === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 15,
     color: '#888888',
     position: 'absolute',
     bottom: 10,
     left: 15,
   },
   sessionLocation: {
-    fontSize: Platform === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 15,
     color: '#888888',
     position: 'absolute',
     bottom: 10,

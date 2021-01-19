@@ -114,7 +114,10 @@ const Home = ({
   const today = new Date();
   const validOnDateObject = new Date(validOn);
   const dateOfValidOn = validOnDateObject.getDate();
-  const monthOfValidOn = validOnDateObject.toLocaleString().split(' ')[0];
+  // prettier-ignore
+  const monthOfValidOn = Platform.OS === 'ios'
+    ? validOnDateObject.toString().split(' ')[1]
+    : validOnDateObject.toLocaleString().split(' ')[0];
   const dayOfValidOn = validOnDateObject.toLocaleString().split(' ')[0].toUpperCase();
 
   return (

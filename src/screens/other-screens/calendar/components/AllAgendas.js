@@ -8,19 +8,19 @@ import theme from '../../../../theme';
 const AllAgendas = ({ attendanceSessions: { sessions } }) => {
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
-    if (Platform !== 'ios') {
-      const x = timeObj.toLocaleString().split(' ');
-      const hour = parseInt(x[x.length - 2].split(':')[0], 10);
-      const time1 = hour % 12;
-      const minuteString = x[x.length - 2].split(':')[1];
-      return `${time1}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
+    if (Platform.OS !== 'ios') {
+      const splittedTime = timeObj.toLocaleString().split(' ');
+      const hour = parseInt(splittedTime[splittedTime.length - 2].split(':')[0], 10);
+      const convertedHour = hour % 12;
+      const minuteString = splittedTime[splittedTime.length - 2].split(':')[1];
+      return `${convertedHour}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
     }
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   };
 
   const dayOfWeek = (time) => {
     const timeObj = new Date(time);
-    return timeObj.toLocaleString().split(' ')[0].toUpperCase();
+    return timeObj.toString().split(' ')[0].toUpperCase();
   };
 
   return (
@@ -119,20 +119,20 @@ const styles = StyleSheet.create({
   },
   courseName: {
     color: theme.palette.secondary.orange,
-    fontSize: Platform === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 15,
     fontWeight: '500',
     marginBottom: 55,
     textAlign: 'center',
   },
   sessionTime: {
-    fontSize: Platform === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 15,
     color: '#888888',
     position: 'absolute',
     bottom: 10,
     left: 15,
   },
   sessionLocation: {
-    fontSize: Platform === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 15,
     color: '#888888',
     position: 'absolute',
     bottom: 10,
