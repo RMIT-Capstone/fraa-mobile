@@ -1,6 +1,6 @@
 import React from 'react';
 import { arrayOf, object, string, bool, func } from 'prop-types';
-import { View, Text, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, RefreshControl, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './CalendarStyle';
 import { navigateTo } from '../../../helpers/navigation';
@@ -19,10 +19,17 @@ const Calendar = ({ agendaSessions, refetching, refetchAttendanceSessions, activ
   const Events = () => {
     const displayDay = new Date();
     displayDay.setDate(date);
-    const dayOfWeek = displayDay.toLocaleDateString('EN', { weekday: 'short' }).toUpperCase();
+    const dayOfWeek = displayDay.toLocaleString().split(' ')[0].toUpperCase();
 
     const transformSessionTime = (time) => {
       const timeObj = new Date(time);
+      if (Platform !== 'ios') {
+        const x = timeObj.toLocaleString().split(' ');
+        const hour = parseInt(x[x.length - 2].split(':')[0], 10);
+        const time1 = hour % 12;
+        const minuteString = x[x.length - 2].split(':')[1];
+        return `${time1}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
+      }
       return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { arrayOf, object, bool, string } from 'prop-types';
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Image, Platform } from 'react-native';
 import styles from './HomeStyle';
 import { navigateTo } from '../../../helpers/navigation';
 import ROUTES from '../../../navigation/routes';
@@ -29,6 +29,13 @@ const Home = ({
 
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
+    if (Platform !== 'ios') {
+      const x = timeObj.toLocaleString().split(' ');
+      const hour = parseInt(x[x.length - 2].split(':')[0], 10);
+      const time1 = hour % 12;
+      const minuteString = x[x.length - 2].split(':')[1];
+      return `${time1}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
+    }
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   };
 
@@ -107,8 +114,8 @@ const Home = ({
   const today = new Date();
   const validOnDateObject = new Date(validOn);
   const dateOfValidOn = validOnDateObject.getDate();
-  const monthOfValidOn = validOnDateObject.toLocaleDateString(undefined, { month: 'long' });
-  const dayOfValidOn = validOnDateObject.toLocaleDateString(undefined, { weekday: 'long' });
+  const monthOfValidOn = validOnDateObject.toLocaleString().split(' ')[0];
+  const dayOfValidOn = validOnDateObject.toLocaleString().split(' ')[0].toUpperCase();
 
   return (
     <View style={[styles.container, styles.centered]}>

@@ -8,7 +8,19 @@ import theme from '../../../../theme';
 const AllAgendas = ({ attendanceSessions: { sessions } }) => {
   const transformSessionTime = (time) => {
     const timeObj = new Date(time);
+    if (Platform !== 'ios') {
+      const x = timeObj.toLocaleString().split(' ');
+      const hour = parseInt(x[x.length - 2].split(':')[0], 10);
+      const time1 = hour % 12;
+      const minuteString = x[x.length - 2].split(':')[1];
+      return `${time1}:${minuteString} ${hour > 12 ? 'PM' : 'AM'}`;
+    }
     return timeObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  };
+
+  const dayOfWeek = (time) => {
+    const timeObj = new Date(time);
+    return timeObj.toLocaleString().split(' ')[0].toUpperCase();
   };
 
   return (
@@ -30,9 +42,7 @@ const AllAgendas = ({ attendanceSessions: { sessions } }) => {
                 ) : (
                   <View style={styles.sessionTimeInfoWrapper}>
                     <Text style={styles.sessionDate}>{new Date(validOn).getDate()}</Text>
-                    <Text style={styles.sessionDay}>
-                      {new Date(validOn).toLocaleDateString('EN', { weekday: 'short' }).toUpperCase()}
-                    </Text>
+                    <Text style={styles.sessionDay}>{dayOfWeek(validOn)}</Text>
                   </View>
                 )}
                 <View key={id} style={styles.sessionInfoWrapper}>
@@ -109,20 +119,20 @@ const styles = StyleSheet.create({
   },
   courseName: {
     color: theme.palette.secondary.orange,
-    fontSize: 17,
+    fontSize: Platform === 'ios' ? 18 : 15,
     fontWeight: '500',
     marginBottom: 55,
     textAlign: 'center',
   },
   sessionTime: {
-    fontSize: 17,
+    fontSize: Platform === 'ios' ? 18 : 15,
     color: '#888888',
     position: 'absolute',
     bottom: 10,
     left: 15,
   },
   sessionLocation: {
-    fontSize: 17,
+    fontSize: Platform === 'ios' ? 18 : 15,
     color: '#888888',
     position: 'absolute',
     bottom: 10,
