@@ -19,7 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* fraaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* fraaTests.m */; };
 		3B6BB56C7217F783382377CE /* libPods-fraa-fraaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B112466DDC507F92A6FF5C /* libPods-fraa-fraaTests.a */; };
 		874D8071259B2B22006F5713 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 874D8070259B2B22006F5713 /* CoreLocation.framework */; };
-		877981CB25B6D606003FD452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877981CA25B6D606003FD452 /* GoogleService-Info.plist */; };
+		87BAF35525B803A8008578F9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87BAF35425B803A8008578F9 /* GoogleService-Info.plist */; };
 		87FD76AA2524361C00BB6E1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87FD76A92524361C00BB6E1D /* LaunchScreen.storyboard */; };
 		D0C3CD3D9B5FA01F0E82D8AB /* libPods-fraa-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A337C8D9E43A608000DCF969 /* libPods-fraa-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -62,7 +62,7 @@
 		5B9BED78BE7909E76567E211 /* Pods-fraa-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-fraa-tvOSTests/Pods-fraa-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5FB3BFFB2CBCAAD8D9E51539 /* Pods-fraa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa.debug.xcconfig"; path = "Target Support Files/Pods-fraa/Pods-fraa.debug.xcconfig"; sourceTree = "<group>"; };
 		874D8070259B2B22006F5713 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		877981CA25B6D606003FD452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		87BAF35425B803A8008578F9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87FD76A92524361C00BB6E1D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E49D404D13FBF6C7FFB3B64 /* Pods-fraa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fraa.release.xcconfig"; path = "Target Support Files/Pods-fraa/Pods-fraa.release.xcconfig"; sourceTree = "<group>"; };
 		A337C8D9E43A608000DCF969 /* libPods-fraa-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fraa-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,8 +133,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				877981CA25B6D606003FD452 /* GoogleService-Info.plist */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				87BAF35425B803A8008578F9 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				87FD76A92524361C00BB6E1D /* LaunchScreen.storyboard */,
@@ -300,7 +300,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = S5VZ535TY5;
+						DevelopmentTeam = 9GKDY5NB5P;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -349,7 +349,7 @@
 			files = (
 				87FD76AA2524361C00BB6E1D /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				877981CB25B6D606003FD452 /* GoogleService-Info.plist in Resources */,
+				87BAF35525B803A8008578F9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,7 +668,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S5VZ535TY5;
+				DEVELOPMENT_TEAM = 9GKDY5NB5P;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -682,7 +682,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa;
+				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa.backup;
 				PRODUCT_NAME = fraa;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -697,7 +697,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S5VZ535TY5;
+				DEVELOPMENT_TEAM = 9GKDY5NB5P;
 				INFOPLIST_FILE = fraa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -706,7 +706,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa;
+				PRODUCT_BUNDLE_IDENTIFIER = rmit.capstone.fraa.backup;
 				PRODUCT_NAME = fraa;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
